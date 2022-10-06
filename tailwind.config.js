@@ -8,6 +8,6 @@ module.exports = {
   },
   plugins: [require('daisyui')],
   daisyui: {
-    themes: ["synthwave", "dark", "cmyk"],
+    themes: ["dark", "dracula", "synthwave", "cmyk"],
   },
 }
