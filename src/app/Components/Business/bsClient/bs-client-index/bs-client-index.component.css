@@ -1,0 +1,15 @@
+.hideSubMenu{
+  max-height: 0 !important;
+  overflow: hidden;
+  transition: max-height 0.7s ease;
+}
+
+.transitionSubMenu{
+  max-height: 400px;
+  overflow: hidden;
+  transition: max-height 0.8s ease;
+}
+
+.menuActive{
+  @apply bg-primary;
+}
