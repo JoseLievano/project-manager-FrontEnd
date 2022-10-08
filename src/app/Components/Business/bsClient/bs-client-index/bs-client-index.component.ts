@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {SidebarMenuService} from "../../../../Service/Shared/sidebar-menu.service";
 
 @Component({
   selector: 'app-bs-client-index',
@@ -11,7 +12,7 @@ export class BsClientIndexComponent implements OnInit {
 
   private activeMenu : String = "";
 
-  constructor() { }
+  constructor(private sidebarOptions : SidebarMenuService) { }
 
   ngOnInit(): void {
   }
@@ -36,6 +37,14 @@ export class BsClientIndexComponent implements OnInit {
 
   getActualSubMenu(){
     return this.actualSubMenu;
+  }
+
+  toggleSidebar(){
+    this.sidebarOptions.toggleSidebar();
+  }
+
+  getSidebarToogleStatus(){
+    return this.sidebarOptions.getSidebarIsVisible();
   }
 
 }

@@ -5,13 +5,16 @@ import { Injectable } from '@angular/core';
 })
 export class SidebarMenuService {
 
-  sidebarIsVisible : Boolean = true;
+  private sidebarIsVisible : Boolean = true;
 
   constructor() { }
 
   toggleSidebar(){
     this.sidebarIsVisible = !this.sidebarIsVisible;
-    console.log("sidebarIsVisible: " + this.sidebarIsVisible);
+  }
+
+  getSidebarIsVisible(){
+    return this.sidebarIsVisible;
   }
 
 }
