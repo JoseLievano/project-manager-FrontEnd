@@ -1,24 +1,29 @@
-<div class="container bg-base-300 w-2/5 mx-auto mt-48 px-16 py-10 rounded shadow-md">
-  <h1 class="card-title text-center text-3xl mb-5">Login to your account</h1>
-  <form name="form" [formGroup]="form">
-    <div class="form-control">
-      <label class="label">
-        <span class="label-text">Username</span>
-      </label>
-      <input type="text" placeholder="username" class="form-control input input-bordered" name="username" formControlName="username" />
+<div id="mainLoginContainer" class="container h-screen">
+  <div class="grid place-items-center h-screen">
+    <div class="container bg-base-300 w-2/5 mx-auto px-16 py-10 rounded shadow-md">
+      <h1 class="card-title text-center text-3xl mb-5">Login to your account</h1>
+      <form name="form" [formGroup]="form">
+        <div class="form-control">
+          <label class="label">
+            <span class="label-text">Username</span>
+          </label>
+          <input type="text" placeholder="username" class="form-control input input-bordered" name="username" formControlName="username" />
+        </div>
+        <div class="form-control">
+          <label class="label">
+            <span class="label-text">Password</span>
+          </label>
+          <input type="password" placeholder="password" class="input input-bordered" name="password" formControlName="password"/>
+          <label class="label">
+            <a href="#" class="label-text-alt link link-hover">Forgot password?</a>
+          </label>
+        </div>
+        <div class="form-control mt-6">
+          <button class="btn btn-primary" (click)="doLogin()" [disabled]="!form.valid">Login</button>
+        </div>
+      </form>
     </div>
-    <div class="form-control">
-      <label class="label">
-        <span class="label-text">Password</span>
-      </label>
-      <input type="password" placeholder="password" class="input input-bordered" name="password" formControlName="password"/>
-      <label class="label">
-        <a href="#" class="label-text-alt link link-hover">Forgot password?</a>
-      </label>
-    </div>
-    <div class="form-control mt-6">
-      <button class="btn btn-primary" (click)="doLogin()" [disabled]="!form.valid">Login</button>
-    </div>
-  </form>
+  </div>
 </div>
+
 

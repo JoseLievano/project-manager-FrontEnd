@@ -2,6 +2,7 @@ import {NgModule} from "@angular/core";
 import {RouterModule, Routes} from "@angular/router";
 import {BsClientIndexComponent} from "./bsClient/bs-client-index/bs-client-index.component";
 import {NgClass} from "@angular/common";
+import {AppRoutingModule} from "../../app-routing.module";
 
 const routes : Routes = [
     {path: "bs_client", component: BsClientIndexComponent}
@@ -9,7 +10,7 @@ const routes : Routes = [
 
 @NgModule({
   declarations: [BsClientIndexComponent],
-  imports: [RouterModule.forRoot(routes, {enableTracing: true}), NgClass],
+  imports: [RouterModule.forRoot(routes, {enableTracing: true}), NgClass, AppRoutingModule],
   exports: [RouterModule]
 })
 

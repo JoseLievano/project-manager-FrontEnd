@@ -7,26 +7,27 @@ import {HTTP_INTERCEPTORS, HttpClientModule, HttpClientXsrfModule} from "@angula
 import {JWTInterceptorInterceptor} from "./Interceptor/jwtinterceptor.interceptor";
 import {BusinessRoutingModule} from "./Components/Business/business-routing.module";
 
+
 @NgModule({
-  declarations: [
-    AppComponent,
-  ],
-  imports: [
-    BrowserModule,
-    FormsModule,
-    ReactiveFormsModule,
-    AppRoutingModule,
-    HttpClientModule,
-    HttpClientXsrfModule,
-    BusinessRoutingModule
-  ],
-  providers: [{
-    provide: HTTP_INTERCEPTORS,
-    useClass: JWTInterceptorInterceptor,
-    multi: true
-  }
-  ],
-  bootstrap: [AppComponent]
+    declarations: [
+        AppComponent,
+    ],
+    imports: [
+        BrowserModule,
+        FormsModule,
+        ReactiveFormsModule,
+        AppRoutingModule,
+        HttpClientModule,
+        HttpClientXsrfModule,
+        BusinessRoutingModule
+    ],
+    providers: [{
+        provide: HTTP_INTERCEPTORS,
+        useClass: JWTInterceptorInterceptor,
+        multi: true
+    }
+    ],
+    bootstrap: [AppComponent]
 })
 
 export class AppModule { }

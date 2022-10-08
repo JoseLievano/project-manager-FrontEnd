@@ -1,19 +1,19 @@
 <div id="indexprimario" class="flex flex-row h-screen">
 
-  <div [ngClass]="{hideSidebar : !getSidebarToogleStatus()}" class="transitionSidebar container sm bg-base-200 basis-1/5 p-0 h-screen">
+  <div [ngClass]="{hideSidebar : !getSidebarToogleStatus()}" class="transitionSidebar container sm bg-base-200 basis-1/5 p-0 h-screen border-r border-neutral shadow-md">
 
     <div class="overflow-y-auto py-4 px-4 rounded">
 
       <ul class="space-y-2">
 
-        <li>
+        <li [ngClass]="{hideMenuElement : !getSidebarToogleStatus()}" class="transitionMenuElement">
           <a (click)="setActive('dashboard1')" [ngClass]="{ menuActive : getActiveMenu() === 'dashboard1' }" class="flex items-center p-2 font-normal rounded-lg transition duration-500 hover:bg-primary hover:text-neutral hover:cursor-pointer">
             <svg aria-hidden="true" class="w-6 h-6 " fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"></path><path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"></path></svg>
             <span class="ml-3">Dashboard</span>
           </a>
         </li>
 
-        <li>
+        <li [ngClass]="{hideMenuElement : !getSidebarToogleStatus()}" class="transitionMenuElement">
           <a (click)="setActive('sub1')" [ngClass]="{ menuActive : getActiveMenu() === 'sub1' }" class="flex items-center p-2 font-normal rounded-lg transition duration-500 hover:bg-primary hover:text-neutral">
             <svg aria-hidden="true" class="w-6 h-6 " fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 2a4 4 0 00-4 4v1H5a1 1 0 00-.994.89l-1 9A1 1 0 004 18h12a1 1 0 00.994-1.11l-1-9A1 1 0 0015 7h-1V6a4 4 0 00-4-4zm2 5V6a2 2 0 10-4 0v1h4zm-6 3a1 1 0 112 0 1 1 0 01-2 0zm7-1a1 1 0 100 2 1 1 0 000-2z" clip-rule="evenodd"></path></svg>
             <span class="ml-3">E-commerce</span>
@@ -21,25 +21,25 @@
           </a>
 
           <ul class="space-y-2 mt-2 transitionSubMenu" [ngClass]="{ hideSubMenu : getActualSubMenu() != 'sub1'}">
-            <li>
+            <li [ngClass]="{hideMenuElement : !getSidebarToogleStatus()}" class="transitionMenuElement">
               <a class="flex items-center p-2 font-normal rounded-lg ml-7 transition duration-500 hover:bg-primary hover:text-neutral">
                 <span class="ml-3">Products</span>
               </a>
             </li>
 
-            <li>
+            <li [ngClass]="{hideMenuElement : !getSidebarToogleStatus()}" class="transitionMenuElement">
               <a class="flex items-center p-2 font-normal rounded-lg ml-7 transition duration-500 hover:bg-primary hover:text-neutral">
                 <span class="ml-3">Products</span>
               </a>
             </li>
 
-            <li>
+            <li [ngClass]="{hideMenuElement : !getSidebarToogleStatus()}" class="transitionMenuElement">
               <a class="flex items-center p-2 font-normal rounded-lg ml-7 transition duration-500 hover:bg-primary hover:text-neutral">
                 <span class="ml-3">Products</span>
               </a>
             </li>
 
-            <li>
+            <li [ngClass]="{hideMenuElement : !getSidebarToogleStatus()}" class="transitionMenuElement">
               <a class="flex items-center p-2 font-normal rounded-lg ml-7 transition duration-500 hover:bg-primary hover:text-neutral">
                 <span class="ml-3">Products</span>
               </a>
@@ -48,7 +48,7 @@
           </ul>
         </li>
 
-        <li>
+        <li [ngClass]="{hideMenuElement : !getSidebarToogleStatus()}" class="transitionMenuElement">
           <a (click)="setActive('dashboard2')" [ngClass]="{ menuActive : getActiveMenu() === 'dashboard2' }" class="flex items-center p-2 font-normal rounded-lg transition duration-500 hover:bg-primary hover:text-neutral hover:cursor-pointer">
             <svg aria-hidden="true" class="w-6 h-6 " fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"></path><path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"></path></svg>
             <span class="ml-3">Dashboard</span>
@@ -56,7 +56,7 @@
         </li>
 
 
-        <li>
+        <li [ngClass]="{hideMenuElement : !getSidebarToogleStatus()}" class="transitionMenuElement">
           <a (click)="setActive('sub2')" [ngClass]="{ menuActive : getActiveMenu() === 'sub2' }" class="flex items-center p-2 font-normal rounded-lg transition duration-500 hover:bg-primary hover:text-neutral">
             <svg aria-hidden="true" class="w-6 h-6 " fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 2a4 4 0 00-4 4v1H5a1 1 0 00-.994.89l-1 9A1 1 0 004 18h12a1 1 0 00.994-1.11l-1-9A1 1 0 0015 7h-1V6a4 4 0 00-4-4zm2 5V6a2 2 0 10-4 0v1h4zm-6 3a1 1 0 112 0 1 1 0 01-2 0zm7-1a1 1 0 100 2 1 1 0 000-2z" clip-rule="evenodd"></path></svg>
             <span class="ml-3">E-commerce</span>
@@ -64,25 +64,25 @@
           </a>
 
           <ul class="space-y-2 mt-2 transitionSubMenu" [ngClass]="{ hideSubMenu : getActualSubMenu() != 'sub2'}">
-            <li>
+            <li [ngClass]="{hideMenuElement : !getSidebarToogleStatus()}" class="transitionMenuElement">
               <a class="flex items-center p-2 font-normal rounded-lg ml-7 transition duration-500 hover:bg-primary hover:text-neutral">
                 <span class="ml-3">Products</span>
               </a>
             </li>
 
-            <li>
+            <li [ngClass]="{hideMenuElement : !getSidebarToogleStatus()}" class="transitionMenuElement">
               <a class="flex items-center p-2 font-normal rounded-lg ml-7 transition duration-500 hover:bg-primary hover:text-neutral">
                 <span class="ml-3">Products</span>
               </a>
             </li>
 
-            <li>
+            <li [ngClass]="{hideMenuElement : !getSidebarToogleStatus()}" class="transitionMenuElement">
               <a class="flex items-center p-2 font-normal rounded-lg ml-7 transition duration-500 hover:bg-primary hover:text-neutral">
                 <span class="ml-3">Products</span>
               </a>
             </li>
 
-            <li>
+            <li [ngClass]="{hideMenuElement : !getSidebarToogleStatus()}" class="transitionMenuElement">
               <a class="flex items-center p-2 font-normal rounded-lg ml-7 transition duration-500 hover:bg-primary hover:text-neutral">
                 <span class="ml-3">Products</span>
               </a>
@@ -91,7 +91,7 @@
           </ul>
         </li>
 
-        <li>
+        <li [ngClass]="{hideMenuElement : !getSidebarToogleStatus()}" class="transitionMenuElement">
           <a (click)="setActive('dashboard3')" [ngClass]="{ menuActive : getActiveMenu() === 'dashboard3' }" class="flex items-center p-2 font-normal rounded-lg transition duration-500 hover:bg-primary hover:text-neutral hover:cursor-pointer">
             <svg aria-hidden="true" class="w-6 h-6 " fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"></path><path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"></path></svg>
             <span class="ml-3">Dashboard</span>
@@ -99,21 +99,24 @@
         </li>
 
       </ul>
-
     </div>
   </div>
 
   <div class="container h-screen">
 
-    <div class="max-h-20 min-h-20 bg-base-300 p-4">
-      <div>
+    <div class="flex justify-between max-h-20 min-h-20 bg-base-200 p-4 shadow-md">
+
+      <div class="rounded bg-neutral p-3">
         <label class="swap swap-rotate">
           <input type="checkbox" />
-          <div (click)="toggleSidebar()" class="swap-on fill-current"><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg></div>
-          <div (click)="toggleSidebar()" class="swap-off fill-current "> <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd"></path></svg> </div>
+          <div (click)="toggleSidebar()" class="swap-on fill-current duration-700 text-neutral-content"><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg></div>
+          <div (click)="toggleSidebar()" class="swap-off fill-current duration-700 text-neutral-content"> <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd"></path></svg> </div>
         </label>
       </div>
 
+      <div>
+        <app-theme-selector></app-theme-selector>
+      </div>
     </div>
 
     <div class=" p-5 ">
