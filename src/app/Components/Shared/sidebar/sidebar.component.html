@@ -1,0 +1,116 @@
+<div [ngClass]="{hideSidebar : !getSidebarToogleStatus()}" class="transitionSidebar">
+
+  <div class="overflow-y-auto py-4 px-4 rounded">
+
+    <!--<p *ngFor="let element of sideBarElements">{{element.name}}</p>-->
+
+    <ul class="space-y-2">
+
+      <li *ngFor="let element of sideBarElements" [ngClass]="{hideMenuElement : !getSidebarToogleStatus()}" class="transitionMenuElement">
+        <a (click)="setActive(element.name)" [ngClass]="{ menuActive : getActiveMenu() === element.name }" class="menuItem">
+          <svg aria-hidden="true" class="w-6 h-6 " fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"></path><path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"></path></svg>
+          <span class="ml-3">{{element.name}}</span>
+          <svg *ngIf="element.hasSubmenu" class="w-6 h-6 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+        </a>
+
+        <ul *ngIf="element.hasSubmenu" class="space-y-2 mt-2 transitionSubMenu" [ngClass]="{ hideSubMenu : getActualSubMenu() != element.name}">
+
+          <li *ngFor="let subElement of element.submenu" [ngClass]="{hideMenuElement : !getSidebarToogleStatus()}" class="transitionMenuElement">
+            <a class="submenuElements">
+              <span class="ml-3">{{subElement.name}}</span>
+            </a>
+          </li>
+
+        </ul>
+
+      </li>
+
+
+      <!--<li [ngClass]="{hideMenuElement : !getSidebarToogleStatus()}" class="transitionMenuElement">
+        <a (click)="setActive('sub1')" [ngClass]="{ menuActive : getActiveMenu() === 'sub1' }" class="flex items-center p-2 font-normal rounded-lg transition duration-500 hover:bg-primary hover:text-neutral">
+          <svg aria-hidden="true" class="w-6 h-6 " fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 2a4 4 0 00-4 4v1H5a1 1 0 00-.994.89l-1 9A1 1 0 004 18h12a1 1 0 00.994-1.11l-1-9A1 1 0 0015 7h-1V6a4 4 0 00-4-4zm2 5V6a2 2 0 10-4 0v1h4zm-6 3a1 1 0 112 0 1 1 0 01-2 0zm7-1a1 1 0 100 2 1 1 0 000-2z" clip-rule="evenodd"></path></svg>
+          <span class="ml-3">E-commerce</span>
+          <svg class="w-6 h-6 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+        </a>
+
+        <ul class="space-y-2 mt-2 transitionSubMenu" [ngClass]="{ hideSubMenu : getActualSubMenu() != 'sub1'}">
+          <li [ngClass]="{hideMenuElement : !getSidebarToogleStatus()}" class="transitionMenuElement">
+            <a class="flex items-center p-2 font-normal rounded-lg ml-7 transition duration-500 hover:bg-primary hover:text-neutral">
+              <span class="ml-3">Products</span>
+            </a>
+          </li>
+
+          <li [ngClass]="{hideMenuElement : !getSidebarToogleStatus()}" class="transitionMenuElement">
+            <a class="flex items-center p-2 font-normal rounded-lg ml-7 transition duration-500 hover:bg-primary hover:text-neutral">
+              <span class="ml-3">Products</span>
+            </a>
+          </li>
+
+          <li [ngClass]="{hideMenuElement : !getSidebarToogleStatus()}" class="transitionMenuElement">
+            <a class="flex items-center p-2 font-normal rounded-lg ml-7 transition duration-500 hover:bg-primary hover:text-neutral">
+              <span class="ml-3">Products</span>
+            </a>
+          </li>
+
+          <li [ngClass]="{hideMenuElement : !getSidebarToogleStatus()}" class="transitionMenuElement">
+            <a class="flex items-center p-2 font-normal rounded-lg ml-7 transition duration-500 hover:bg-primary hover:text-neutral">
+              <span class="ml-3">Products</span>
+            </a>
+          </li>
+
+        </ul>
+      </li>
+
+      <li [ngClass]="{hideMenuElement : !getSidebarToogleStatus()}" class="transitionMenuElement">
+        <a (click)="setActive('dashboard2')" [ngClass]="{ menuActive : getActiveMenu() === 'dashboard2' }" class="flex items-center p-2 font-normal rounded-lg transition duration-500 hover:bg-primary hover:text-neutral hover:cursor-pointer">
+          <svg aria-hidden="true" class="w-6 h-6 " fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"></path><path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"></path></svg>
+          <span class="ml-3">Dashboard</span>
+        </a>
+      </li>
+
+
+      <li [ngClass]="{hideMenuElement : !getSidebarToogleStatus()}" class="transitionMenuElement">
+        <a (click)="setActive('sub2')" [ngClass]="{ menuActive : getActiveMenu() === 'sub2' }" class="flex items-center p-2 font-normal rounded-lg transition duration-500 hover:bg-primary hover:text-neutral">
+          <svg aria-hidden="true" class="w-6 h-6 " fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 2a4 4 0 00-4 4v1H5a1 1 0 00-.994.89l-1 9A1 1 0 004 18h12a1 1 0 00.994-1.11l-1-9A1 1 0 0015 7h-1V6a4 4 0 00-4-4zm2 5V6a2 2 0 10-4 0v1h4zm-6 3a1 1 0 112 0 1 1 0 01-2 0zm7-1a1 1 0 100 2 1 1 0 000-2z" clip-rule="evenodd"></path></svg>
+          <span class="ml-3">E-commerce</span>
+          <svg class="w-6 h-6 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+        </a>
+
+        <ul class="space-y-2 mt-2 transitionSubMenu" [ngClass]="{ hideSubMenu : getActualSubMenu() != 'sub2'}">
+          <li [ngClass]="{hideMenuElement : !getSidebarToogleStatus()}" class="transitionMenuElement">
+            <a class="flex items-center p-2 font-normal rounded-lg ml-7 transition duration-500 hover:bg-primary hover:text-neutral">
+              <span class="ml-3">Products</span>
+            </a>
+          </li>
+
+          <li [ngClass]="{hideMenuElement : !getSidebarToogleStatus()}" class="transitionMenuElement">
+            <a class="flex items-center p-2 font-normal rounded-lg ml-7 transition duration-500 hover:bg-primary hover:text-neutral">
+              <span class="ml-3">Products</span>
+            </a>
+          </li>
+
+          <li [ngClass]="{hideMenuElement : !getSidebarToogleStatus()}" class="transitionMenuElement">
+            <a class="flex items-center p-2 font-normal rounded-lg ml-7 transition duration-500 hover:bg-primary hover:text-neutral">
+              <span class="ml-3">Products</span>
+            </a>
+          </li>
+
+          <li [ngClass]="{hideMenuElement : !getSidebarToogleStatus()}" class="transitionMenuElement">
+            <a class="flex items-center p-2 font-normal rounded-lg ml-7 transition duration-500 hover:bg-primary hover:text-neutral">
+              <span class="ml-3">Products</span>
+            </a>
+          </li>
+
+        </ul>
+      </li>
+
+      <li [ngClass]="{hideMenuElement : !getSidebarToogleStatus()}" class="transitionMenuElement">
+        <a (click)="setActive('dashboard3')" [ngClass]="{ menuActive : getActiveMenu() === 'dashboard3' }" class="flex items-center p-2 font-normal rounded-lg transition duration-500 hover:bg-primary hover:text-neutral hover:cursor-pointer">
+          <svg aria-hidden="true" class="w-6 h-6 " fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"></path><path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"></path></svg>
+          <span class="ml-3">Dashboard</span>
+        </a>
+      </li>-->
+
+    </ul>
+  </div>
+</div>

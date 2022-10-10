@@ -8,37 +8,9 @@ module.exports = {
   },
   plugins: [require('daisyui')],
   daisyui: {
-    themes: [ "night",
-              "dark",
-              "cupcake",
-              "bumblebee",
-              "emerald",
-              "corporate",
-              "synthwave",
-              "retro",
-              "cyberpunk",
-              "valentine",
-              "halloween",
-              "garden",
-              "forest",
-              "aqua",
-              "lofi",
-              "pastel",
-              "fantasy",
-              "wireframe",
-              "black",
-              "luxury",
-              "dracula",
-              "cmyk",
-              "autumn",
-              "business",
-              "acid",
-              "lemonade",
-              "light",
-              "coffee",
-              "winter",
-              /*{
-                jose: {
+    themes: [
+              {
+                nocturn: {
                   "primary": "#0c2461",
                   "secondary": "#15803d",
                   "accent": "#ea580c",
@@ -48,8 +20,10 @@ module.exports = {
                   "success": "#16a34a",
                   "warning": "#facc15",
                   "error": "#be123c",
+                  "primary-content": "#ecf0f1",
+                  "secondary-content": "#2c3e50",
                 }
-             },*/
+             },
     ],
   },
 }

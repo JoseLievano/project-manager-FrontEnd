@@ -7,15 +7,15 @@ export class User{
   public lastName : string | null;
   public email : string | null;
 
-  public User(
-              id : number | null,
-              username : string | null,
-              password : string | null,
-              roles : String[] | null,
-              firstName : string | null,
-              lastName : string | null,
-              email : string | null
-              ){
+  public user (
+    id : number | null,
+    username : string | null,
+    password : string | null,
+    roles : String[] | null,
+    firstName : string | null,
+    lastName : string | null,
+    email : string | null
+  ){
     this.id = id;
     this.username = username;
     this.password = password;

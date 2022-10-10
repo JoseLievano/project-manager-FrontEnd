@@ -3,7 +3,6 @@ import { Routes, RouterModule } from '@angular/router';
 import {IndexNormalComponent} from "./Components/Shared/index-normal/index-normal.component";
 import {LoginComponent} from "./Components/Shared/login/login.component";
 import {ReactiveFormsModule} from "@angular/forms";
-import {ThemeSelectorComponent} from "./Components/Shared/theme-selector/theme-selector.component";
 
 const routes: Routes = [
   {path: '', component: IndexNormalComponent},
@@ -13,8 +12,8 @@ const routes: Routes = [
   declarations: [
     IndexNormalComponent,
     LoginComponent,
-    ThemeSelectorComponent],
+    ],
   imports: [RouterModule.forRoot(routes, {enableTracing: true}), ReactiveFormsModule],
-  exports: [RouterModule, ThemeSelectorComponent]
+  exports: [RouterModule]
 })
 export class AppRoutingModule { }
