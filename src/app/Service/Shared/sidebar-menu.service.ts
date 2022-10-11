@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import {LoginService} from "./login.service";
-import {User} from "../../Model/User";
 import {SidebarMenuElement} from "../../Model/SidebarMenuElement";
 import {SidebarSubMenuElement} from "../../Model/SidebarSubMenuElement";
 
@@ -10,8 +9,6 @@ import {SidebarSubMenuElement} from "../../Model/SidebarSubMenuElement";
 export class SidebarMenuService {
 
   private sidebarIsVisible : Boolean = true;
-
-  private actualSideBarUser : User;
 
   private menuObjects  = {
     ROLE_BS_CLIENT : [
@@ -28,7 +25,7 @@ export class SidebarMenuService {
   }
 
   constructor(private loginService : LoginService) {
-    this.actualSideBarUser = this.loginService.getActualUser();
+    /*this.actualSideBarUser = this.loginService.getActualUser();*/
   }
 
   toggleSidebar(){
@@ -41,15 +38,15 @@ export class SidebarMenuService {
 
   getSidebarMenuElements() {
     /*console.log(this.menuObjects.ROLE_BS_CLIENT);*/
-    return this.menuObjects.ROLE_BS_CLIENT;
+    /*return this.menuObjects.ROLE_BS_CLIENT;*/
 
-    /*// @ts-ignore
-    if (this.actualSideBarUser.roles[0] == "ROLE_BS_CLIENT"){
+    // @ts-ignore
+    if (this.loginService.getActualUser().roles[0] == "ROLE_BS_CLIENT"){
       // @ts-ignore
       return this.menuObjects["ROLE_BS_CLIENT"];
     }
 
-    return [{}];*/
+    return [{}];
 
   }
 
