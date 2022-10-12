@@ -12,7 +12,7 @@ const routes : Routes = [
 @NgModule({
   declarations: [BsClientIndexComponent],
   imports: [
-    RouterModule.forRoot(routes, {enableTracing: true}),
+    RouterModule.forRoot(routes),
     NgClass,
     AppRoutingModule,
     SharedComponentsModule

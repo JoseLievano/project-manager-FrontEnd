@@ -59,6 +59,17 @@ export class LoginService {
   }
 
   getActualUser(){
+
+    // @ts-ignore
+    let userdetailsLenght : number | null = window.sessionStorage.getItem("userdetails").length;
+
+    if (userdetailsLenght != null && userdetailsLenght > 0){
+      this.actualUser = JSON.parse(<string> window.sessionStorage.getItem("userdetails"));
+    }else{
+      this.router.navigate([""]);
+    }
+
+    console.log("get actual user login service: " + this.actualUser.username)
     return this.actualUser;
   }
 

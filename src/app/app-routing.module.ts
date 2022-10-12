@@ -13,7 +13,7 @@ const routes: Routes = [
     IndexNormalComponent,
     LoginComponent,
     ],
-  imports: [RouterModule.forRoot(routes, {enableTracing: true}), ReactiveFormsModule],
+  imports: [RouterModule.forRoot(routes), ReactiveFormsModule],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
