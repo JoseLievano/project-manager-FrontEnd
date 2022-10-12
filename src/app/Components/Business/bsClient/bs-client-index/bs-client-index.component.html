@@ -1,23 +1,10 @@
-<div id="indexprimario" class="flex flex-row h-screen">
+<div id="primaryIndex" class="flex flex-row h-screen">
 
   <app-sidebar></app-sidebar>
 
   <div class="container h-screen">
 
-    <div class="flex justify-between max-h-20 min-h-20 bg-base-200 p-4 shadow-md">
-
-      <div class="rounded bg-neutral p-3">
-        <label class="swap swap-rotate">
-          <input type="checkbox" />
-          <div (click)="toggleSidebar()" class="swap-on fill-current duration-700 text-neutral-content"><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg></div>
-          <div (click)="toggleSidebar()" class="swap-off fill-current duration-700 text-neutral-content"> <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd"></path></svg> </div>
-        </label>
-      </div>
-
-      <div>
-        <app-theme-selector></app-theme-selector>
-      </div>
-    </div>
+      <app-top-bar></app-top-bar>
 
     <div class=" p-5 ">
       <h1 class="text-2xl text-center">Test BS Client</h1>
