@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import {SidebarMenuService} from "../../../../Service/Shared/sidebar-menu.service";
 
 @Component({
   selector: 'app-bs-client-index',
@@ -9,13 +8,11 @@ import {SidebarMenuService} from "../../../../Service/Shared/sidebar-menu.servic
 export class BsClientIndexComponent implements OnInit {
 
 
-  constructor(private sidebarOptions : SidebarMenuService) { }
+  constructor() { }
 
   ngOnInit(): void {
   }
 
-  toggleSidebar(){
-    this.sidebarOptions.toggleSidebar();
-  }
+
 
 }
