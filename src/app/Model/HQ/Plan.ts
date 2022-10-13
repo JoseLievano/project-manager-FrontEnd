@@ -1,4 +1,5 @@
 import {MainHQ} from "./MainHQ";
+import {Invoice} from "./Invoice";
 
 export class Plan{
 
@@ -14,13 +15,16 @@ export class Plan{
 
   public mainHQ : MainHQ | undefined | null ;
 
+  public invoices : Invoice[] | undefined | null ;
+
   public Plan(
               id : Number | undefined | null ,
               price : Number | undefined | null ,
               userLimit : Number | undefined | null ,
               diskLimit : Number | undefined | null ,
               maxProjects : Number | undefined | null ,
-              mainHQ : MainHQ | undefined | null
+              mainHQ : MainHQ | undefined | null,
+              invoices : Invoice[] | undefined | null
   ){
     this.id = id;
     this.price = price;
@@ -28,6 +32,7 @@ export class Plan{
     this.diskLimit = diskLimit;
     this.maxProjects = maxProjects;
     this.mainHQ = mainHQ;
+    this.invoices = invoices;
   }
 
   static builder() : Plan{
@@ -61,6 +66,11 @@ export class Plan{
 
   public setMainHQ (mainHQ : MainHQ) : Plan{
     this.mainHQ = mainHQ;
+    return this;
+  }
+
+  public setInvoices (invoices : Invoice[]) : Plan{
+    this.invoices = invoices;
     return this;
   }
 

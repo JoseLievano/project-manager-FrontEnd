@@ -1,4 +1,5 @@
 import {Plan} from "./Plan";
+import {Invoice} from "./Invoice";
 
 export class MainHQ{
 
@@ -7,6 +8,8 @@ export class MainHQ{
   public name : String | undefined | null ;
 
   public plans : Plan[] | undefined | null ;
+
+  public invoices : Invoice[] | undefined | null ;
 
   public MainHQ(
                 id : Number | undefined | null ,
