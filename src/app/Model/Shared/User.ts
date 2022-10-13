@@ -8,13 +8,13 @@ export class User{
   public email : string | null | undefined;
 
   public user (
-    id : number | null | undefined,
-    username : string | null | undefined,
-    password : string | null | undefined,
-    roles : String[] | null | undefined,
-    firstName : string | null | undefined,
-    lastName : string | null | undefined,
-    email : string | null | undefined
+                id : number | null | undefined,
+                username : string | null | undefined,
+                password : string | null | undefined,
+                roles : String[] | null | undefined,
+                firstName : string | null | undefined,
+                lastName : string | null | undefined,
+                email : string | null | undefined
   ){
     this.id = id;
     this.username = username;

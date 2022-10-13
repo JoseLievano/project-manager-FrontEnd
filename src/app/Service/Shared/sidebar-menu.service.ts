@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import {LoginService} from "./login.service";
-import {SidebarMenuElement} from "../../Model/SidebarMenuElement";
-import {SidebarSubMenuElement} from "../../Model/SidebarSubMenuElement";
-import {User} from "../../Model/User";
+import {SidebarMenuElement} from "../../Model/Shared/SidebarMenuElement";
+import {SidebarSubMenuElement} from "../../Model/Shared/SidebarSubMenuElement";
+import {User} from "../../Model/Shared/User";
 
 @Injectable({
   providedIn: 'root'

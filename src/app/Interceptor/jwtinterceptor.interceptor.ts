@@ -7,7 +7,7 @@ import {
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import {Router} from "@angular/router";
-import {User} from "../Model/User";
+import {User} from "../Model/Shared/User";
 
 @Injectable()
 export class JWTInterceptorInterceptor implements HttpInterceptor {

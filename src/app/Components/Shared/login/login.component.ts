@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {User} from "../../../Model/User";
+import {User} from "../../../Model/Shared/User";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {LoginService} from "../../../Service/Shared/login.service";
 

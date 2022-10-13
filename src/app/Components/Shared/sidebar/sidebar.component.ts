@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {SidebarMenuService} from "../../../Service/Shared/sidebar-menu.service";
-import {SidebarMenuElement} from "../../../Model/SidebarMenuElement";
+import {SidebarMenuElement} from "../../../Model/Shared/SidebarMenuElement";
 
 @Component({
   selector: 'app-sidebar',

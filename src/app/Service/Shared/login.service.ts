@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpResponse} from "@angular/common/http";
-import {User} from "../../Model/User";
+import {User} from "../../Model/Shared/User";
 import {Const} from "../../Constant/const";
 import {Router} from "@angular/router";
 
