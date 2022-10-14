@@ -68,8 +68,8 @@ export class LoginService {
     }else{
       this.router.navigate([""]);
     }
-
-    console.log("get actual user login service: " + this.actualUser.username)
+/*
+    console.log("get actual user login service: " + this.actualUser.username)*/
     return this.actualUser;
   }
 
