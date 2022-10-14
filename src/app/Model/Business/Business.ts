@@ -9,6 +9,10 @@ import {bsEmployee} from "./bsEmployee";
 import {bsInvoice} from "./bsInvoice";
 import {bsKBCategory} from "./bsKBCategory";
 import {bsKB} from "./bsKB";
+import {bsManager} from "./bsManager";
+import {bsPriority} from "./bsPriority";
+import {bsStatus} from "./bsStatus";
+import {bsTaskCategory} from "./bsTaskCategory";
 
 export class Business{
 
@@ -48,6 +52,14 @@ export class Business{
 
   public bsKBs : bsKB[] | undefined | null;
 
+  public bsManagers : bsManager[] | undefined | null;
+
+  public bsPriorities : bsPriority[] | undefined | null;
+
+  public bsStatuses : bsStatus[] | undefined | null;
+
+  public bsTaskCategories : bsTaskCategory[] | undefined | null;
+
   public Business (
                     id : Number | undefined | null,
                     name : String | undefined | null,
@@ -66,7 +78,11 @@ export class Business{
                     bsEmployees : bsEmployee[] | undefined | null,
                     bsInvoices : bsInvoice[] | undefined | null,
                     bsKBCategories : bsKBCategory[] | undefined | null,
-                    bsKBs : bsKB[] | undefined | null
+                    bsKBs : bsKB[] | undefined | null,
+                    bsManagers : bsManager[] | undefined | null,
+                    bsPriorities : bsPriority[] | undefined | null,
+                    bsStatuses : bsStatus[] | undefined | null,
+                    bsTaskCategories : bsTaskCategory[] | undefined | null
   ){
     this.id = id;
     this.name = name;
@@ -86,6 +102,10 @@ export class Business{
     this.bsInvoices = bsInvoices;
     this.bsKBCategories = bsKBCategories;
     this.bsKBs = bsKBs;
+    this.bsManagers = bsManagers;
+    this.bsPriorities = bsPriorities;
+    this.bsStatuses = bsStatuses;
+    this.bsTaskCategories = bsTaskCategories;
   }
 
   static builder () : Business{
@@ -179,6 +199,26 @@ export class Business{
 
   public setBsKBs(bsKBs: bsKB[]) : Business{
     this.bsKBs = bsKBs;
+    return this;
+  }
+
+  public setBsManagers(bsManagers: bsManager[]) : Business{
+    this.bsManagers = bsManagers;
+    return this;
+  }
+
+  public setBsPriorities(bsPriorities: bsPriority[]) : Business{
+    this.bsPriorities = bsPriorities;
+    return this;
+  }
+
+  public setBsStatuses(bsStatuses : bsStatus[]) : Business{
+    this.bsStatuses = bsStatuses;
+    return this;
+  }
+
+  public setBsTaskCategories(bsTaskCategories : bsTaskCategory[]) : Business{
+    this.bsTaskCategories = bsTaskCategories;
     return this;
   }
 
