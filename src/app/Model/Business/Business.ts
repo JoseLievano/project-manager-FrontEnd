@@ -13,6 +13,8 @@ import {bsManager} from "./bsManager";
 import {bsPriority} from "./bsPriority";
 import {bsStatus} from "./bsStatus";
 import {bsTaskCategory} from "./bsTaskCategory";
+import {bsType} from "./bsType";
+import {bsProject} from "../Project/bsProject";
 
 export class Business{
 
@@ -60,6 +62,10 @@ export class Business{
 
   public bsTaskCategories : bsTaskCategory[] | undefined | null;
 
+  public bsTypes : bsType[] | undefined | null;
+
+  public bsProjects : bsProject[] | undefined | null;
+
   public Business (
                     id : Number | undefined | null,
                     name : String | undefined | null,
@@ -82,7 +88,9 @@ export class Business{
                     bsManagers : bsManager[] | undefined | null,
                     bsPriorities : bsPriority[] | undefined | null,
                     bsStatuses : bsStatus[] | undefined | null,
-                    bsTaskCategories : bsTaskCategory[] | undefined | null
+                    bsTaskCategories : bsTaskCategory[] | undefined | null,
+                    bsTypes : bsType[] | undefined | null,
+                    bsProjects : bsProject[] | undefined | null
   ){
     this.id = id;
     this.name = name;
@@ -106,6 +114,8 @@ export class Business{
     this.bsPriorities = bsPriorities;
     this.bsStatuses = bsStatuses;
     this.bsTaskCategories = bsTaskCategories;
+    this.bsTypes = bsTypes;
+    this.bsProjects = bsProjects;
   }
 
   static builder () : Business{
@@ -219,6 +229,16 @@ export class Business{
 
   public setBsTaskCategories(bsTaskCategories : bsTaskCategory[]) : Business{
     this.bsTaskCategories = bsTaskCategories;
+    return this;
+  }
+
+  public setBsTypes(types : bsType[]) : Business{
+    this.bsTypes = types;
+    return this;
+  }
+
+  public setBsProjects(projects : bsProject[]) : Business{
+    this.bsProjects = projects;
     return this;
   }
 
