@@ -7,6 +7,8 @@ import {bsDoc} from "./bsDoc";
 import {bsDocsCategory} from "./bsDocsCategory";
 import {bsEmployee} from "./bsEmployee";
 import {bsInvoice} from "./bsInvoice";
+import {bsKBCategory} from "./bsKBCategory";
+import {bsKB} from "./bsKB";
 
 export class Business{
 
@@ -42,6 +44,10 @@ export class Business{
 
   public bsInvoices : bsInvoice[] | undefined | null;
 
+  public bsKBCategories : bsKBCategory[] | undefined | null;
+
+  public bsKBs : bsKB[] | undefined | null;
+
   public Business (
                     id : Number | undefined | null,
                     name : String | undefined | null,
@@ -58,7 +64,9 @@ export class Business{
                     bsDocs : bsDoc[] | undefined | null,
                     bsDocsCategories : bsDocsCategory[] | undefined | null,
                     bsEmployees : bsEmployee[] | undefined | null,
-                    bsInvoices : bsInvoice[] | undefined | null
+                    bsInvoices : bsInvoice[] | undefined | null,
+                    bsKBCategories : bsKBCategory[] | undefined | null,
+                    bsKBs : bsKB[] | undefined | null
   ){
     this.id = id;
     this.name = name;
@@ -76,6 +84,8 @@ export class Business{
     this.bsDocsCategories = bsDocsCategories;
     this.bsEmployees = bsEmployees;
     this.bsInvoices = bsInvoices;
+    this.bsKBCategories = bsKBCategories;
+    this.bsKBs = bsKBs;
   }
 
   static builder () : Business{
@@ -159,6 +169,16 @@ export class Business{
 
   public setBsInvoices(bsInvoices: bsInvoice[]) : Business{
     this.bsInvoices = bsInvoices;
+    return this;
+  }
+
+  public setBsKBCategories(bsKBCategories: bsKBCategory[]) : Business{
+    this.bsKBCategories = bsKBCategories;
+    return this;
+  }
+
+  public setBsKBs(bsKBs: bsKB[]) : Business{
+    this.bsKBs = bsKBs;
     return this;
   }
 
