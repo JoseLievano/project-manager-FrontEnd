@@ -2,6 +2,10 @@ import {Business} from "../Business/Business";
 import {bsClient} from "../Business/bsClient";
 import {bsInvoice} from "../Business/bsInvoice";
 import {bsPrChannel} from "./bsPrChannel";
+import {bsPrDocsCategory} from "./bsPrDocsCategory";
+import {bsPrDocs} from "./bsPrDocs";
+import {bsPrKBCategory} from "./bsPrKBCategory";
+import {bsPrKB} from "./bsPrKB";
 
 export class bsProject{
 
@@ -23,6 +27,14 @@ export class bsProject{
 
   public channels : bsPrChannel[] | undefined | null;
 
+  public docsCategories : bsPrDocsCategory[] | undefined | null;
+
+  public docs : bsPrDocs[] | undefined | null;
+
+  public kbCategories : bsPrKBCategory[] | undefined | null;
+
+  public kbs : bsPrKB[] | undefined | null;
+
   public bsProject(
                     id: Number | undefined | null,
                     name: String | undefined | null,
@@ -32,7 +44,11 @@ export class bsProject{
                     business : Business | undefined | null,
                     client : bsClient | undefined | null,
                     invoices : bsInvoice[] | undefined | null,
-                    channels : bsPrChannel[] | undefined | null
+                    channels : bsPrChannel[] | undefined | null,
+                    docsCategories : bsPrDocsCategory[] | undefined | null,
+                    docs : bsPrDocs[] | undefined | null,
+                    kbCategories : bsPrKBCategory[] | undefined | null,
+                    kbs : bsPrKB[] | undefined | null
   ){
     this.id = id;
     this.name = name;
@@ -43,6 +59,10 @@ export class bsProject{
     this.client = client;
     this.invoices = invoices;
     this.channels = channels;
+    this.docsCategories = docsCategories;
+    this.docs = docs;
+    this.kbCategories = kbCategories;
+    this.kbs = kbs;
   }
 
   static builder() : bsProject{
@@ -91,6 +111,26 @@ export class bsProject{
 
   public setChannels(channels : bsPrChannel[]) : bsProject{
     this.channels = channels;
+    return this;
+  }
+
+  public setDocsCategories (docsCategories : bsPrDocsCategory[]) : bsProject{
+    this.docsCategories = docsCategories;
+    return this;
+  }
+
+  public setDocs (docs : bsPrDocs[]) : bsProject{
+    this.docs = docs;
+    return this;
+  }
+
+  public setKbCategories(kbCategories : bsPrKBCategory[]) : bsProject{
+    this.kbCategories = kbCategories;
+    return this;
+  }
+
+  public setKBs(kbs : bsPrKB[]) : bsProject{
+    this.kbs = kbs
     return this;
   }
 
