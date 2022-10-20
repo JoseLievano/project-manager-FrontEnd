@@ -1,6 +1,7 @@
 import {User} from "../Shared/User";
 import {bsPrChannel} from "./bsPrChannel";
 import {bsProject} from "./bsProject";
+import {bsPrMention} from "./bsPrMention";
 
 export class bsPrComment{
 
@@ -16,13 +17,16 @@ export class bsPrComment{
 
   public project : bsProject | undefined | null;
 
+  public mentions : bsPrMention[] | undefined | null;
+
   public bsPrComment(
                       id : Number | undefined | null,
                       commentContent : String | undefined | null,
                       commentDate : Date | undefined | null,
                       author : User | undefined | null,
                       channel : bsPrChannel | undefined | null,
-                      project : bsProject | undefined | null
+                      project : bsProject | undefined | null,
+                      mentions : bsPrMention[] | undefined | null
   ){
     this.id = id;
     this.commentContent = commentContent;
@@ -30,6 +34,7 @@ export class bsPrComment{
     this.author = author;
     this.channel = channel;
     this.project = project;
+    this.mentions = mentions;
   }
 
   static builder() : bsPrComment{
@@ -58,6 +63,11 @@ export class bsPrComment{
 
   public setChannel(channel : bsPrChannel) : bsPrComment{
     this.channel = channel;
+    return this;
+  }
+
+  public setMentions(mentions : bsPrMention[]) : bsPrComment{
+    this.mentions = mentions;
     return this;
   }
 
