@@ -15,6 +15,7 @@ import {bsStatus} from "./bsStatus";
 import {bsTaskCategory} from "./bsTaskCategory";
 import {bsType} from "./bsType";
 import {bsProject} from "../Project/bsProject";
+import {bsPrTask} from "../Project/bsPrTask";
 
 export class Business{
 
@@ -66,6 +67,8 @@ export class Business{
 
   public bsProjects : bsProject[] | undefined | null;
 
+  public bsPrTasks : bsPrTask[] | undefined | null;
+
   public Business (
                     id : Number | undefined | null,
                     name : String | undefined | null,
@@ -90,7 +93,8 @@ export class Business{
                     bsStatuses : bsStatus[] | undefined | null,
                     bsTaskCategories : bsTaskCategory[] | undefined | null,
                     bsTypes : bsType[] | undefined | null,
-                    bsProjects : bsProject[] | undefined | null
+                    bsProjects : bsProject[] | undefined | null,
+                    bsPrTasks : bsPrTask[] | undefined | null
   ){
     this.id = id;
     this.name = name;
@@ -116,6 +120,7 @@ export class Business{
     this.bsTaskCategories = bsTaskCategories;
     this.bsTypes = bsTypes;
     this.bsProjects = bsProjects;
+    this.bsPrTasks = bsPrTasks;
   }
 
   static builder () : Business{
@@ -239,6 +244,11 @@ export class Business{
 
   public setBsProjects(projects : bsProject[]) : Business{
     this.bsProjects = projects;
+    return this;
+  }
+
+  public setBsPrTasks(tasks : bsPrTask[]) : Business{
+    this.bsPrTasks = tasks;
     return this;
   }
 

@@ -1,4 +1,5 @@
 import {Business} from "./Business";
+import {bsPrTask} from "../Project/bsPrTask";
 
 export class bsTaskCategory{
 
@@ -8,14 +9,18 @@ export class bsTaskCategory{
 
   public business : Business | undefined | null;
 
+  public tasks : bsPrTask[] | undefined | null;
+
   public bsTaskCategory(
                         id : Number | undefined | null,
                         name : String | undefined | null,
-                        business : Business | undefined | null
+                        business : Business | undefined | null,
+                        tasks : bsPrTask[] | undefined | null
   ){
     this.id = id;
     this.name = name;
     this.business = business;
+    this.tasks = tasks;
   }
 
   static builder() : bsTaskCategory{
@@ -34,6 +39,11 @@ export class bsTaskCategory{
 
   public setBusiness(business : Business) : bsTaskCategory{
     this.business = business;
+    return this;
+  }
+
+  public setTasks(tasks : bsPrTask[]) : bsTaskCategory{
+    this.tasks = tasks;
     return this;
   }
 

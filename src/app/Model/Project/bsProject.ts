@@ -6,6 +6,7 @@ import {bsPrDocsCategory} from "./bsPrDocsCategory";
 import {bsPrDocs} from "./bsPrDocs";
 import {bsPrKBCategory} from "./bsPrKBCategory";
 import {bsPrKB} from "./bsPrKB";
+import {bsPrTask} from "./bsPrTask";
 
 export class bsProject{
 
@@ -35,6 +36,8 @@ export class bsProject{
 
   public kbs : bsPrKB[] | undefined | null;
 
+  public tasks : bsPrTask[] | undefined | null;
+
   public bsProject(
                     id: Number | undefined | null,
                     name: String | undefined | null,
@@ -48,7 +51,8 @@ export class bsProject{
                     docsCategories : bsPrDocsCategory[] | undefined | null,
                     docs : bsPrDocs[] | undefined | null,
                     kbCategories : bsPrKBCategory[] | undefined | null,
-                    kbs : bsPrKB[] | undefined | null
+                    kbs : bsPrKB[] | undefined | null,
+                    tasks : bsPrTask[] | undefined | null
   ){
     this.id = id;
     this.name = name;
@@ -63,6 +67,7 @@ export class bsProject{
     this.docs = docs;
     this.kbCategories = kbCategories;
     this.kbs = kbs;
+    this.tasks = tasks;
   }
 
   static builder() : bsProject{
@@ -131,6 +136,11 @@ export class bsProject{
 
   public setKBs(kbs : bsPrKB[]) : bsProject{
     this.kbs = kbs
+    return this;
+  }
+
+  public setTasks(tasks : bsPrTask[]) : bsProject{
+    this.tasks = tasks;
     return this;
   }
 

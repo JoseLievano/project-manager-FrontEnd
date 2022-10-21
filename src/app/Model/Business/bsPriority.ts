@@ -1,4 +1,5 @@
 import {Business} from "./Business";
+import {bsPrTask} from "../Project/bsPrTask";
 
 export class bsPriority{
 
@@ -10,16 +11,20 @@ export class bsPriority{
 
   public business : Business | undefined | null;
 
+  public tasks : bsPrTask[] | undefined | null;
+
   public bsPriority (
                       id : Number | undefined | null,
                       name : String | undefined | null,
                       priorityOrder : Number | undefined | null,
-                      business : Business | undefined | null
+                      business : Business | undefined | null,
+                      tasks : bsPrTask[] | undefined | null
   ){
     this.id = id;
     this.name = name;
     this.priorityOrder = priorityOrder;
     this.business = business;
+    this.tasks = tasks;
   }
 
   static builder() : bsPriority{
@@ -43,6 +48,11 @@ export class bsPriority{
 
   public setBusiness(business: Business) : bsPriority{
     this.business = business;
+    return this;
+  }
+
+  public setTasks(tasks : bsPrTask[]) : bsPriority{
+    this.tasks = tasks;
     return this;
   }
 
