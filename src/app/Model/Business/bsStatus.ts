@@ -1,4 +1,5 @@
 import {Business} from "./Business";
+import {bsPrTask} from "../Project/bsPrTask";
 
 export class bsStatus{
 
@@ -10,16 +11,20 @@ export class bsStatus{
 
   public business : Business | undefined | null;
 
+  public tasks : bsPrTask[] | undefined | null;
+
   public bsStatus(
                   id : Number | undefined | null,
                   name : String | undefined | null,
                   color : String | undefined | null,
-                  business : Business | undefined | null
+                  business : Business | undefined | null,
+                  tasks : bsPrTask[] | undefined | null
   ){
     this.id = id;
     this.name = name;
     this.color = color;
     this.business = business;
+    this.tasks = tasks;
   }
 
   static builder() : bsStatus{
@@ -43,6 +48,11 @@ export class bsStatus{
 
   public setBusiness(business: Business) : bsStatus{
     this.business = business;
+    return this;
+  }
+
+  public setTasks(tasks : bsPrTask[]) : bsStatus{
+    this.tasks = tasks;
     return this;
   }
 

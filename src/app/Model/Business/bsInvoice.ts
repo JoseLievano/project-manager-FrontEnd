@@ -1,5 +1,6 @@
 import {bsClient} from "./bsClient";
 import {Business} from "./Business";
+import {bsPrTask} from "../Project/bsPrTask";
 
 export class bsInvoice{
 
@@ -21,6 +22,8 @@ export class bsInvoice{
 
   public business : Business | undefined | null;
 
+  public task : bsPrTask[] | undefined | null;
+
   public bsInvoice(
                     id : Number | undefined | null,
                     dateGenerated : Date | undefined | null,
@@ -30,7 +33,8 @@ export class bsInvoice{
                     isOverDue : Boolean | undefined | null,
                     number : String | undefined | null,
                     client : bsClient | undefined | null,
-                    business : Business | undefined | null
+                    business : Business | undefined | null,
+                    task : bsPrTask[] | undefined | null
   ){
     this.id = id;
     this.dateGenerated = dateGenerated;
@@ -41,6 +45,7 @@ export class bsInvoice{
     this.number = number;
     this.client = client;
     this.business = business;
+    this.task = task;
   }
 
   static builder() : bsInvoice{
@@ -89,6 +94,11 @@ export class bsInvoice{
 
   public setBusiness (business : Business) : bsInvoice{
     this.business = business;
+    return this;
+  }
+
+  public setTask (task : bsPrTask[]) : bsInvoice{
+    this.task = task;
     return this;
   }
 
