@@ -36,4 +36,28 @@ export class bsPrMention{
     return this;
   }
 
+  public setMentionDate(mentionDate : Date) : bsPrMention{
+    this.mentionDate = mentionDate;
+    return this;
+  }
+
+  public setComment(comment : bsPrComment) : bsPrMention{
+    this.comment = comment;
+    return this;
+  }
+
+  public setAuthor(author : User) : bsPrMention{
+    this.author = author;
+    return this;
+  }
+
+  public setMentionedUser(mentionedUser : User) : bsPrMention{
+    this.mentionedUser = mentionedUser;
+    return this;
+  }
+
+  public build() : bsPrMention{
+    return this;
+  }
+
 }
