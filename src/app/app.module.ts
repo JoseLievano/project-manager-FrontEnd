@@ -5,12 +5,13 @@ import {AppRoutingModule} from "./app-routing.module";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {HTTP_INTERCEPTORS, HttpClientModule, HttpClientXsrfModule} from "@angular/common/http";
 import {JWTInterceptorInterceptor} from "./Interceptor/jwtinterceptor.interceptor";
-import {BusinessRoutingModule} from "./Components/Business/business-routing.module";
+import {BusinessModule} from "./Components/Business/business.module";
+import {HQModule} from "./Components/HQ/hq.module";
 
 
 @NgModule({
     declarations: [
-        AppComponent,
+        AppComponent
     ],
     imports: [
         BrowserModule,
@@ -19,7 +20,8 @@ import {BusinessRoutingModule} from "./Components/Business/business-routing.modu
         AppRoutingModule,
         HttpClientModule,
         HttpClientXsrfModule,
-        BusinessRoutingModule
+        BusinessModule,
+        HQModule
     ],
     providers: [{
         provide: HTTP_INTERCEPTORS,

@@ -15,4 +15,4 @@ import {SharedComponentsModule} from "../Shared/shared-components.module";
   exports: []
 })
 
-export class BusinessRoutingModule{}
+export class BusinessModule {}

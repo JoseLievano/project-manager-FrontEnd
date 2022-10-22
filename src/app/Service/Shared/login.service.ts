@@ -27,9 +27,10 @@ export class LoginService {
           // @ts-ignore
           role = this.actualUser.roles[0];
 
-          // @ts-ignore
-          if (this.actualUser.roles[0] === "ROLE_BS_CLIENT"){
+          if (role === "ROLE_BS_CLIENT"){
             this.router.navigate(["dashboard/business_client"]);
+          }else if(role === "ROLE_CLIENT"){
+            this.router.navigate(["dashboard/client"]);
           }
         }
       }
