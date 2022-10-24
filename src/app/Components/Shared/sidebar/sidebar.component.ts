@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {SidebarMenuService} from "../../../Service/Shared/sidebar-menu.service";
 import {SidebarMenuElement} from "../../../Model/Shared/SidebarMenuElement";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-sidebar',
@@ -15,7 +16,7 @@ export class SidebarComponent implements OnInit {
 
   public sideBarElements : [SidebarMenuElement];
 
-  constructor(private sidebarOptions : SidebarMenuService) {
+  constructor(private sidebarOptions : SidebarMenuService, private router : Router) {
 
     // @ts-ignore
     this.sideBarElements = this.sidebarOptions.getSidebarMenuElements();
@@ -29,9 +30,11 @@ export class SidebarComponent implements OnInit {
 
   }
 
-  setActive(menu : String){
+  setActive(menu : String, path : String){
     this.activeMenu = menu;
+    console.log(path);
     this.submenuToggle(menu);
+    this.router.navigate([path]);
   }
 
   getActiveMenu(){

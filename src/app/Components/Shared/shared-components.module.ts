@@ -5,6 +5,7 @@ import { SidebarComponent } from './sidebar/sidebar.component';
 import { TopBarComponent } from './top-bar/top-bar.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import {RouterOutlet} from "@angular/router";
+import {ModelComponentModule} from "./ModelComponents/model-component.module";
 
 
 
@@ -17,12 +18,14 @@ import {RouterOutlet} from "@angular/router";
   ],
   imports: [
     CommonModule,
-    RouterOutlet
+    RouterOutlet,
+    ModelComponentModule
   ],
   exports: [
     TopBarComponent,
     ThemeSelectorComponent,
-    SidebarComponent
+    SidebarComponent,
+    ModelComponentModule
   ]
 })
 export class SharedComponentsModule { }

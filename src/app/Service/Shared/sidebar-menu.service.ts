@@ -16,6 +16,10 @@ export class SidebarMenuService {
   // @ts-ignore
   // @ts-ignore
   private menuObjects  = {
+    ROLE_CLIENT : [
+      SidebarMenuElement.builder().setName("Dashboard").setPath("/dashboard/client").setIsSeparator(false).setHasSubmenu(false).setSubmenu([]).build(),
+      SidebarMenuElement.builder().setName("Business").setPath("/dashboard/client/business").setIsSeparator(false).setHasSubmenu(false).setSubmenu([]).build()
+    ],
     ROLE_BS_CLIENT : [
       new SidebarMenuElement("Dashboard", "/dashboard", false, false, []),
       new SidebarMenuElement("Orders", "/orders", false, false, []),
@@ -33,7 +37,6 @@ export class SidebarMenuService {
         SidebarSubMenuElement.builder().setName("submenu3"),
         SidebarSubMenuElement.builder().setName("submenu4").build(),
       ]),
-
     ],
     ROLE_BS_ADMIN : []
   }
@@ -54,12 +57,16 @@ export class SidebarMenuService {
     /*console.log(this.menuObjects.ROLE_BS_CLIENT);*/
     /*return this.menuObjects.ROLE_BS_CLIENT;*/
 
-    console.log("actual user: " + this.loginService.getActualUser().username)
+    // @ts-ignore
+    let role = this.loginService.getActualUser().roles[0];
 
     // @ts-ignore
-    if (this.loginService.getActualUser().roles[0] == "ROLE_BS_CLIENT"){
+    if (role == "ROLE_BS_CLIENT"){
       // @ts-ignore
       return this.menuObjects["ROLE_BS_CLIENT"];
+    }else if (role == "ROLE_CLIENT"){
+      // @ts-ignore
+      return this.menuObjects["ROLE_CLIENT"];
     }
 
     return [{}];
