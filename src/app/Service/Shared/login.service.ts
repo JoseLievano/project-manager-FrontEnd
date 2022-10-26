@@ -27,10 +27,8 @@ export class LoginService {
           // @ts-ignore
           role = this.actualUser.roles[0];
 
-          if (role === "ROLE_BS_CLIENT"){
-            this.router.navigate(["dashboard/business_client"]);
-          }else if(role === "ROLE_CLIENT"){
-            this.router.navigate(["dashboard/client"]);
+          if (role != null){
+            this.router.navigate([""]);
           }
         }
       }
@@ -39,7 +37,7 @@ export class LoginService {
   }
 
   private validateLoginDetails(user: User) {
-    window.sessionStorage.setItem("userdetails",JSON.stringify(user));
+    window.localStorage.setItem("userdetails",JSON.stringify(user));
     return this.http.get(Const.API_URL + Const.LOGIN, { observe: 'response',withCredentials: true });
   }
 
@@ -48,7 +46,10 @@ export class LoginService {
     let token : String | null = response.headers.get('Authorization')
 
     // @ts-ignore
-    window.sessionStorage.setItem("Authorization",token);
+    /*window.sessionStorage.setItem("Authorization",token);*/
+
+    // @ts-ignore
+    window.localStorage.setItem("Authorization",token);
 
     this.actualUser = <any> response.body;
 
@@ -56,22 +57,33 @@ export class LoginService {
     // @ts-ignore
     this.actualUser.role = response.body.roles[0].authority;
 
-    window.sessionStorage.setItem("userdetails",JSON.stringify(this.actualUser));
+    window.localStorage.setItem("userdetails",JSON.stringify(this.actualUser));
   }
 
   getActualUser(){
 
     // @ts-ignore
-    let userdetailsLenght : number | null = window.sessionStorage.getItem("userdetails").length;
+    let userDetailsLength : number | null = window.localStorage.getItem("userdetails").length;
 
-    if (userdetailsLenght != null && userdetailsLenght > 0){
-      this.actualUser = JSON.parse(<string> window.sessionStorage.getItem("userdetails"));
+    if (userDetailsLength != null && userDetailsLength > 0){
+      this.actualUser = JSON.parse(<string> window.localStorage.getItem("userdetails"));
     }else{
       this.router.navigate([""]);
     }
 /*
     console.log("get actual user login service: " + this.actualUser.username)*/
     return this.actualUser;
+  }
+
+  isUserLoggedIn() : boolean{
+    return this.getActualUser() != null;
+  }
+
+  doLogout(){
+    this.actualUser = new User();
+    window.localStorage.removeItem("userdetails");
+    window.localStorage.removeItem("Authorization");
+    this.router.navigate(["login"]);
   }
 
 }

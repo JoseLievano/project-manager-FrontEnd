@@ -23,7 +23,7 @@ export class JWTInterceptorInterceptor implements HttpInterceptor {
     let httpHeaders = new HttpHeaders();
 
     // @ts-ignore
-    this.user = JSON.parse(sessionStorage.getItem('userdetails'));
+    this.user = JSON.parse(localStorage.getItem('userdetails'));
     if (this.user != null && this.user.password != null && this.user.username != null){
 
       let credentials = btoa(this.user.username + ':' + this.user.password);
@@ -36,7 +36,7 @@ export class JWTInterceptorInterceptor implements HttpInterceptor {
 
     console.log("usuario interceptado: " + this.user)
 
-    let authorization = sessionStorage.getItem('Authorization');
+    let authorization = localStorage.getItem('Authorization');
 
     if (authorization != null){
       httpHeaders = httpHeaders.append('Authorization', "Bearer " + authorization);

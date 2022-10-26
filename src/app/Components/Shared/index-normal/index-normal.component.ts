@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-index-normal',
@@ -7,9 +8,20 @@ import { Component, OnInit } from '@angular/core';
 })
 export class IndexNormalComponent implements OnInit {
 
-  constructor() { }
+  constructor(private router : Router) { }
 
   ngOnInit(): void {
+
+  }
+
+  ngDoCheck(){
+
+    let actualURL = this.router.url;
+
+    if(actualURL == "/" || actualURL == ""){
+      this.router.navigate(['dashboard']);
+    }
+
   }
 
 }

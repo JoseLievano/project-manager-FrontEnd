@@ -6,7 +6,8 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {HTTP_INTERCEPTORS, HttpClientModule, HttpClientXsrfModule} from "@angular/common/http";
 import {JWTInterceptorInterceptor} from "./Interceptor/jwtinterceptor.interceptor";
 import {BusinessModule} from "./Components/Business/business.module";
-import {HQModule} from "./Components/HQ/hq.module";
+import {FeaturesModule} from "./Components/Features/features.module";
+import {AuthUserGuard} from "./Guards/auth-user.guard";
 
 
 @NgModule({
@@ -21,13 +22,15 @@ import {HQModule} from "./Components/HQ/hq.module";
         HttpClientModule,
         HttpClientXsrfModule,
         BusinessModule,
-        HQModule
+        FeaturesModule
     ],
-    providers: [{
+    providers: [
+      {
         provide: HTTP_INTERCEPTORS,
         useClass: JWTInterceptorInterceptor,
         multi: true
-    }
+      },
+      AuthUserGuard
     ],
     bootstrap: [AppComponent]
 })

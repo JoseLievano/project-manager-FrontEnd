@@ -5,7 +5,7 @@ import { SidebarComponent } from './sidebar/sidebar.component';
 import { TopBarComponent } from './top-bar/top-bar.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import {RouterOutlet} from "@angular/router";
-import {ModelComponentModule} from "./ModelComponents/model-component.module";
+import { LogoutBtnTopComponent } from './logout-btn-top/logout-btn-top.component';
 
 
 
@@ -14,18 +14,17 @@ import {ModelComponentModule} from "./ModelComponents/model-component.module";
     ThemeSelectorComponent,
     SidebarComponent,
     TopBarComponent,
-    DashboardComponent
+    DashboardComponent,
+    LogoutBtnTopComponent
   ],
   imports: [
     CommonModule,
     RouterOutlet,
-    ModelComponentModule
   ],
   exports: [
     TopBarComponent,
     ThemeSelectorComponent,
     SidebarComponent,
-    ModelComponentModule
   ]
 })
 export class SharedComponentsModule { }

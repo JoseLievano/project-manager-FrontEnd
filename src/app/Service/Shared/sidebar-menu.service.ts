@@ -13,12 +13,15 @@ export class SidebarMenuService {
 
   public actualUser : User;
 
+  private mainMenu : SidebarMenuElement[] = [
+    new SidebarMenuElement("Dashboard", "dashboard", false, false),
+  ]
   // @ts-ignore
   // @ts-ignore
   private menuObjects  = {
     ROLE_CLIENT : [
-      SidebarMenuElement.builder().setName("Dashboard").setPath("/dashboard/client").setIsSeparator(false).setHasSubmenu(false).setSubmenu([]).build(),
-      SidebarMenuElement.builder().setName("Business").setPath("/dashboard/client/business").setIsSeparator(false).setHasSubmenu(false).setSubmenu([]).build()
+      SidebarMenuElement.builder().setName("Dashboard").setPath("/dashboard").setIsSeparator(false).setHasSubmenu(false).setSubmenu([]).build(),
+      SidebarMenuElement.builder().setName("Business").setPath("/business").setIsSeparator(false).setHasSubmenu(false).setSubmenu([]).build()
     ],
     ROLE_BS_CLIENT : [
       new SidebarMenuElement("Dashboard", "/dashboard", false, false, []),

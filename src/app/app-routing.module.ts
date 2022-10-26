@@ -4,21 +4,16 @@ import {IndexNormalComponent} from "./Components/Shared/index-normal/index-norma
 import {LoginComponent} from "./Components/Shared/login/login.component";
 import {ReactiveFormsModule} from "@angular/forms";
 import {DashboardComponent} from "./Components/Shared/dashboard/dashboard.component";
-import {BsClientIndexComponent} from "./Components/Business/bsClient/bs-client-index/bs-client-index.component";
-import {ClientIndexComponent} from "./Components/HQ/Client/client-index/client-index.component";
-import {ClientBusinessComponent} from "./Components/HQ/Client/client-business/client-business.component";
-import {ClientDashboardComponent} from "./Components/HQ/Client/client-dashboard/client-dashboard.component";
+import {BusinessListComponent} from "./Components/Features/HQ/business/business-list/business-list.component";
+import {SharedComponentsModule} from "./Components/Shared/shared-components.module";
+import {AuthUserGuard} from "./Guards/auth-user.guard";
 
 const routes: Routes = [
-  {path: '', component: IndexNormalComponent},
-  {path: 'dashboard', component: DashboardComponent, children: [
-      {path: 'business_client', component: BsClientIndexComponent},
-      {path: 'client', component: ClientIndexComponent, children:[
-          {path: '', component: ClientDashboardComponent},
-          {path: 'business', component: ClientBusinessComponent}
-        ]}
-    ]
-  }
+  {path: '', component: IndexNormalComponent, canActivate: [AuthUserGuard],children: [
+      {path: 'dashboard', component: DashboardComponent},
+      {path: 'business', component: BusinessListComponent}
+  ]},
+  {path: 'login', component: LoginComponent}
 ];
 
 @NgModule({
@@ -26,7 +21,7 @@ const routes: Routes = [
     IndexNormalComponent,
     LoginComponent,
     ],
-  imports: [RouterModule.forRoot(routes), ReactiveFormsModule],
+    imports: [RouterModule.forRoot(routes), ReactiveFormsModule, SharedComponentsModule],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
