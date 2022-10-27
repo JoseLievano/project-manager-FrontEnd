@@ -1,15 +1,17 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {BusinessListComponent} from "./business/business-list/business-list.component";
+import {BusinessComponentsModule} from "./business/business-components.module";
 
 
 
 @NgModule({
-  declarations: [
-    BusinessListComponent
-  ],
+  declarations: [],
   imports: [
-    CommonModule
+    CommonModule,
+    BusinessComponentsModule
+  ],
+  exports: [
+    BusinessComponentsModule
   ]
 })
 export class HqFeaturesModule { }
