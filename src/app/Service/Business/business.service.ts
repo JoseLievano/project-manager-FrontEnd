@@ -17,7 +17,6 @@ export class BusinessService {
 
   getAll() : Observable<Business[]>{
     return this.http.get<Business[]>(Const.API_URL + Const.BUSINESS);
-
   }
 
 }

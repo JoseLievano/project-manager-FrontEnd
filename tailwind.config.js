@@ -52,7 +52,7 @@ module.exports = {
                   'warning': '#facc15',
                   'warning-content': '#4B3A0A',
                   'error': '#A81036',
-                  'error-content': '#380512',
+                  'error-content': '#ecf0f1',
                 }
              },
     ],
