@@ -1,10 +1,12 @@
 export class SidebarSubMenuElement{
   public name : String ;
   public path : String ;
+  public canActiveRoles : String[] = [];
 
-  constructor(name? : String , path? : String){
+  constructor(name? : String , path? : String, canActiveRoles? : String[]){
     this.name = name ?? "";
     this.path = path ??  "";
+    this.canActiveRoles = canActiveRoles ?? [];
   }
 
   static builder() : SidebarSubMenuElement{
@@ -18,6 +20,11 @@ export class SidebarSubMenuElement{
 
   public setPath (path : String) : SidebarSubMenuElement{
     this.path = path;
+    return this;
+  }
+
+  public setCanActiveRoles (canActiveRoles : String[]) : SidebarSubMenuElement{
+    this.canActiveRoles = canActiveRoles;
     return this;
   }
 

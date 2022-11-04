@@ -14,34 +14,36 @@ export class SidebarMenuService {
   public actualUser : User;
 
   private mainMenu : SidebarMenuElement[] = [
-    new SidebarMenuElement("Dashboard", "dashboard", false, false),
+    SidebarMenuElement.builder()
+      .setName("Dashboard")
+      .setPath("dashboard")
+      .setIsSeparator(false)
+      .setHasSubmenu(false)
+      .setCanActiveRoles(["ROLE_CLIENT", "ROLE_ADMIN", "ROLE_EMPLOYEE"]),
+    SidebarMenuElement.builder()
+      .setName("Business")
+      .setPath("business")
+      .setIsSeparator(false)
+      .setHasSubmenu(false)
+      .setCanActiveRoles(["ROLE_CLIENT", "ROLE_ADMIN", "ROLE_EMPLOYEE"]),
   ]
+
+  private businessMenu : SidebarMenuElement[] = [
+    SidebarMenuElement.builder()
+      .setName("Dashboard")
+      .setPath("dashboard")
+      .setIsSeparator(false)
+      .setHasSubmenu(false)
+      .setCanActiveRoles(["ROLE_CLIENT", "ROLE_ADMIN", "ROLE_EMPLOYEE", "ROLE_BS_CLIENT", "ROLE_BS_EMPLOYEE", "ROLE_BS_MANAGER"]),
+  ];
+
   // @ts-ignore
   // @ts-ignore
   private menuObjects  = {
     ROLE_CLIENT : [
       SidebarMenuElement.builder().setName("Dashboard").setPath("/dashboard").setIsSeparator(false).setHasSubmenu(false).setSubmenu([]).build(),
       SidebarMenuElement.builder().setName("Business").setPath("/business").setIsSeparator(false).setHasSubmenu(false).setSubmenu([]).build()
-    ],
-    ROLE_BS_CLIENT : [
-      new SidebarMenuElement("Dashboard", "/dashboard", false, false, []),
-      new SidebarMenuElement("Orders", "/orders", false, false, []),
-      new SidebarMenuElement("Products", "/products", false, false, []),
-      SidebarMenuElement.builder().setName("Settings").setPath("/settings").setIsSeparator(false).setHasSubmenu(false).setSubmenu([]).build(),
-      SidebarMenuElement.builder().setName("subeMenuTest").setPath("/subeMenuTest").setIsSeparator(true).setHasSubmenu(true).setSubmenu([
-          SidebarSubMenuElement.builder().setName("Submenu1").setPath("/bs_client/submenu/submenu1").build(),
-          SidebarSubMenuElement.builder().setName("Submenu2").setPath("/bs_client/submenu/submenu2").build(),
-          SidebarSubMenuElement.builder().setName("submenu3"),
-          SidebarSubMenuElement.builder().setName("submenu4").build(),
-        ]).build(),
-      new SidebarMenuElement("SubMenuTest", "/bs_client/submenu", false, true, [
-        SidebarSubMenuElement.builder().setName("Submenu1").setPath("/bs_client/submenu/submenu1").build(),
-        SidebarSubMenuElement.builder().setName("Submenu2").setPath("/bs_client/submenu/submenu2").build(),
-        SidebarSubMenuElement.builder().setName("submenu3"),
-        SidebarSubMenuElement.builder().setName("submenu4").build(),
-      ]),
-    ],
-    ROLE_BS_ADMIN : []
+    ]
   }
 
   constructor(private loginService : LoginService) {
@@ -66,10 +68,10 @@ export class SidebarMenuService {
     // @ts-ignore
     if (role == "ROLE_BS_CLIENT"){
       // @ts-ignore
-      return this.menuObjects["ROLE_BS_CLIENT"];
+      return this.businessMenu;
     }else if (role == "ROLE_CLIENT"){
       // @ts-ignore
-      return this.menuObjects["ROLE_CLIENT"];
+      return this.mainMenu;
     }
 
     return [{}];

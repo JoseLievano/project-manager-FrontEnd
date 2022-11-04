@@ -6,13 +6,20 @@ export class SidebarMenuElement{
   public path : String ;
   public isSeparator : Boolean ;
   public hasSubmenu : Boolean ;
+  public canActiveRoles : String[] = [];
   public submenu : SidebarSubMenuElement[] ;
 
-  constructor (name? : String, path? : String, isSeparator? : Boolean, hasSubmenu? : Boolean, submenu? : SidebarSubMenuElement[]){
+  constructor (name? : String,
+               path? : String,
+               isSeparator? : Boolean,
+               hasSubmenu? : Boolean,
+               canActiveRoles? : String[],
+               submenu? : SidebarSubMenuElement[]){
     this.name = name ?? "";
     this.path = path ?? "";
     this.isSeparator = isSeparator ?? false;
     this.hasSubmenu = hasSubmenu ?? false;
+    this.canActiveRoles = canActiveRoles ?? [];
     this.submenu = submenu ?? [];
   }
 
@@ -37,6 +44,11 @@ export class SidebarMenuElement{
 
   public setHasSubmenu (hasSubmenu : Boolean) : SidebarMenuElement{
     this.hasSubmenu = hasSubmenu;
+    return this;
+  }
+
+  public setCanActiveRoles (canActiveRoles : String[]) : SidebarMenuElement{
+    this.canActiveRoles = canActiveRoles;
     return this;
   }
 
