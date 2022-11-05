@@ -10,7 +10,7 @@ import {Router} from "@angular/router";
 
 export class LoginService {
 
-  private actualUser : User = new User();
+  private actualUser : User | null;
 
   constructor(private http : HttpClient, private router : Router) { }
 
@@ -62,20 +62,23 @@ export class LoginService {
 
   getActualUser(){
 
-    // @ts-ignore
-    let userDetailsLength : number | null = window.localStorage.getItem("userdetails").length;
+    console.log("get actual user");
+
+    let userDetailsLength : number | null | undefined;
+
+    userDetailsLength = window.localStorage.getItem("userdetails")?.length;
 
     if (userDetailsLength != null && userDetailsLength > 0){
       this.actualUser = JSON.parse(<string> window.localStorage.getItem("userdetails"));
     }else{
-      this.router.navigate([""]);
+      this.actualUser = null;
     }
-/*
-    console.log("get actual user login service: " + this.actualUser.username)*/
+
     return this.actualUser;
   }
 
   isUserLoggedIn() : boolean{
+    console.log("is user logged in");
     return this.getActualUser() != null;
   }
 
