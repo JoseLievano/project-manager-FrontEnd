@@ -11,15 +11,22 @@ export class BusinessListComponent implements OnInit {
 
   private businesses : Business[];
 
-  constructor(private businessService : BusinessService) { }
+  constructor(private businessService : BusinessService) {
+    this.getAll();
+  }
 
   ngOnInit(): void {
   }
 
   getAll() {
     return this.businessService.getAll().subscribe({
-      next : (data) => {this.businesses = data},
+      next : (data) => {
+        this.businesses = data;
+        console.log("get all business");
+        console.log(this.businesses);
+      },
     });
+
   }
 
 }

@@ -35,39 +35,39 @@ export class Business{
 
   public client : Client | undefined | null;
 
-  public invoices : Invoice[] | undefined | null;
-
   public plan : Plan | undefined | null;
-
-  public bsClients : bsClient[] | undefined | null;
 
   public bsGeneralSettings : bsGeneralSettings | undefined | null;
 
-  public bsDocs : bsDoc[] | undefined | null;
+  public invoices : Invoice[] | number | undefined | null;
 
-  public bsDocsCategories : bsDocsCategory[] | undefined | null;
+  public bsClients : bsClient[] | number | undefined | null;
 
-  public bsEmployees : bsEmployee[] | undefined | null;
+  public bsDocs : bsDoc[] | number | undefined | null;
 
-  public bsInvoices : bsInvoice[] | undefined | null;
+  public bsDocsCategories : bsDocsCategory[] | number | undefined | null;
 
-  public bsKBCategories : bsKBCategory[] | undefined | null;
+  public bsEmployees : bsEmployee[] | number | undefined | null;
 
-  public bsKBs : bsKB[] | undefined | null;
+  public bsInvoices : bsInvoice[] | number | undefined | null;
 
-  public bsManagers : bsManager[] | undefined | null;
+  public bsKBCategories : bsKBCategory[] | number | undefined | null;
 
-  public bsPriorities : bsPriority[] | undefined | null;
+  public bsKBs : bsKB[] | number | undefined | null;
 
-  public bsStatuses : bsStatus[] | undefined | null;
+  public bsManagers : bsManager[] | number | undefined | null;
 
-  public bsTaskCategories : bsTaskCategory[] | undefined | null;
+  public bsPriorities : bsPriority[] | number | undefined | null;
 
-  public bsTypes : bsType[] | undefined | null;
+  public bsStatuses : bsStatus[] | number | undefined | null;
 
-  public bsProjects : bsProject[] | undefined | null;
+  public bsTaskCategories : bsTaskCategory[] | number | undefined | null;
 
-  public bsPrTasks : bsPrTask[] | undefined | null;
+  public bsTypes : bsType[] | number | undefined | null;
+
+  public bsProjects : bsProject[] | number | undefined | null;
+
+  public bsPrTasks : bsPrTask[] | number | undefined | null;
 
   public Business (
                     id : Number | undefined | null,
@@ -78,23 +78,23 @@ export class Business{
                     overDue : Boolean | undefined | null,
                     isActive : Boolean | undefined | null,
                     client : Client | undefined | null,
-                    invoices : Invoice[] | undefined | null,
+                    invoices : Invoice[] | number | undefined | null,
                     plan : Plan | undefined | null,
-                    bsClients : bsClient[] | undefined | null,
+                    bsClients : bsClient[] | number | undefined | null,
                     bsGeneralSettings : bsGeneralSettings | undefined | null,
-                    bsDocs : bsDoc[] | undefined | null,
-                    bsDocsCategories : bsDocsCategory[] | undefined | null,
-                    bsEmployees : bsEmployee[] | undefined | null,
-                    bsInvoices : bsInvoice[] | undefined | null,
-                    bsKBCategories : bsKBCategory[] | undefined | null,
-                    bsKBs : bsKB[] | undefined | null,
-                    bsManagers : bsManager[] | undefined | null,
-                    bsPriorities : bsPriority[] | undefined | null,
-                    bsStatuses : bsStatus[] | undefined | null,
-                    bsTaskCategories : bsTaskCategory[] | undefined | null,
-                    bsTypes : bsType[] | undefined | null,
-                    bsProjects : bsProject[] | undefined | null,
-                    bsPrTasks : bsPrTask[] | undefined | null
+                    bsDocs : bsDoc[] | number | undefined | null,
+                    bsDocsCategories : bsDocsCategory[] | number | undefined | null,
+                    bsEmployees : bsEmployee[] | number | undefined | null,
+                    bsInvoices : bsInvoice[] | number | undefined | null,
+                    bsKBCategories : bsKBCategory[] | number | undefined | null,
+                    bsKBs : bsKB[] | number | undefined | null,
+                    bsManagers : bsManager[] | number | undefined | null,
+                    bsPriorities : bsPriority[] | number | undefined | null,
+                    bsStatuses : bsStatus[] | number | undefined | null,
+                    bsTaskCategories : bsTaskCategory[] | number | undefined | null,
+                    bsTypes : bsType[] | number | undefined | null,
+                    bsProjects : bsProject[] | number | undefined | null,
+                    bsPrTasks : bsPrTask[] | number | undefined | null
   ){
     this.id = id;
     this.name = name;
@@ -167,7 +167,7 @@ export class Business{
     return this;
   }
 
-  public setInvoices(invoices: Invoice[]) : Business{
+  public setInvoices(invoices: Invoice[] | number) : Business{
     this.invoices = invoices;
     return this;
   }
@@ -177,7 +177,7 @@ export class Business{
     return this;
   }
 
-  public setBsClients(bsClients: bsClient[]) : Business{
+  public setBsClients(bsClients: bsClient[] | number) : Business{
     this.bsClients = bsClients;
     return this;
   }
@@ -187,67 +187,67 @@ export class Business{
     return this;
   }
 
-  public setBsDocs(bsDocs: bsDoc[]) : Business{
+  public setBsDocs(bsDocs: bsDoc[] | number) : Business{
     this.bsDocs = bsDocs;
     return this;
   }
 
-  public setBsDocsCategories(bsDocsCategories: bsDocsCategory[]) : Business{
+  public setBsDocsCategories(bsDocsCategories: bsDocsCategory[] | number) : Business{
     this.bsDocsCategories = bsDocsCategories;
     return this;
   }
 
-  public setBsEmployees(bsEmployees: bsEmployee[]) : Business{
+  public setBsEmployees(bsEmployees: bsEmployee[] | number) : Business{
     this.bsEmployees = bsEmployees;
     return this;
   }
 
-  public setBsInvoices(bsInvoices: bsInvoice[]) : Business{
+  public setBsInvoices(bsInvoices: bsInvoice[] | number) : Business{
     this.bsInvoices = bsInvoices;
     return this;
   }
 
-  public setBsKBCategories(bsKBCategories: bsKBCategory[]) : Business{
+  public setBsKBCategories(bsKBCategories: bsKBCategory[] | number) : Business{
     this.bsKBCategories = bsKBCategories;
     return this;
   }
 
-  public setBsKBs(bsKBs: bsKB[]) : Business{
+  public setBsKBs(bsKBs: bsKB[] | number) : Business{
     this.bsKBs = bsKBs;
     return this;
   }
 
-  public setBsManagers(bsManagers: bsManager[]) : Business{
+  public setBsManagers(bsManagers: bsManager[] | number) : Business{
     this.bsManagers = bsManagers;
     return this;
   }
 
-  public setBsPriorities(bsPriorities: bsPriority[]) : Business{
+  public setBsPriorities(bsPriorities: bsPriority[] | number) : Business{
     this.bsPriorities = bsPriorities;
     return this;
   }
 
-  public setBsStatuses(bsStatuses : bsStatus[]) : Business{
+  public setBsStatuses(bsStatuses : bsStatus[] | number) : Business{
     this.bsStatuses = bsStatuses;
     return this;
   }
 
-  public setBsTaskCategories(bsTaskCategories : bsTaskCategory[]) : Business{
+  public setBsTaskCategories(bsTaskCategories : bsTaskCategory[] | number) : Business{
     this.bsTaskCategories = bsTaskCategories;
     return this;
   }
 
-  public setBsTypes(types : bsType[]) : Business{
+  public setBsTypes(types : bsType[] | number) : Business{
     this.bsTypes = types;
     return this;
   }
 
-  public setBsProjects(projects : bsProject[]) : Business{
+  public setBsProjects(projects : bsProject[] | number) : Business{
     this.bsProjects = projects;
     return this;
   }
 
-  public setBsPrTasks(tasks : bsPrTask[]) : Business{
+  public setBsPrTasks(tasks : bsPrTask[] | number) : Business{
     this.bsPrTasks = tasks;
     return this;
   }
