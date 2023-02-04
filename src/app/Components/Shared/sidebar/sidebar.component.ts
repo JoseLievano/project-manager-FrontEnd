@@ -54,7 +54,7 @@ export class SidebarComponent implements OnInit {
     return this.actualSubMenu;
   }
 
-  getSidebarToogleStatus(){
+  getSidebarToggleStatus(){
     return this.sidebarOptions.getSidebarIsVisible();
   }
 

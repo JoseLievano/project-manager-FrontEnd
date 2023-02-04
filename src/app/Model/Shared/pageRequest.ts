@@ -6,9 +6,9 @@ export class PageRequest{
 
   public size : number;
 
-  public sort : SortRequest[];
+  public sort : SortRequest[] | null | undefined
 
-  public filter : FilterRequest[];
+  public filter : FilterRequest[] | null | undefined;
 
 }
 

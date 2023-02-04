@@ -15,6 +15,8 @@ export class BusinessService {
 
   constructor(private http : HttpClient) {
     this.url = Const.API_URL + Const.BUSINESS;
+
+    console.log("in the constructor")
   }
 
   getAll() : Observable<Business[]>{
@@ -25,8 +27,15 @@ export class BusinessService {
     return this.http.get<Business[]>(Const.API_URL + Const.BUSINESS + "list");
   }
 
-  getPageListView(pageRequest : object) : Observable<PageableResponse<Business>>{
-    return this.http.post<PageableResponse<Business>>(Const.API_URL + Const.BUSINESS + "page-list-view", pageRequest);
+  getPageListView(pageRequest : PageRequest ) : Observable<PageableResponse<Business>>{
+
+    if (pageRequest.sort == null){
+      pageRequest.sort = [
+        {"property" : "id", "isAscending": true}
+      ];
+    }
+    console.log("modificado servicio business")
+    return this.http.post<PageableResponse<Business>>(this.url + "page-list-view", pageRequest);
   }
 
 
