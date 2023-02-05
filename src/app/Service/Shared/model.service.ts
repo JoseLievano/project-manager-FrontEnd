@@ -5,13 +5,14 @@ import {Const} from "../../Constant/const";
 import {PageRequest} from "../../Model/Shared/pageRequest";
 import {Observable} from "rxjs";
 import {PageableResponse} from "../../Model/Shared/PageableResponse";
+import {ModelClassURLService} from "../../Util/model-class-url.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class ModelService{
 
-  constructor(private http : HttpClient) {
+  constructor(private http : HttpClient, private modelURL : ModelClassURLService) {
 
   }
 
@@ -23,14 +24,7 @@ export class ModelService{
       ];
     }
 
-    let secondPart : String = "";
-
-    if (model instanceof Business){
-      secondPart = Const.BUSINESS;
-      console.log("Is a business")
-    }
-
-    let url : String = Const.API_URL + secondPart;
+    let url : String = Const.API_URL + this.modelURL.getClassURL(model);
 
     return this.http.post<PageableResponse<T>>(url + "page-list-view", pageRequest);
 
