@@ -6,6 +6,7 @@ import { TopBarComponent } from './top-bar/top-bar.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import {RouterOutlet} from "@angular/router";
 import { LogoutBtnTopComponent } from './logout-btn-top/logout-btn-top.component';
+import { TableViewComponent } from './table-view/table-view.component';
 
 
 
@@ -15,7 +16,8 @@ import { LogoutBtnTopComponent } from './logout-btn-top/logout-btn-top.component
     SidebarComponent,
     TopBarComponent,
     DashboardComponent,
-    LogoutBtnTopComponent
+    LogoutBtnTopComponent,
+    TableViewComponent
   ],
   imports: [
     CommonModule,
