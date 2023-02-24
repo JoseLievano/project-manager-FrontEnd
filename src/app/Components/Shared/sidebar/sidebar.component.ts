@@ -32,7 +32,6 @@ export class SidebarComponent implements OnInit {
 
   setActive(menu : String, path : String){
     this.activeMenu = menu;
-    console.log(path);
     this.submenuToggle(menu);
     this.router.navigate([path]);
   }

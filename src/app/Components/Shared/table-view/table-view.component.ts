@@ -46,12 +46,9 @@ export class TableViewComponent<T> implements OnInit {
     this.pageRequest.size = 10;
     this.pageRequest.sort = this.sort;
 
-    console.log("TableViewComponent constructor" + this.modelConst)
-
   }
 
   ngOnInit(): void {
-    console.log("Init TableViewComponent" + this.modelConst);
     this.pageAbleResponse = this.getPageResponse();
   }
 

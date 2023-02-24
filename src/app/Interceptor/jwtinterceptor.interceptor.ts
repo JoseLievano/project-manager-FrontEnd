@@ -31,8 +31,6 @@ export class JWTInterceptorInterceptor implements HttpInterceptor {
 
     }
 
-    console.log("usuario interceptado: " + this.user)
-
     let authorization = localStorage.getItem('Authorization');
 
     if (authorization != null){
