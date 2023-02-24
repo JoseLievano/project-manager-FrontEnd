@@ -46,14 +46,10 @@ export class LoginService {
     let token : String | null = response.headers.get('Authorization')
 
     // @ts-ignore
-    /*window.sessionStorage.setItem("Authorization",token);*/
-
-    // @ts-ignore
     window.localStorage.setItem("Authorization",token);
 
     this.actualUser = <any> response.body;
 
-    /*this.actualUser.authStatus = 'AUTH';*/
     // @ts-ignore
     this.actualUser.role = response.body.roles[0].authority;
 
@@ -61,8 +57,6 @@ export class LoginService {
   }
 
   getActualUser(){
-
-    console.log("get actual user");
 
     let userDetailsLength : number | null | undefined;
 
@@ -78,7 +72,6 @@ export class LoginService {
   }
 
   isUserLoggedIn() : boolean{
-    console.log("is user logged in");
     return this.getActualUser() != null;
   }
 

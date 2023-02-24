@@ -13,15 +13,6 @@ import {bsManager} from "../Model/Business/bsManager";
 })
 export class ModelClassURLService {
 
-  //Map of model = URL
-  private readonly modelURLMap = new Map<String, String>([
-    ["bsClient", Const.bs_CLIENT],
-    ["bsDoc", Const.bs_DOC],
-    ["bsDocsCategory", Const.bs_DOCS_CATEGORY],
-    ["bsEmployee", Const.bs_EMPLOYEE],
-    ["Business", Const.BUSINESS]
-  ]);
-
   constructor() { }
 
   public getClassURL<T> (model : T) : String{
@@ -96,8 +87,6 @@ export class ModelClassURLService {
       }
 
     }
-
-    console.log("seconURLPart " + secondURLPart);
 
     if (!secondURLPart){
       throw new Error("Model class not found");

@@ -34,8 +34,14 @@ export class BusinessService {
         {"property" : "id", "isAscending": true}
       ];
     }
-    console.log("modificado servicio business")
+
     return this.http.post<PageableResponse<Business>>(this.url + "page-list-view", pageRequest);
+  }
+
+  saveInformationInLocalStorage(pageResponse : PageableResponse<Business>) : void{
+    //Check if localStorage already has a business pageResponse
+    let businessPageResponse : PageableResponse<Business> | null = JSON.parse(localStorage.getItem("business") || '{}');
+
   }
 
 

@@ -8,6 +8,7 @@ import {PageRequest} from "../../../../../Model/Shared/pageRequest";
 import {PageableResponse} from "../../../../../Model/Shared/PageableResponse";
 import {LoginService} from "../../../../../Service/Shared/login.service";
 import {ModelService} from "../../../../../Service/Shared/model.service";
+import {Const} from "../../../../../Constant/const";
 
 @Component({
   selector: 'app-business-list',
@@ -16,6 +17,9 @@ import {ModelService} from "../../../../../Service/Shared/model.service";
 })
 export class BusinessListComponent implements OnInit {
 
+  public model : Business = new Business();
+
+  public modelConst : String = "/business/";
   private businesses : Business[];
 
   private sort : SortRequest[];
@@ -35,10 +39,8 @@ export class BusinessListComponent implements OnInit {
     let userId : Number | null | undefined = loginService.getActualUser()?.id;
 
     //Check if userId is a number
-
-
     if (typeof userId === 'number'){
-      console.log("userId is a number " + userId);
+
       this.operationRequest = [
         {
           "operator" : "=",
@@ -75,13 +77,12 @@ export class BusinessListComponent implements OnInit {
   }
 
   getAllGeneric(){
-    return this.modelService.getPageListView<Business>(this.pageRequest, new Business()).subscribe({
+    /*return this.modelService.getPageListView<Business>(this.pageRequest, new Business()).subscribe({
       next : (data)=> {
         this.pageableResponse = data;
-        console.log("In the generics this is the response: ")
-        console.log(this.pageableResponse)
+
       }
-    })
+    })*/
   }
 
   getAll() {
@@ -89,9 +90,9 @@ export class BusinessListComponent implements OnInit {
     return this.businessService.getPageListView(this.pageRequest).subscribe({
       next : (data) => {
         this.pageableResponse = data;
-        console.log(this.pageableResponse);
+        /*console.log(this.pageableResponse);*/
         if (this.pageableResponse.content != null){
-          console.log("first Business name " + this.pageableResponse.content[0].name);
+          /*console.log("first Business name " + this.pageableResponse.content[0].name);*/
         }
 
       }

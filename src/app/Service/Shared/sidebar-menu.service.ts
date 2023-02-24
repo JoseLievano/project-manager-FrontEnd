@@ -47,7 +47,7 @@ export class SidebarMenuService {
   }
 
   constructor(private loginService : LoginService) {
-    /*this.actualUser = this.loginService.getActualUser();*/
+
   }
 
   toggleSidebar(){
@@ -59,8 +59,6 @@ export class SidebarMenuService {
   }
 
   getSidebarMenuElements() {
-    /*console.log(this.menuObjects.ROLE_BS_CLIENT);*/
-    /*return this.menuObjects.ROLE_BS_CLIENT;*/
 
     // @ts-ignore
     let role = this.loginService.getActualUser().roles[0];

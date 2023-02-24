@@ -23,10 +23,11 @@ import { TableViewComponent } from './table-view/table-view.component';
     CommonModule,
     RouterOutlet,
   ],
-  exports: [
-    TopBarComponent,
-    ThemeSelectorComponent,
-    SidebarComponent,
-  ]
+    exports: [
+        TopBarComponent,
+        ThemeSelectorComponent,
+        SidebarComponent,
+        TableViewComponent,
+    ]
 })
 export class SharedComponentsModule { }

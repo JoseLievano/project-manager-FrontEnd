@@ -18,8 +18,6 @@ export class JWTInterceptorInterceptor implements HttpInterceptor {
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
 
-    console.log("interceptando")
-
     let httpHeaders = new HttpHeaders();
 
     // @ts-ignore
@@ -28,7 +26,6 @@ export class JWTInterceptorInterceptor implements HttpInterceptor {
 
       let credentials = btoa(this.user.username + ':' + this.user.password);
 
-      console.log("encoded data: "+ credentials)
 
       httpHeaders = httpHeaders.append('Authorization', 'Basic ' + credentials);
 
