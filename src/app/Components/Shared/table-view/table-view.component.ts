@@ -27,10 +27,17 @@ export class TableViewComponent<T> implements OnInit {
 
   public pageAbleResponse : PageableResponse<T>;
 
-  public modelsArray : T[] | null | undefined;
+  public modelsArray: { [key: string]: any }[] | null | undefined;
+
+  public modelsTransformed : { [key: string]: any }[];
 
   public modelKeys : string[];
 
+  public objeto = {
+    field1: 1,
+    field2: 2,
+    field3: 3
+  };
   constructor(
     private loginService : LoginService,
     private modelService : ModelService
@@ -59,14 +66,55 @@ export class TableViewComponent<T> implements OnInit {
     this.modelService.getPageListView<T>(this.pageRequest, this.modelConst).subscribe({
       next : (response) => {
         data = response;
-        this.modelsArray = data.content;
-        console.log(this.modelsArray);
+        // @ts-ignore
+        this.modifyModels(data.content);
         // @ts-ignore
         this.modelKeys = Object.keys(this.modelsArray[0]);
       }
     });
 
     return data;
+  }
+
+  private modifyModels( data : { [key: string]: any }[] ){
+
+    this.modelsArray = data;
+    // @ts-ignore
+    this.modelsTransformed = JSON.parse(JSON.stringify(data));
+
+    this.modelsTransformed.forEach((model) => {
+
+      let modelTomodify = model;
+
+      for (let key in modelTomodify) {
+
+        let insideValue = modelTomodify[key];
+
+        if (key === "invoices"){
+          console.log(insideValue);
+        }
+
+        if (insideValue != null && typeof insideValue === "object"){
+
+          // @ts-ignore
+          if (insideValue.hasOwnProperty("name")){
+            // @ts-ignore
+            modelTomodify[key] = insideValue.name;
+          }// @ts-ignore
+          else if (insideValue.hasOwnProperty("firstName")){
+            // @ts-ignore
+            modelTomodify[key] = insideValue.firstName;
+          }
+        }
+
+      }
+    });
+    console.log("Model transformed")
+    console.log(this.modelsTransformed)
+
+    console.log("Normal model")
+    console.log(this.modelsArray)
+
   }
 
 }

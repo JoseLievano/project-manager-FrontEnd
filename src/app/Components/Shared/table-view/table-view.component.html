@@ -1,2 +1,36 @@
-<p *ngFor="let key of modelKeys">{{key.toUpperCase()}}</p>
-<p>{{modelConst}}</p>
+<!--<table class="table-fixed table-zebra min-w-full text-primary-content">
+  <thead class="bg-base-100">
+    <tr>
+      <td class="px-6 py-4 text-left">Name</td>
+      <td class="px-6 py-4 text-left">plan</td>
+      <td class="px-6 py-4 text-left">Projects</td>
+      <td class="px-6 py-4 text-left">Pending Tasks</td>
+      <td class="px-6 py-4 text-left">Actions</td>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="px-6 py-4 text-left">John Doe</td>
+      <td class="px-6 py-4 text-left">Free</td>
+      <td class="px-6 py-4 text-left">1</td>
+      <td class="px-6 py-4 text-left">2</td>
+      <td class="px-6 py-4 flex flex-row items-center gap-4 content-center">
+        <button class="btn btn-secondary btn-sm">Load</button>
+        <button class="btn btn-primary btn-sm">Edit</button>
+        <button class="btn btn-error btn-sm">Delete</button>
+      </td>
+    </tr>
+  </tbody>
+</table>-->
+
+<table class="table-fixed table-zebra min-w-full text-primary-content">
+  <thead class="bg-base-100">
+    <tr>
+      <td *ngFor="let key of modelKeys" class="px-6 py-4 text-left">{{key}}</td>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let actualModel of modelsTransformed">
+      <td *ngFor="let key of modelKeys" class="px-6 py-4 text-left">{{actualModel[key]}}</td>
+    </tr>
+</table>
