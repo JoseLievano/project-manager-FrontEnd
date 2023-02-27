@@ -23,14 +23,18 @@
   </tbody>
 </table>-->
 
+<div>
+
+</div>
+
 <table class="table-fixed table-zebra min-w-full text-primary-content">
   <thead class="bg-base-100">
     <tr>
-      <td *ngFor="let key of modelKeys" class="px-6 py-4 text-left">{{key}}</td>
+      <td *ngFor="let key of modelKeysTransformed" class="px-6 py-4 text-left">{{key}}</td>
     </tr>
   </thead>
   <tbody>
     <tr *ngFor="let actualModel of modelsTransformed">
-      <td *ngFor="let key of modelKeys" class="px-6 py-4 text-left">{{actualModel[key]}}</td>
+      <td *ngFor="let key of modelKeysTransformed" class="px-6 py-4 text-left">{{actualModel[key]}}</td>
     </tr>
 </table>

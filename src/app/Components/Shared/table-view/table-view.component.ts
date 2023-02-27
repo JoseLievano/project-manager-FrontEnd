@@ -27,17 +27,14 @@ export class TableViewComponent<T> implements OnInit {
 
   public pageAbleResponse : PageableResponse<T>;
 
-  public modelsArray: { [key: string]: any }[] | null | undefined;
+  private modelsArray: { [key: string]: any }[] | null | undefined;
 
   public modelsTransformed : { [key: string]: any }[];
 
   public modelKeys : string[];
 
-  public objeto = {
-    field1: 1,
-    field2: 2,
-    field3: 3
-  };
+  public modelKeysTransformed : string[];
+
   constructor(
     private loginService : LoginService,
     private modelService : ModelService
@@ -67,9 +64,10 @@ export class TableViewComponent<T> implements OnInit {
       next : (response) => {
         data = response;
         // @ts-ignore
-        this.modifyModels(data.content);
+        this.modelKeys = Object.keys(data.content[0]);
+        this.modelKeysTransformed = this.modelKeys.slice();
         // @ts-ignore
-        this.modelKeys = Object.keys(this.modelsArray[0]);
+        this.modifyModels(data.content);
       }
     });
 
@@ -109,6 +107,7 @@ export class TableViewComponent<T> implements OnInit {
 
       }
     });
+
     console.log("Model transformed")
     console.log(this.modelsTransformed)
 
