@@ -108,11 +108,22 @@ export class TableViewComponent<T> implements OnInit {
       }
     });
 
-    console.log("Model transformed")
-    console.log(this.modelsTransformed)
+  }
 
-    console.log("Normal model")
-    console.log(this.modelsArray)
+  public changeKey(keyName : string, e : Event){
+
+    let checked : boolean = (e.target as HTMLInputElement).checked;
+
+    if (checked){
+      let indexKey = this.modelKeysTransformed.indexOf(keyName);
+      if (indexKey < 0){
+        let normalIndexPosition = this.modelKeys.indexOf(keyName);
+        this.modelKeysTransformed.splice(normalIndexPosition, 0, keyName);
+      }
+
+    }else{
+      this.modelKeysTransformed = this.modelKeysTransformed.filter(key => key !== keyName);
+    }
 
   }
 

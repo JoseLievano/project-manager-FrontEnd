@@ -20,6 +20,7 @@ export class BusinessListComponent implements OnInit {
   public model : Business = new Business();
 
   public modelConst : String = "/business/";
+  
   private businesses : Business[];
 
   private sort : SortRequest[];
