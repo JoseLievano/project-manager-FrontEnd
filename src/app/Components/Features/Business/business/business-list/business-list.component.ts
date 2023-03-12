@@ -20,18 +20,6 @@ export class BusinessListComponent implements OnInit {
   public model : Business = new Business();
 
   public modelConst : String = "/business/";
-  
-  private businesses : Business[];
-
-  private sort : SortRequest[];
-
-  private filter : FilterRequest[];
-
-  private operationRequest : OperationRequest[];
-
-  private pageRequest : PageRequest = new PageRequest();
-
-  private pageableResponse : PageableResponse<Business>;
 
   constructor(private businessService : BusinessService,
               private loginService : LoginService,
@@ -39,66 +27,11 @@ export class BusinessListComponent implements OnInit {
 
     let userId : Number | null | undefined = loginService.getActualUser()?.id;
 
-    //Check if userId is a number
-    if (typeof userId === 'number'){
-
-      this.operationRequest = [
-        {
-          "operator" : "=",
-          "value" : userId.toString(),
-          "field" : "id"}
-      ];
-    }else {
-      this.operationRequest = [
-        {
-          "operator" : "=",
-          "value" : "0",
-          "field" : "id"}
-      ];
-    }
-
-    this.filter = [
-      {
-        "field" : "client",
-        "operations" : this.operationRequest
-      }
-    ];
-
-    this.pageRequest.page = 0;
-    this.pageRequest.size = 10;
-    this.pageRequest.sort = this.sort;
-    //this.pageRequest.filter = this.filter;
-    //this.getAll();
-
-    //Checking the new generi model
-    this.getAllGeneric();
   }
 
   ngOnInit(): void {
   }
 
-  getAllGeneric(){
-    /*return this.modelService.getPageListView<Business>(this.pageRequest, new Business()).subscribe({
-      next : (data)=> {
-        this.pageableResponse = data;
 
-      }
-    })*/
-  }
-
-  getAll() {
-
-    return this.businessService.getPageListView(this.pageRequest).subscribe({
-      next : (data) => {
-        this.pageableResponse = data;
-        /*console.log(this.pageableResponse);*/
-        if (this.pageableResponse.content != null){
-          /*console.log("first Business name " + this.pageableResponse.content[0].name);*/
-        }
-
-      }
-    });
-
-  }
 
 }

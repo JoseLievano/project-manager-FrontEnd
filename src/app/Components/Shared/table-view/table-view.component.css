@@ -1,0 +1,17 @@
+.z-top{
+  z-index: 99999 !important;
+}
+
+
+.show-in{
+  transition: all 0.2s ease-in-out;
+}
+
+.show-out > .btn{
+  border-width: 0px !important;
+  padding: 0px !important;
+  background-color: rgba(0,0,0,0);
+  color: rgba(0,0,0,0);
+  border-color: rgba(0,0,0,0);
+  transition: all 0.2s ease-in-out;
+}

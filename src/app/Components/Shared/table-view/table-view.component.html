@@ -1,33 +1,60 @@
 <div class="drawer">
-  <input id="my-drawer" type="checkbox" class="drawer-toggle" />
+  <input id="column-drawer" type="checkbox" class="drawer-toggle" />
   <div class="drawer-content">
-    <!-- Page content here -->
-    <label for="my-drawer" class="btn btn-primary drawer-button">Open drawer</label>
-    <div class="overflow-auto">
-      <table class="table-fixed table-zebra min-w-full text-primary-content">
+    <div id="table_options" class="flex justify-end my-2">
+      <label for="column-drawer" class="btn btn-primary drawer-button">Edit Columns</label>
+    </div>
+    <div id="infoTableModel" class="overflow-auto scrollbar-thin scrollbar-track-base-100 scrollbar-thumb-base-l-300 scrollbar-thumb-rounded-sm scrollbar-track-rounded-sm">
+      <table  class="table-auto min-w-full text-primary-content">
         <thead class="bg-base-100">
-        <tr>
-          <td *ngFor="let key of modelKeysTransformed" class="px-6 py-4 text-left">{{key}}</td>
-        </tr>
+          <tr>
+            <td *ngFor="let key of modelKeysTransformed" (click)="addSortRequest(key)" class="px-6 py-4 text-left cursor-pointer">
+              <span id="row-{{key}}">{{key}}<span *ngIf="checkIfKeyIsBeingSorted(key)==1">⮭</span><span *ngIf="checkIfKeyIsBeingSorted(key)==0"> </span><span *ngIf="checkIfKeyIsBeingSorted(key)==-1">⮯</span></span>
+            </td>
+          </tr>
         </thead>
-        <tbody>
-        <tr *ngFor="let actualModel of modelsTransformed">
-          <td *ngFor="let key of modelKeysTransformed" class="px-6 py-4 text-left">{{actualModel[key]}}</td>
-        </tr>
+        <tbody class="overflow-visible">
+          <tr #refTR *ngFor="let actualModel of modelsTransformed" class="even:bg-base-300 odd:bg-base-200 z-0" (mouseout)="onTRLeave(refActions)"  (mouseover)="this.onTROver( refActions) ">
+            <td *ngFor="let key of modelKeysTransformed" class="px-6 py-4 text-left">{{actualModel[key]}}</td>
+
+            <div class="dropdown dropdown-left fixed my-1 right-10 show-out z-top" #refActions>
+              <label tabindex="0" class="btn m-1">...</label>
+              <ul tabindex="0" (mouseover)="onTROver(refActions)" (mouseout)="onTRLeave(refActions)" class="dropdown-content absolute menu p-2 shadow bg-base rounded-box w-52 z-50">
+                <li><a>{{actualModel["id"]}}</a></li>
+                <li><a>Item 2</a></li>
+              </ul>
+            </div>
+
+          </tr>
+        </tbody>
       </table>
+    </div>
+
+    <!--<button class="btn btn-primary" (click)="checkPageRequest()" >Check PageRequest</button>-->
+    <div class="btn-group flex justify-center my-5">
+      <button
+        class="btn" *ngFor="let page of getPaginationNumbers()"
+        [ngClass]="{'btn-disabled': page.isActualPage}"
+        (click)="setPageNumber(page.page)">
+        <span *ngIf="page.isTopRight">>></span>
+        <span *ngIf="page.isTopLeft"><<</span>
+        <span *ngIf="!page.isTopLeft && !page.isTopRight">{{page.page}}</span>
+      </button>
     </div>
 
   </div>
   <div class="drawer-side">
-    <label for="my-drawer" class="drawer-overlay"></label>
+    <label for="column-drawer" class="drawer-overlay"></label>
     <div class="p-4 w-1/2 bg-base-200">
 
       <div class="flex flex-col">
-        <div class="form-control w-52" *ngFor="let key of modelKeys">
-          <label class="cursor-pointer label">
-            <span class="label-text">{{key}}</span>
-            <input (click)="changeKey(key, $event)" type="checkbox" class="toggle toggle-primary" checked />
-          </label>
+        <div id="keys-toggle-area" class="grid grid-cols-2 gap-x-10 gap-y-2" >
+          <div class="form-control w-full" *ngFor="let key of modelKeys">
+            <label class="cursor-pointer label">
+              <span class="label-text">{{key}}</span>
+              <input (click)="changeKey(key, $event)" type="checkbox" class="toggle toggle-success" checked />
+            </label>
+          </div>
         </div>
       </div>
 

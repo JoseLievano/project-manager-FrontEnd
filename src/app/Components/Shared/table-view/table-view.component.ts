@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, HostListener, Input, OnInit} from '@angular/core';
 import {LoginService} from "../../../Service/Shared/login.service";
 import {ModelService} from "../../../Service/Shared/model.service";
 import {PageableResponse} from "../../../Model/Shared/PageableResponse";
@@ -35,6 +35,10 @@ export class TableViewComponent<T> implements OnInit {
 
   public modelKeysTransformed : string[];
 
+  private firstLoad : boolean = true;
+
+  private windowSize : number;
+
   constructor(
     private loginService : LoginService,
     private modelService : ModelService
@@ -42,36 +46,50 @@ export class TableViewComponent<T> implements OnInit {
 
     //Set default sort
     this.sort = [
-      { property : "id", isAscending : false}
+      { property : "id", isAscending: true}
     ]
 
     //Set default pageRequest
     this.pageRequest.page = 0;
-    this.pageRequest.size = 10;
+    this.pageRequest.size = 5;
     this.pageRequest.sort = this.sort;
 
   }
 
   ngOnInit(): void {
-    this.pageAbleResponse = this.getPageResponse();
+    this.getPageResponse();
   }
 
-  private getPageResponse() : PageableResponse<T>{
+  onTROver( actions : HTMLElement) : void{
+    actions.classList.remove("show-out");
+    actions.classList.add("show-in");
+  }
 
-    let data : PageableResponse<T> = new PageableResponse<T>();
+  onTRLeave(actions : HTMLElement) : void{
+    actions.classList.add("show-out");
+  }
+
+
+  private getPageResponse() {
+
+    let data : PageableResponse<T>;
 
     this.modelService.getPageListView<T>(this.pageRequest, this.modelConst).subscribe({
       next : (response) => {
+        this.pageAbleResponse = response;
         data = response;
         // @ts-ignore
         this.modelKeys = Object.keys(data.content[0]);
-        this.modelKeysTransformed = this.modelKeys.slice();
+        //this.modelKeysTransformed = this.modelKeys.slice();
+        if (this.firstLoad){
+          this.modelKeysTransformed = this.modelKeys.slice();
+          this.firstLoad = false;
+        }
         // @ts-ignore
         this.modifyModels(data.content);
       }
     });
 
-    return data;
   }
 
   private modifyModels( data : { [key: string]: any }[] ){
@@ -125,6 +143,122 @@ export class TableViewComponent<T> implements OnInit {
       this.modelKeysTransformed = this.modelKeysTransformed.filter(key => key !== keyName);
     }
 
+  }
+
+  public checkIfKeyIsBeingSorted(checkingKey : String) : number{
+
+    for (let sortRequest of this.sort){
+      if (sortRequest.property === checkingKey){
+        if (sortRequest.isAscending){
+          return 1;
+        }else {
+          return -1
+        }
+      }
+    }
+    return 0;
+  }
+
+  public addSortRequest(key : string){
+
+    let number = this.checkIfKeyIsBeingSorted(key);
+
+    if (number === 0){
+      this.sort.unshift(
+        { property : key, isAscending: true}
+      )
+    }else if (number === 1){
+      for (let sortRequest of this.sort){
+        if (sortRequest.property === key){
+          sortRequest.isAscending = false;
+        }
+      }
+    }else if (number === -1){
+      for (let i = 0; i < this.sort.length; i++){
+        let actualSort : SortRequest = this.sort[i];
+        if (actualSort.property === key){
+          this.sort.splice(i, 1);
+        }
+      }
+    }
+    this.getPageResponse();
+  }
+
+  public checkPageRequest(){
+    console.log(this.pageRequest);
+    console.log(this.pageAbleResponse);
+  }
+
+  public getPaginationNumbers() : {page: number, isTopLeft : boolean, isTopRight : boolean, isActualPage: boolean}[] {
+
+    let totalPages : number = this.pageAbleResponse.totalPages;
+    let actualPage : number = this.pageAbleResponse.number + 1;
+
+    let newPagination : {page: number, isTopLeft : boolean, isTopRight : boolean, isActualPage: boolean}[] = [];
+
+    //Check if there is just one page
+    if (totalPages == 1){
+      newPagination.push(
+        {page: 1, isTopLeft: false, isTopRight: false, isActualPage: true}
+      )
+      return newPagination;
+    }
+
+    let left : number = actualPage - 2;
+
+    let right : number = actualPage + 2;
+
+    if (left <= 0){
+      left = 1;
+      right = left + 4;
+      if (right > totalPages){
+        right = totalPages;
+      }
+    }
+
+    if (right > totalPages){
+      right = totalPages;
+      left = right - 4;
+      if (left < 1){
+        left = 1;
+      }
+    }
+
+    for (let i = left; i < right+1; i++){
+
+      if (i == actualPage){
+        newPagination.push(
+          {page: i, isTopLeft: false, isTopRight: false, isActualPage: true}
+        )
+      }else {
+        newPagination.push(
+          {page: i, isTopLeft: false, isTopRight: false, isActualPage: false}
+        )
+      }
+
+    }
+
+    //Check if we need to add a top left button
+    if (actualPage > 3){
+      newPagination.unshift(
+        {page: 1, isTopLeft: true, isTopRight: false, isActualPage: false}
+      )
+    }
+
+    //Check if we need to add a top right button
+    let lastNumber = newPagination[newPagination.length-1].page;
+    if (lastNumber < totalPages ) {
+      newPagination.push(
+        {page: totalPages, isTopLeft: false, isTopRight: true, isActualPage: false}
+      )
+    }
+    return newPagination;
+
+  }
+
+  setPageNumber(newPage : number){
+    this.pageRequest.page = newPage - 1;
+    this.getPageResponse();
   }
 
 }

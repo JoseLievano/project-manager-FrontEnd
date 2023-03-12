@@ -25,6 +25,8 @@ export class ModelService{
 
     let url : String = Const.API_URL + modelURL;
 
+    console.log(url + "page-list-view");
+
     return this.http.post<PageableResponse<T>>(url + "page-list-view", pageRequest);
 
   }
