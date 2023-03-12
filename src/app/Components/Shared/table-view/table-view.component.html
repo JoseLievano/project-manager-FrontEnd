@@ -14,7 +14,7 @@
           </tr>
         </thead>
         <tbody class="overflow-visible">
-          <tr #refTR *ngFor="let actualModel of modelsTransformed" class="even:bg-base-300 odd:bg-base-200 z-0" (mouseout)="onTRLeave(refActions)"  (mouseover)="this.onTROver( refActions) ">
+          <tr *ngFor="let actualModel of modelsTransformed" class="even:bg-base-300 odd:bg-base-200 z-0" (mouseout)="onTRLeave(refActions)"  (mouseover)="this.onTROver( refActions) ">
             <td *ngFor="let key of modelKeysTransformed" class="px-6 py-4 text-left">{{actualModel[key]}}</td>
 
             <div class="dropdown dropdown-left fixed my-1 right-10 show-out z-top" #refActions>
