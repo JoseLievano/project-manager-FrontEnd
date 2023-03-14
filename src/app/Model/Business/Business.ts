@@ -16,6 +16,8 @@ import {bsTaskCategory} from "./bsTaskCategory";
 import {bsType} from "./bsType";
 import {bsProject} from "../Project/bsProject";
 import {bsPrTask} from "../Project/bsPrTask";
+import {PageRequest} from "../Shared/pageRequest";
+import {BusinessService} from "../../Service/Business/business.service";
 
 export class Business{
 
@@ -69,6 +71,10 @@ export class Business{
 
   public bsPrTasks : bsPrTask[] | number | undefined | null;
 
+  private static pageRequest : PageRequest;
+
+  public static service : BusinessService;
+
   public Business (
                     id : Number | undefined | null,
                     name : String | undefined | null,
@@ -94,7 +100,8 @@ export class Business{
                     bsTaskCategories : bsTaskCategory[] | number | undefined | null,
                     bsTypes : bsType[] | number | undefined | null,
                     bsProjects : bsProject[] | number | undefined | null,
-                    bsPrTasks : bsPrTask[] | number | undefined | null
+                    bsPrTasks : bsPrTask[] | number | undefined | null,
+                    service : BusinessService
   ){
     this.id = id;
     this.name = name;
