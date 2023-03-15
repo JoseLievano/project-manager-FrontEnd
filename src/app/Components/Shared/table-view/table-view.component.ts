@@ -17,7 +17,9 @@ export class TableViewComponent<T> implements OnInit {
   @Input() model : T;
 
   @Input() modelConst : String;
-  private sort : SortRequest[];
+
+  @Input() modelService : ModelService<T>
+  private sort : SortRequest[] = [];
 
   private filter : FilterRequest[];
 
@@ -41,18 +43,11 @@ export class TableViewComponent<T> implements OnInit {
 
   constructor(
     private loginService : LoginService,
-    private modelService : ModelService
   ) {
-
-    //Set default sort
-    this.sort = [
-      { property : "id", isAscending: true}
-    ]
-
     //Set default pageRequest
     this.pageRequest.page = 0;
     this.pageRequest.size = 5;
-    this.pageRequest.sort = this.sort;
+
 
   }
 
@@ -73,6 +68,9 @@ export class TableViewComponent<T> implements OnInit {
   private getPageResponse() {
 
     let data : PageableResponse<T>;
+    this.pageRequest.sort = this.sort;
+    console.log("getpageresponse");
+    console.log(this.pageRequest)
 
     this.modelService.getPageListView<T>(this.pageRequest, this.modelConst).subscribe({
       next : (response) => {
@@ -164,7 +162,7 @@ export class TableViewComponent<T> implements OnInit {
     let number = this.checkIfKeyIsBeingSorted(key);
 
     if (number === 0){
-      this.sort.unshift(
+      this.sort.push(
         { property : key, isAscending: true}
       )
     }else if (number === 1){
@@ -181,6 +179,10 @@ export class TableViewComponent<T> implements OnInit {
         }
       }
     }
+
+
+    console.log("sort after: ")
+    console.log(this.sort)
     this.getPageResponse();
   }
 
