@@ -6,6 +6,8 @@ import {SortRequest} from "../../../Model/Shared/sortRequest";
 import {FilterRequest} from "../../../Model/Shared/filterRequest";
 import {OperationRequest} from "../../../Model/Shared/operationRequest";
 import {PageRequest} from "../../../Model/Shared/pageRequest";
+import {ActionsButtons} from "../../../Model/Shared/actions-buttons";
+import {User} from "../../../Model/Shared/User";
 
 @Component({
   selector: 'app-table-view',
@@ -27,7 +29,7 @@ export class TableViewComponent<T> implements OnInit {
 
   private pageRequest : PageRequest = new PageRequest();
 
-  public pageAbleResponse : PageableResponse<T>;
+  public pageAbleResponse : PageableResponse<T> = new PageableResponse<T>();
 
   private modelsArray: { [key: string]: any }[] | null | undefined;
 
@@ -41,6 +43,8 @@ export class TableViewComponent<T> implements OnInit {
 
   private windowSize : number;
 
+  public actions : ActionsButtons[] = [];
+
   constructor(
     private loginService : LoginService,
   ) {
@@ -52,7 +56,24 @@ export class TableViewComponent<T> implements OnInit {
   }
 
   ngOnInit(): void {
+
+
+
     this.getPageResponse();
+
+    let actualUSer : User | null = this.loginService.getActualUser() != null ? this.loginService.getActualUser() : null;
+    if (actualUSer != null){
+      for (let i = 0; i < this.modelService.getButtonPermissions().length; i ++){
+        let action = this.modelService.getButtonPermissions()[i];
+        // @ts-ignore
+        if (action.roles.indexOf(actualUSer.roles[0]) >= 0){
+          this.actions.push(action);
+        }
+      }
+    }
+
+    console.log("En el init");
+    console.log(this.actions);
   }
 
   onTROver( actions : HTMLElement) : void{
@@ -74,17 +95,21 @@ export class TableViewComponent<T> implements OnInit {
 
     this.modelService.getPageListView<T>(this.pageRequest, this.modelConst).subscribe({
       next : (response) => {
+        console.log("En la respuesta");
+        console.log(response);
         this.pageAbleResponse = response;
         data = response;
         // @ts-ignore
         this.modelKeys = Object.keys(data.content[0]);
-        //this.modelKeysTransformed = this.modelKeys.slice();
         if (this.firstLoad){
           this.modelKeysTransformed = this.modelKeys.slice();
           this.firstLoad = false;
         }
         // @ts-ignore
         this.modifyModels(data.content);
+      },
+      error : (error) => {
+        console.log(error.getError());
       }
     });
 

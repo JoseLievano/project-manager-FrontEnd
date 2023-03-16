@@ -27,12 +27,6 @@ export class BusinessListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
-    if (this.user != null){
-      // @ts-ignore
-      console.log(this.user.roles[0])
-    }
-
   }
 
 }
