@@ -57,8 +57,6 @@ export class TableViewComponent<T> implements OnInit {
 
   ngOnInit(): void {
 
-
-
     this.getPageResponse();
 
     let actualUSer : User | null = this.loginService.getActualUser() != null ? this.loginService.getActualUser() : null;
@@ -71,9 +69,6 @@ export class TableViewComponent<T> implements OnInit {
         }
       }
     }
-
-    console.log("En el init");
-    console.log(this.actions);
   }
 
   onTROver( actions : HTMLElement) : void{
@@ -90,13 +85,10 @@ export class TableViewComponent<T> implements OnInit {
 
     let data : PageableResponse<T>;
     this.pageRequest.sort = this.sort;
-    console.log("getpageresponse");
     console.log(this.pageRequest)
 
     this.modelService.getPageListView<T>(this.pageRequest, this.modelConst).subscribe({
       next : (response) => {
-        console.log("En la respuesta");
-        console.log(response);
         this.pageAbleResponse = response;
         data = response;
         // @ts-ignore
@@ -109,7 +101,10 @@ export class TableViewComponent<T> implements OnInit {
         this.modifyModels(data.content);
       },
       error : (error) => {
-        console.log(error.getError());
+        console.log("Error from the server");
+        console.log(error.error.message);
+        console.log(error);
+        console.log("Prev")
       }
     });
 

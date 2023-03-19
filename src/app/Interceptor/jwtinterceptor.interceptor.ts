@@ -26,7 +26,6 @@ export class JWTInterceptorInterceptor implements HttpInterceptor {
 
       let credentials = btoa(this.user.username + ':' + this.user.password);
 
-
       httpHeaders = httpHeaders.append('Authorization', 'Basic ' + credentials);
 
     }
