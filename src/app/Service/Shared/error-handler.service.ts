@@ -35,7 +35,7 @@ export class ErrorHandlerService {
 
   private clearUser(){
     console.log("Clearing user data");
-    /*this.loginService.doLogout();*/
+    this.loginService.doLogout();
   }
 
 }
