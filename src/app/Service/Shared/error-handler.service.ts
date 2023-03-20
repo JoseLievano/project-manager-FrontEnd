@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import {Router} from "@angular/router";
 import {LoginService} from "./login.service";
+import {UiMessage} from "../../Model/Shared/ui-message";
+import {messageType} from "../../Constant/messageType";
 
 @Injectable({
   providedIn: 'root'
@@ -31,6 +33,7 @@ export class ErrorHandlerService {
 
   private showErrorMessageUI(errorMessage : string){
     console.log(errorMessage);
+    let errorAlert = new UiMessage(errorMessage, messageType.ERROR);
   }
 
   private clearUser(){

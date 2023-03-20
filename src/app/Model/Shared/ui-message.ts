@@ -1,12 +1,14 @@
 export class UiMessage {
 
-  private message : string;
+  private readonly message : string;
 
-  private type : string;
+  private readonly type : string;
 
-  public UiMessage(message : string, type : string){
-    this.message = message;
-    this.type = type;
+  public constructor(message? : string, type? : string){
+    if (message !== undefined && type !== undefined){
+      this.message = message;
+      this.type = type;
+    }
   }
 
   public getMessage() : string{
