@@ -18,8 +18,7 @@ export class LoginService {
     this.validateLoginDetails(user).subscribe({
       next: (response) =>{this.saveLoginDetails(response)},
       error: (error) => {
-        console.log(error)
-        console.log("There is an error with the user service validateLoginDetails")
+
       },
       complete: () => {
 

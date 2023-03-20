@@ -8,6 +8,7 @@ import {OperationRequest} from "../../../Model/Shared/operationRequest";
 import {PageRequest} from "../../../Model/Shared/pageRequest";
 import {ActionsButtons} from "../../../Model/Shared/actions-buttons";
 import {User} from "../../../Model/Shared/User";
+import {ErrorHandlerService} from "../../../Service/Shared/error-handler.service";
 
 @Component({
   selector: 'app-table-view',
@@ -47,6 +48,7 @@ export class TableViewComponent<T> implements OnInit {
 
   constructor(
     private loginService : LoginService,
+    private errorHandler : ErrorHandlerService
   ) {
     //Set default pageRequest
     this.pageRequest.page = 0;
@@ -100,10 +102,9 @@ export class TableViewComponent<T> implements OnInit {
         // @ts-ignore
         this.modifyModels(data.content);
       },
-      error : (error) => {
+      error : (e) => {
         console.log("Error from the server");
-        console.log(error.error.message);
-        console.log(error);
+        this.errorHandler.processError(e.error)
         console.log("Prev")
       }
     });

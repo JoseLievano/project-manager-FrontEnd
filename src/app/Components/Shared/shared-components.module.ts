@@ -7,6 +7,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import {RouterOutlet} from "@angular/router";
 import { LogoutBtnTopComponent } from './logout-btn-top/logout-btn-top.component';
 import { TableViewComponent } from './table-view/table-view.component';
+import { AlertsComponent } from './alerts/alerts.component';
 
 
 
@@ -17,7 +18,8 @@ import { TableViewComponent } from './table-view/table-view.component';
     TopBarComponent,
     DashboardComponent,
     LogoutBtnTopComponent,
-    TableViewComponent
+    TableViewComponent,
+    AlertsComponent
   ],
   imports: [
     CommonModule,
@@ -28,6 +30,7 @@ import { TableViewComponent } from './table-view/table-view.component';
         ThemeSelectorComponent,
         SidebarComponent,
         TableViewComponent,
+        AlertsComponent,
     ]
 })
 export class SharedComponentsModule { }
