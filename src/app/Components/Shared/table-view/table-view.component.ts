@@ -104,8 +104,7 @@ export class TableViewComponent<T> implements OnInit {
       },
       error : (e) => {
         console.log("Error from the server");
-        this.errorHandler.processError(e.error)
-        console.log("Prev")
+        this.errorHandler.processError(e.error);
       }
     });
 
