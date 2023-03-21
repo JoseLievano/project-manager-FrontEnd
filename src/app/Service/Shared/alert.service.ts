@@ -9,23 +9,33 @@ export class AlertService {
 
   private alerts : UiMessage[] = [];
 
-  private alertsChanged : Subject<UiMessage[]> = new Subject<UiMessage[]>();
-
-  constructor() {  }
-
-  public getAlerts() : Observable<UiMessage[]>{
-    return this.alertsChanged.asObservable();
+  constructor() {
+    window.localStorage.setItem("alerts", "");
   }
 
   public addNewAlert(newAlert : UiMessage) : void {
-    this.alerts.unshift(newAlert);
-    this.alertsChanged.next(this.alerts);
+    this.updateAlerts();
+    this.alerts.push(newAlert);
+    window.localStorage.setItem("alerts", JSON.stringify(this.alerts));
   }
 
   public removeAlert(toRemove : UiMessage) : void {
+    this.updateAlerts();
     let toRemoveIndex = this.alerts.indexOf(toRemove);
     this.alerts.splice(toRemoveIndex, 1);
-    this.alertsChanged.next(this.alerts);
+    window.localStorage.setItem("alerts", JSON.stringify(this.alerts));
+  }
+
+  public getAlertsNorm() : UiMessage[]{
+    this.updateAlerts();
+    return this.alerts;
+  }
+
+  private updateAlerts() : void {
+    let alertsLength : number | undefined = window.localStorage.getItem("alerts")?.length;
+    if (alertsLength !== undefined && alertsLength > 0){
+      this.alerts = JSON.parse(<string> window.localStorage.getItem("alerts"));
+    }
   }
 
 }

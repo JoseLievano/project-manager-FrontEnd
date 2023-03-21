@@ -9,18 +9,19 @@ import {AlertService} from "../../../Service/Shared/alert.service";
 })
 export class AlertsComponent implements OnInit {
 
-  public alerts : UiMessage[];
+  public alerts : UiMessage[] = [];
 
   constructor(
     private alertService : AlertService
   ) { }
 
   ngOnInit(): void {
-    this.alertService.getAlerts().subscribe({
-      next: (response) => {
-        this.alerts = response;
-        console.log(this.alerts);
-      }
-    });
+    this.alerts = this.alertService.getAlertsNorm();
   }
+
+  public deleteAlert(alert : UiMessage) : void{
+    this.alertService.removeAlert(alert);
+    this.alerts = this.alertService.getAlertsNorm();
+  }
+
 }

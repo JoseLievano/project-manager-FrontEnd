@@ -30,13 +30,11 @@ export class ErrorHandlerService {
   }
 
   private showErrorMessageUI(errorMessage : string){
-    console.log(errorMessage);
     let errorAlert = new UiMessage(errorMessage, messageType.ERROR);
     this.alertService.addNewAlert(errorAlert);
   }
 
   private clearUser(){
-    console.log("Clearing user data");
     this.loginService.doLogout();
   }
 
