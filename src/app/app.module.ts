@@ -7,6 +7,7 @@ import {HTTP_INTERCEPTORS, HttpClientModule, HttpClientXsrfModule} from "@angula
 import {JWTInterceptorInterceptor} from "./Interceptor/jwtinterceptor.interceptor";
 import {FeaturesModule} from "./Components/Features/features.module";
 import {AuthUserGuard} from "./Guards/auth-user.guard";
+import {SharedComponentsModule} from "./Components/Shared/shared-components.module";
 
 
 @NgModule({
@@ -20,7 +21,8 @@ import {AuthUserGuard} from "./Guards/auth-user.guard";
         AppRoutingModule,
         HttpClientModule,
         HttpClientXsrfModule,
-        FeaturesModule
+        FeaturesModule,
+        SharedComponentsModule
     ],
     providers: [
       {
