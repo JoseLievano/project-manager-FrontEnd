@@ -3,19 +3,17 @@ import {Router} from "@angular/router";
 import {LoginService} from "./login.service";
 import {UiMessage} from "../../Model/Shared/ui-message";
 import {messageType} from "../../Constant/messageType";
+import {AlertService} from "./alert.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class ErrorHandlerService {
 
-  private errorMessage : string = "";
-
-  private alertIsVisible : boolean = false;
-
   constructor(
     private router : Router,
-    private loginService : LoginService
+    private loginService : LoginService,
+    private alertService : AlertService
   ) { }
 
   public processError(actualError : Error) : void{
@@ -34,6 +32,7 @@ export class ErrorHandlerService {
   private showErrorMessageUI(errorMessage : string){
     console.log(errorMessage);
     let errorAlert = new UiMessage(errorMessage, messageType.ERROR);
+    this.alertService.addNewAlert(errorAlert);
   }
 
   private clearUser(){
