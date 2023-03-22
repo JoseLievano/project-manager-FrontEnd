@@ -42,8 +42,6 @@ export class TableViewComponent<T> implements OnInit {
 
   private firstLoad : boolean = true;
 
-  private windowSize : number;
-
   public actions : ActionsButtons[] = [];
 
   constructor(
@@ -53,8 +51,6 @@ export class TableViewComponent<T> implements OnInit {
     //Set default pageRequest
     this.pageRequest.page = 0;
     this.pageRequest.size = 5;
-
-
   }
 
   ngOnInit(): void {
@@ -103,7 +99,6 @@ export class TableViewComponent<T> implements OnInit {
         this.modifyModels(data.content);
       },
       error : (e) => {
-        console.log("Error from the server");
         this.errorHandler.processError(e.error);
       }
     });
@@ -123,10 +118,6 @@ export class TableViewComponent<T> implements OnInit {
       for (let key in modelTomodify) {
 
         let insideValue = modelTomodify[key];
-
-        if (key === "invoices"){
-          console.log(insideValue);
-        }
 
         if (insideValue != null && typeof insideValue === "object"){
 
@@ -199,10 +190,6 @@ export class TableViewComponent<T> implements OnInit {
         }
       }
     }
-
-
-    console.log("sort after: ")
-    console.log(this.sort)
     this.getPageResponse();
   }
 
@@ -278,9 +265,16 @@ export class TableViewComponent<T> implements OnInit {
 
   }
 
-  setPageNumber(newPage : number){
+  public setPageNumber(newPage : number){
     this.pageRequest.page = newPage - 1;
     this.getPageResponse();
+  }
+
+  protected executeAction(action : string, model : any){
+    let id : number = model.id;
+    if (id != null){
+      this.modelService.executeAction(action, id);
+    }
   }
 
 }
