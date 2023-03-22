@@ -28,6 +28,30 @@ export class SidebarMenuService {
       .setCanActiveRoles(["ROLE_CLIENT", "ROLE_ADMIN", "ROLE_EMPLOYEE"]),
   ]
 
+  private mainMenu2 : SidebarMenuElement[] = [
+    SidebarMenuElement.builder()
+      .setName("Dashboard")
+      .setPath("dashboard")
+      .setCanActiveRoles(["ROLE_CLIENT", "ROLE_ADMIN", "ROLE_EMPLOYEE"]),
+    SidebarMenuElement.builder()
+      .setName("Business")
+      .setPath("business")
+      .setNeedBusinessLoaded(false)
+      .setShowWithBusinessLoaded(false)
+      .setCanActiveRoles(["ROLE_CLIENT", "ROLE_ADMIN", "ROLE_EMPLOYEE"]),
+    SidebarMenuElement.builder()
+      .setName("No Business")
+      .setPath("#")
+      .setNeedBusinessLoaded(false)
+      .setShowWithBusinessLoaded(false)
+      .setCanActiveRoles(["ROLE_CLIENT", "ROLE_ADMIN"]),
+    SidebarMenuElement.builder()
+      .setName("Projects")
+      .setPath("#")
+      .setNeedBusinessLoaded(true)
+      .setCanActiveRoles(["ROLE_CLIENT", "ROLE_ADMIN"])
+  ]
+
   private businessMenu : SidebarMenuElement[] = [
     SidebarMenuElement.builder()
       .setName("Dashboard")
@@ -58,21 +82,11 @@ export class SidebarMenuService {
     return this.sidebarIsVisible;
   }
 
-  getSidebarMenuElements() {
+  getSidebarMenuElements() : SidebarMenuElement[] {
 
-    // @ts-ignore
-    let role = this.loginService.getActualUser().roles[0];
+    let actualSidebar : SidebarMenuElement [] = [];
 
-    // @ts-ignore
-    if (role == "ROLE_BS_CLIENT"){
-      // @ts-ignore
-      return this.businessMenu;
-    }else if (role == "ROLE_CLIENT"){
-      // @ts-ignore
-      return this.mainMenu;
-    }
-
-    return [{}];
+    return actualSidebar;
 
   }
 
