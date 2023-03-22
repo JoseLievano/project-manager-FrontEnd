@@ -23,7 +23,6 @@ export class BusinessService extends ModelService<Business>{
     this.url = Const.API_URL + Const.BUSINESS;
   }
 
-
   protected override pageListViewRestrictions(pageRequest: PageRequest) {
 
     if (this.actualUser != null || this.actualUser != undefined) {
@@ -40,13 +39,26 @@ export class BusinessService extends ModelService<Business>{
     }
   }
 
-
   override getButtonPermissions(): ActionsButtons[] {
     let actions : ActionsButtons[] = [
       {actionName: "Load", roles: ["ROLE_CLIENT"]},
       {actionName: "Delete", roles: ["ROLE_CLIENT"]}
     ]
-
     return actions;
   }
+
+
+  //Methods to load and unload a business in the local storage
+  public loadBusiness(businessID : number){
+    window.localStorage.setItem("business", JSON.stringify(businessID));
+  }
+
+  public unloadBusiness(){
+    window.localStorage.setItem("business", "-1");
+  }
+
+  public getLoadedBusiness() : number{
+    return JSON.parse(<string> window.localStorage.getItem("business"));
+  }
+
 }
