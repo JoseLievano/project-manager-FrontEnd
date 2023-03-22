@@ -20,8 +20,7 @@
             <div class="dropdown dropdown-left fixed my-1 right-10 show-out z-top" #refActions>
               <label tabindex="0" class="btn m-1">...</label>
               <ul tabindex="0" (mouseover)="onTROver(refActions)" (mouseout)="onTRLeave(refActions)" class="dropdown-content absolute menu p-2 shadow bg-base rounded-box w-52 z-50">
-                <li><a>{{actualModel["id"]}}</a></li>
-                <li><a>Item 2</a></li>
+                <li *ngFor="let action of actions" (click)="executeAction(action.actionName, actualModel)" ><a>{{action.actionName}}</a></li>
               </ul>
             </div>
 
