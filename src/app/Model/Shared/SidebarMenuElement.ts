@@ -8,8 +8,9 @@ export class SidebarMenuElement{
   public hasSubmenu : Boolean ;
   public canActiveRoles : String[] = [];
   public submenu : SidebarSubMenuElement[];
-
   public needBusinessLoaded : Boolean;
+
+  public showWithBusinessLoaded : Boolean;
 
   constructor (name? : String,
                path? : String,
@@ -17,14 +18,16 @@ export class SidebarMenuElement{
                hasSubmenu? : Boolean,
                canActiveRoles? : String[],
                submenu? : SidebarSubMenuElement[],
-               needBusinessLoaded? : Boolean){
+               needBusinessLoaded? : Boolean,
+               showWithBusinessLoaded? : Boolean){
     this.name = name ?? "";
     this.path = path ?? "";
     this.isSeparator = isSeparator ?? false;
     this.hasSubmenu = hasSubmenu ?? false;
     this.canActiveRoles = canActiveRoles ?? [];
     this.submenu = submenu ?? [];
-    this.needBusinessLoaded = needBusinessLoaded ?? false;
+    this.needBusinessLoaded = needBusinessLoaded ?? true;
+    this.showWithBusinessLoaded = showWithBusinessLoaded ?? true;
   }
 
   static builder() : SidebarMenuElement{
@@ -58,6 +61,16 @@ export class SidebarMenuElement{
 
   public setSubmenu (submenu : SidebarSubMenuElement[]) : SidebarMenuElement{
     this.submenu = submenu;
+    return this;
+  }
+
+  public setNeedBusinessLoaded(needBusiness : Boolean) : SidebarMenuElement{
+    this.needBusinessLoaded = needBusiness;
+    return this;
+  }
+
+  public setShowWithBusinessLoaded(show : Boolean) : SidebarMenuElement{
+    this.showWithBusinessLoaded = show;
     return this;
   }
 
