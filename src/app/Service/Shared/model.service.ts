@@ -58,13 +58,12 @@ export abstract class ModelService<T>{
   }
 
   public getButtonPermissions() : ActionsButtons[] {
-
-    let actions : ActionsButtons[] = [
-      {actionName: "view", roles: ["X"]}
-    ]
-
+    let actions : ActionsButtons[] = [];
     return actions;
+  }
 
+  public executeAction(action : string, id : number) : void {
+    //Modify how actions are executed
   }
 
 }
