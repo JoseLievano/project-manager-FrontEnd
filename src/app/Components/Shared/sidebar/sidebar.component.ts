@@ -25,10 +25,7 @@ export class SidebarComponent implements OnInit {
 
   }
 
-  ngOnInit(): void {
-
-
-  }
+  ngOnInit(): void {}
 
   setActive(menu : String, path : String){
     this.activeMenu = menu;
