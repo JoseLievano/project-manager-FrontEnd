@@ -7,6 +7,7 @@ import {LoginService} from "../Shared/login.service";
 import {User} from "../../Model/Shared/User";
 import {PageRequest} from "../../Model/Shared/pageRequest";
 import {ActionsButtons} from "../../Model/Shared/actions-buttons";
+import {tableActionButton} from "../../Constant/table-action-button";
 
 @Injectable({
   providedIn: 'root'
@@ -41,12 +42,19 @@ export class BusinessService extends ModelService<Business>{
 
   override getButtonPermissions(): ActionsButtons[] {
     let actions : ActionsButtons[] = [
-      {actionName: "Load", roles: ["ROLE_CLIENT"]},
-      {actionName: "Delete", roles: ["ROLE_CLIENT"]}
+      {actionName: tableActionButton.LOAD, roles: ["ROLE_CLIENT"]},
+      {actionName: tableActionButton.EDIT, roles: ["ROLE_CLIENT"]}
     ]
     return actions;
   }
 
+  override executeAction(action : string, id : number) : void {
+    switch (action){
+      case tableActionButton.LOAD:
+        this.loadBusiness(id);
+        break;
+    }
+  }
 
   //Methods to load and unload a business in the local storage
   public loadBusiness(businessID : number){
