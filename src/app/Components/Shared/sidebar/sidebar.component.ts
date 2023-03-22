@@ -54,8 +54,4 @@ export class SidebarComponent implements OnInit {
     return this.sidebarOptions.getSidebarIsVisible();
   }
 
-  getSidebarElements(){
-    return this.sideBarElements;
-  }
-
 }
