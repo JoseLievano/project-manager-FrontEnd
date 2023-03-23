@@ -49,4 +49,12 @@ export class SidebarComponent implements OnInit {
     return this.sidebarOptions.getSidebarMenuElements();
   }
 
+  protected businessIsLoaded() : Boolean{
+    return this.sidebarOptions.businessIsLoaded();
+  }
+
+  protected unloadBusiness() : void {
+    this.sidebarOptions.unloadBusiness();
+  }
+
 }
