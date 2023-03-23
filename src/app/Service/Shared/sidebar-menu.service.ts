@@ -18,21 +18,6 @@ export class SidebarMenuService {
     SidebarMenuElement.builder()
       .setName("Dashboard")
       .setPath("dashboard")
-      .setIsSeparator(false)
-      .setHasSubmenu(false)
-      .setCanActiveRoles(["ROLE_CLIENT", "ROLE_ADMIN", "ROLE_EMPLOYEE"]),
-    SidebarMenuElement.builder()
-      .setName("Business")
-      .setPath("business")
-      .setIsSeparator(false)
-      .setHasSubmenu(false)
-      .setCanActiveRoles(["ROLE_CLIENT", "ROLE_ADMIN", "ROLE_EMPLOYEE"]),
-  ]
-
-  private mainMenu2 : SidebarMenuElement[] = [
-    SidebarMenuElement.builder()
-      .setName("Dashboard")
-      .setPath("dashboard")
       .setNeedBusinessLoaded(false)
       .setShowWithBusinessLoaded(true)
       .setCanActiveRoles([userRole.ADMIN, userRole.CLIENT, userRole.BS_CLIENT, userRole.BS_EMPLOYEE, userRole.BS_MANAGER]),
@@ -53,24 +38,6 @@ export class SidebarMenuService {
       .setPath("#")
       .setCanActiveRoles([userRole.ADMIN, userRole.CLIENT, userRole.BS_MANAGER, userRole.BS_EMPLOYEE])
   ]
-
-  private businessMenu : SidebarMenuElement[] = [
-    SidebarMenuElement.builder()
-      .setName("Dashboard")
-      .setPath("dashboard")
-      .setIsSeparator(false)
-      .setHasSubmenu(false)
-      .setCanActiveRoles(["ROLE_CLIENT", "ROLE_ADMIN", "ROLE_EMPLOYEE", "ROLE_BS_CLIENT", "ROLE_BS_EMPLOYEE", "ROLE_BS_MANAGER"]),
-  ];
-
-  // @ts-ignore
-  // @ts-ignore
-  private menuObjects  = {
-    ROLE_CLIENT : [
-      SidebarMenuElement.builder().setName("Dashboard").setPath("/dashboard").setIsSeparator(false).setHasSubmenu(false).setSubmenu([]).build(),
-      SidebarMenuElement.builder().setName("Business").setPath("/business").setIsSeparator(false).setHasSubmenu(false).setSubmenu([]).build()
-    ]
-  }
 
   constructor(private loginService : LoginService, private businessService : BusinessService) {
     this.actualUser = loginService.getActualUser();
@@ -96,7 +63,7 @@ export class SidebarMenuService {
 
     const businessLoaded = this.businessService.getLoadedBusiness() >= 0;
 
-    for (const item of this.mainMenu2) {
+    for (const item of this.mainMenu) {
       if (!item.canActiveRoles.includes(actualRole)) {
         continue;
       }
