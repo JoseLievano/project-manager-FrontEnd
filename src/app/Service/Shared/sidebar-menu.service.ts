@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import {LoginService} from "./login.service";
 import {SidebarMenuElement} from "../../Model/Shared/SidebarMenuElement";
-import {SidebarSubMenuElement} from "../../Model/Shared/SidebarSubMenuElement";
 import {User} from "../../Model/Shared/User";
 import {userRole} from "../../Constant/userRole";
 import {BusinessService} from "../Business/business.service";
@@ -35,6 +34,7 @@ export class SidebarMenuService {
       .setName("Dashboard")
       .setPath("dashboard")
       .setNeedBusinessLoaded(false)
+      .setShowWithBusinessLoaded(true)
       .setCanActiveRoles([userRole.ADMIN, userRole.CLIENT, userRole.BS_CLIENT, userRole.BS_EMPLOYEE, userRole.BS_MANAGER]),
     SidebarMenuElement.builder()
       .setName("Business")
@@ -86,32 +86,30 @@ export class SidebarMenuService {
 
   getSidebarMenuElements() : SidebarMenuElement[] {
 
-    let actualSidebar : SidebarMenuElement [] = [];
+    const actualSidebar: SidebarMenuElement[] = [];
 
-    let actualRole : String = "";
+    const actualRole = this.actualUser?.roles?.[0];
 
-    if (this.actualUser?.roles){
-      actualRole = this.actualUser.roles[0];
-    }else {
+    if (!actualRole) {
       return actualSidebar;
     }
 
-    let businessLoaded : Boolean = false;
-    if (this.businessService.getLoadedBusiness() >= 0){
-      businessLoaded = true;
-    }
+    const businessLoaded = this.businessService.getLoadedBusiness() >= 0;
 
-    for (let item of this.mainMenu2){
+    for (const item of this.mainMenu2) {
+      if (!item.canActiveRoles.includes(actualRole)) {
+        continue;
+      }
 
-      let userRoleIndex = item.canActiveRoles.indexOf(actualRole);
+      if (item.needBusinessLoaded && !businessLoaded) {
+        continue;
+      }
 
-      if (userRoleIndex >= 0 && businessLoaded == item.showWithBusinessLoaded){
-
-        if ((item.needBusinessLoaded && businessLoaded) || !item.needBusinessLoaded){
-          actualSidebar.push(item);
-        }
+      if (item.showWithBusinessLoaded || !businessLoaded) {
+        actualSidebar.push(item);
       }
     }
+
     return actualSidebar;
   }
 
