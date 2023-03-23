@@ -66,7 +66,12 @@ export class BusinessService extends ModelService<Business>{
   }
 
   public getLoadedBusiness() : number{
-    return JSON.parse(<string> window.localStorage.getItem("business"));
+    let actualBusiness : number = JSON.parse(<string> window.localStorage.getItem("business"));
+
+    if (actualBusiness >= 0){
+      return actualBusiness;
+    }
+    return -1;
   }
 
 }
