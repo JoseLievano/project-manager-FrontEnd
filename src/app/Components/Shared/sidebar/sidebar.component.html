@@ -1,27 +1,21 @@
 <div [ngClass]="{hideSidebar : !getSidebarToggleStatus()}" class="transitionSidebar">
-
   <div class="overflow-y-auto py-4 px-4 rounded">
-
     <ul class="space-y-2">
-
       <li *ngFor="let element of getMainMenu()" [ngClass]="{hideMenuElement : !getSidebarToggleStatus()}" class="transitionMenuElement">
         <a (click)="setActive(element.name, element.path)" [ngClass]="{ menuActive : getActiveMenu() === element.name }" class="menuItem">
           <svg aria-hidden="true" class="w-6 h-6 " fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"></path><path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"></path></svg>
           <span class="ml-3">{{element.name}}</span>
           <svg *ngIf="element.hasSubmenu" class="w-6 h-6 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
         </a>
-
         <ul *ngIf="element.hasSubmenu" class="space-y-2 mt-2 transitionSubMenu" [ngClass]="{ hideSubMenu : getActualSubMenu() != element.name}">
-
           <li *ngFor="let subElement of element.submenu" [ngClass]="{hideMenuElement : !getSidebarToggleStatus()}" class="transitionMenuElement">
             <a class="submenuElements">
               <span class="ml-3">{{subElement.name}}</span>
             </a>
           </li>
-
         </ul>
-
       </li>
     </ul>
   </div>
 </div>
+<button class="btn fixed bottom-0 left-0" *ngIf="businessIsLoaded()" (click)="unloadBusiness()">Unload Business</button>
