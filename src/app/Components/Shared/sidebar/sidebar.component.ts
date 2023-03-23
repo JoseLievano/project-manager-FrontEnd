@@ -14,16 +14,7 @@ export class SidebarComponent implements OnInit {
 
   private activeMenu : String = "";
 
-  public sideBarElements : [SidebarMenuElement];
-
-  constructor(private sidebarOptions : SidebarMenuService, private router : Router) {
-
-    // @ts-ignore
-    this.sideBarElements = this.sidebarOptions.getSidebarMenuElements();
-
-    console.log(this.sideBarElements);
-
-  }
+  constructor(private sidebarOptions : SidebarMenuService, private router : Router) {  }
 
   ngOnInit(): void {}
 
@@ -52,6 +43,10 @@ export class SidebarComponent implements OnInit {
 
   getSidebarToggleStatus(){
     return this.sidebarOptions.getSidebarIsVisible();
+  }
+
+  protected getMainMenu() : SidebarMenuElement[] {
+    return this.sidebarOptions.getSidebarMenuElements();
   }
 
 }
