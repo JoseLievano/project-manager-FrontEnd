@@ -8,6 +8,7 @@ import {User} from "../../Model/Shared/User";
 import {PageRequest} from "../../Model/Shared/pageRequest";
 import {ActionsButtons} from "../../Model/Shared/actions-buttons";
 import {tableActionButton} from "../../Constant/table-action-button";
+import {Router} from "@angular/router";
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +20,8 @@ export class BusinessService extends ModelService<Business>{
   protected override actualUser : User | null;
 
   constructor(protected override http : HttpClient,
-              private loginService : LoginService) {
+              private loginService : LoginService,
+              private router : Router) {
     super(http, loginService.getActualUser());
     this.url = Const.API_URL + Const.BUSINESS;
   }
@@ -59,10 +61,12 @@ export class BusinessService extends ModelService<Business>{
   //Methods to load and unload a business in the local storage
   public loadBusiness(businessID : number){
     window.localStorage.setItem("business", JSON.stringify(businessID));
+    this.router.navigate(["dashboard"])
   }
 
   public unloadBusiness(){
     window.localStorage.setItem("business", "-1");
+    this.router.navigate(["dashboard"]);
   }
 
   public getLoadedBusiness() : number{

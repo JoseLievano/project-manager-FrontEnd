@@ -9,7 +9,6 @@ export class SidebarMenuElement{
   public canActiveRoles : String[] = [];
   public submenu : SidebarSubMenuElement[];
   public needBusinessLoaded : Boolean;
-
   public showWithBusinessLoaded : Boolean;
 
   constructor (name? : String,
