@@ -3,6 +3,7 @@ import {HttpClient, HttpResponse} from "@angular/common/http";
 import {User} from "../../Model/Shared/User";
 import {Const} from "../../Constant/const";
 import {Router} from "@angular/router";
+import {RoleService} from "./role.service";
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,7 @@ export class LoginService {
 
   private actualUser : User | null;
 
-  constructor(private http : HttpClient, private router : Router) { }
+  constructor(private http : HttpClient, private router : Router, private roleService : RoleService) { }
 
   doLogin(user: User) {
     this.validateLoginDetails(user).subscribe({
@@ -27,6 +28,8 @@ export class LoginService {
         if (this.actualUser != null){
           // @ts-ignore
           role = this.actualUser.roles[0];
+          // @ts-ignore
+          this.roleService.setInitialLocalStorageBusiness(role);
 
           if (role != null){
             this.router.navigate([""]);
@@ -55,6 +58,8 @@ export class LoginService {
     this.actualUser.role = response.body.roles[0].authority;
 
     window.localStorage.setItem("userdetails",JSON.stringify(this.actualUser));
+
+
   }
 
   getActualUser(){
