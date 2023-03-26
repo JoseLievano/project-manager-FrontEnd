@@ -85,6 +85,7 @@ export class LoginService {
     this.actualUser = new User();
     window.localStorage.removeItem("userdetails");
     window.localStorage.removeItem("Authorization");
+    window.localStorage.removeItem("business");
     this.router.navigate(["login"]);
   }
 
