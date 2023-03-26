@@ -7,11 +7,12 @@ import {DashboardComponent} from "./Components/Shared/dashboard/dashboard.compon
 import {BusinessListComponent} from "./Components/Features/Business/business/business-list/business-list.component";
 import {SharedComponentsModule} from "./Components/Shared/shared-components.module";
 import {AuthUserGuard} from "./Guards/auth-user.guard";
+import {Paths} from "./Constant/paths";
 
 const routes: Routes = [
   {path: '', component: IndexNormalComponent, canActivate: [AuthUserGuard],children: [
-      {path: 'dashboard', component: DashboardComponent},
-      {path: 'business', component: BusinessListComponent}
+      {path: Paths.DASHBOARD.path, component: DashboardComponent},
+      {path: Paths.BUSINESS.path, component: BusinessListComponent}
   ]},
   {path: 'login', component: LoginComponent}
 ];

@@ -4,6 +4,7 @@ import {SidebarMenuElement} from "../../Model/Shared/SidebarMenuElement";
 import {User} from "../../Model/Shared/User";
 import {userRole} from "../../Constant/userRole";
 import {BusinessService} from "../Business/business.service";
+import {Paths} from "../../Constant/paths";
 
 @Injectable({
   providedIn: 'root'
@@ -16,8 +17,8 @@ export class SidebarMenuService {
 
   private mainMenu : SidebarMenuElement[] = [
     SidebarMenuElement.builder()
-      .setName("Dashboard")
-      .setPath("dashboard")
+      .setName(Paths.DASHBOARD.name)
+      .setPath(Paths.DASHBOARD.path)
       .setNeedBusinessLoaded(false)
       .setShowWithBusinessLoaded(true)
       .setCanActiveRoles([userRole.ADMIN, userRole.CLIENT, userRole.BS_CLIENT, userRole.BS_EMPLOYEE, userRole.BS_MANAGER]),
@@ -27,16 +28,7 @@ export class SidebarMenuService {
       .setNeedBusinessLoaded(false)
       .setShowWithBusinessLoaded(false)
       .setCanActiveRoles([userRole.ADMIN, userRole.CLIENT, userRole.EMPLOYEE]),
-    SidebarMenuElement.builder()
-      .setName("No Business")
-      .setPath("#")
-      .setNeedBusinessLoaded(false)
-      .setShowWithBusinessLoaded(false)
-      .setCanActiveRoles([userRole.ADMIN, userRole.CLIENT]),
-    SidebarMenuElement.builder()
-      .setName("Projects")
-      .setPath("#")
-      .setCanActiveRoles([userRole.ADMIN, userRole.CLIENT, userRole.BS_MANAGER, userRole.BS_EMPLOYEE])
+
   ]
 
   constructor(private loginService : LoginService, private businessService : BusinessService) {
