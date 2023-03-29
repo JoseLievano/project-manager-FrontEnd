@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import {BusinessService} from "../../../../../Service/Business/business.service";
 import {Business} from "../../../../../Model/Business/Business";
 import {LoginService} from "../../../../../Service/Shared/login.service";
-import {ModelService} from "../../../../../Service/Shared/model.service";
 import {User} from "../../../../../Model/Shared/User";
 
 @Component({
@@ -13,8 +12,6 @@ import {User} from "../../../../../Model/Shared/User";
 export class BusinessListComponent implements OnInit {
 
   public model : Business = new Business();
-
-  public modelConst : String = "/business/";
 
   private user : User | null;
 
