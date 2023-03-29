@@ -14,9 +14,13 @@ export abstract class ModelService<T>{
 
   protected actualUser : User | null;
 
+  protected apiBaseURL : String;
+
   constructor(protected http: HttpClient,
-              actualUser: User | null) {
+              actualUser: User | null,
+              apiBaseURL : String) {
     this.actualUser = actualUser;
+    this.apiBaseURL = apiBaseURL;
     // @ts-ignore
     console.log(actualUser?.firstName)
   }
@@ -38,13 +42,15 @@ export abstract class ModelService<T>{
 
 
   //Get a list of all the items, based in the pageRequest
-  public getPageListView<T>(pageRequest : PageRequest , modelURL : String) : Observable<PageableResponse<T>>{
+  public getPageListView<T>(pageRequest : PageRequest) : Observable<PageableResponse<T>>{
 
     this.pageListViewRestrictions(pageRequest);
 
-    let url : String = Const.API_URL + modelURL;
+    let url2 : String = this.apiBaseURL;
 
-    return this.http.post<PageableResponse<T>>(url + "page-list-view", pageRequest);
+    console.log("URL2: " + url2);
+
+    return this.http.post<PageableResponse<T>>(url2 + "page-list-view", pageRequest);
 
   }
 
