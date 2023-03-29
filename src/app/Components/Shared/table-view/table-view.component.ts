@@ -19,8 +19,6 @@ export class TableViewComponent<T> implements OnInit {
 
   @Input() model : T;
 
-  @Input() modelConst : String;
-
   @Input() modelService : ModelService<T>
   private sort : SortRequest[] = [];
 
@@ -85,7 +83,7 @@ export class TableViewComponent<T> implements OnInit {
     this.pageRequest.sort = this.sort;
     console.log(this.pageRequest)
 
-    this.modelService.getPageListView<T>(this.pageRequest, this.modelConst).subscribe({
+    this.modelService.getPageListView<T>(this.pageRequest).subscribe({
       next : (response) => {
         this.pageAbleResponse = response;
         data = response;
