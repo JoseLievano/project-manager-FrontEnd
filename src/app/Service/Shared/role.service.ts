@@ -1,6 +1,4 @@
-import { Injectable } from '@angular/core';
-import {LoginService} from "./login.service";
-import {BusinessService} from "../Business/business.service";
+import {Injectable} from '@angular/core';
 import {userRole} from "../../Constant/userRole";
 
 @Injectable({
@@ -9,18 +7,20 @@ import {userRole} from "../../Constant/userRole";
 export class RoleService {
 
 
-  constructor( ) {
+  constructor() {
   }
 
-  public setInitialLocalStorageBusiness(role : String) : void{
+  public setInitialLocalStorageBusiness(role: String): void {
     console.log("setInitialLocalStorageBusiness" + role);
-    switch (role){
-      case userRole.ADMIN:
+    switch (role) {
+      case userRole.ADMIN : {
         window.localStorage.setItem("business", "-1");
         break;
-      case userRole.CLIENT:
+      }
+      case userRole.CLIENT: {
         window.localStorage.setItem("business", "-1");
         break;
+      }
       default:
         window.localStorage.setItem("business", "-1");
         break;
