@@ -16,7 +16,7 @@ export abstract class ModelService<T>{
 
   protected apiBaseURL : String;
 
-  constructor(protected http: HttpClient,
+  protected constructor(protected http: HttpClient,
               actualUser: User | null,
               apiBaseURL : String) {
     this.actualUser = actualUser;
