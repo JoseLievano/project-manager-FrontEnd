@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {Const} from "../../Constant/const";
 import {PageRequest} from "../../Model/Shared/pageRequest";
 import {Observable} from "rxjs";
 import {PageableResponse} from "../../Model/Shared/PageableResponse";
@@ -16,9 +15,11 @@ export abstract class ModelService<T>{
 
   protected apiBaseURL : String;
 
-  protected constructor(protected http: HttpClient,
-              actualUser: User | null,
-              apiBaseURL : String) {
+  protected http : HttpClient;
+
+  protected constructor(http: HttpClient,
+                        actualUser: User | null,
+                        apiBaseURL : String) {
     this.actualUser = actualUser;
     this.apiBaseURL = apiBaseURL;
     // @ts-ignore
