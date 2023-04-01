@@ -8,8 +8,11 @@ import {User} from "../../Model/Shared/User";
 })
 export abstract class UserServiceService<T> extends ModelService<T>{
 
+  protected user : T;
 
   protected constructor(http : HttpClient, actualUser : User, url : String) {
     super(http, actualUser, url);
   }
+
+
 }

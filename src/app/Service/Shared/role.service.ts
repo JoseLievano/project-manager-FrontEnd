@@ -6,9 +6,7 @@ import {userRole} from "../../Constant/userRole";
 })
 export class RoleService {
 
-
-  constructor() {
-  }
+  constructor() {}
 
   public setInitialLocalStorageBusiness(role: String): void {
     console.log("setInitialLocalStorageBusiness" + role);
@@ -25,8 +23,6 @@ export class RoleService {
         window.localStorage.setItem("business", "-1");
         break;
     }
-
   }
-
 
 }
