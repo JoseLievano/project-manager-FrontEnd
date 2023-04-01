@@ -43,11 +43,11 @@ export class BusinessService extends ModelService<Business> {
   }
 
   override getButtonPermissions(): ActionsButtons[] {
-    let actions: ActionsButtons[] = [
+    return [
       {actionName: tableActionButton.LOAD, roles: ["ROLE_CLIENT"]},
-      {actionName: tableActionButton.EDIT, roles: ["ROLE_CLIENT"]}
-    ]
-    return actions;
+      {actionName: tableActionButton.EDIT, roles: ["ROLE_CLIENT"]},
+      {actionName: tableActionButton.DELETE, roles: ["ROLE_CLIENT"]}
+    ];
   }
 
   override executeAction(action: string, id: number): void {
