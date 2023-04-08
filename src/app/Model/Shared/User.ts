@@ -1,28 +1,34 @@
 export class User{
   public id : number | null | undefined;
-  public username : string | null | undefined;
+  public username : string;
   public password : string | null | undefined;
-  public roles : String [] | null | undefined;
-  public firstName : string | null | undefined;
-  public lastName : string | null | undefined;
-  public email : string | null | undefined;
+  public roles : String [];
+  public firstName : string;
+  public lastName : string;
+  public email : string;
 
-  public user (
-                id : number | null | undefined,
-                username : string | null | undefined,
-                password : string | null | undefined,
-                roles : String[] | null | undefined,
-                firstName : string | null | undefined,
-                lastName : string | null | undefined,
-                email : string | null | undefined
+  public constructor (
+                id ?: number | null | undefined,
+                username ?: string,
+                password ?: string | null | undefined,
+                roles ?: String[] ,
+                firstName ?: string,
+                lastName ?: string ,
+                email ?: string
   ){
     this.id = id;
-    this.username = username;
-    this.password = password;
-    this.roles = roles;
-    this.firstName = firstName;
-    this.lastName = lastName;
-    this.email = email;
+    if (username)
+      this.username = username;
+    if (password)
+      this.password = password;
+    if (roles)
+      this.roles = roles;
+    if (firstName)
+      this.firstName = firstName;
+    if (lastName)
+      this.lastName = lastName;
+    if (email)
+      this.email = email;
   }
 
   static builder() : User{
