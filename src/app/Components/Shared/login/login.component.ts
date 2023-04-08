@@ -20,9 +20,10 @@ export class LoginComponent{
   constructor(private loginService : LoginService) { }
 
   public doLogin(){
-
-    this.User.username = this.form.value.username;
-    this.User.password = this.form.value.password;
+    if (this.form.value.username)
+      this.User.username = this.form.value.username;
+    if (this.form.value.password)
+      this.User.password = this.form.value.password;
 
     console.log("pasando el user al login service: " + this.User);
 
