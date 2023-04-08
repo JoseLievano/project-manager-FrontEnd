@@ -17,12 +17,10 @@ export class BusinessService extends ModelService<Business> {
 
   private url: String;
 
-  protected override actualUser: User | null;
-
   constructor(protected override http: HttpClient,
-              private loginService: LoginService,
+              protected override loginService: LoginService,
               private router: Router) {
-    super(http, loginService.getActualUser(), Const.API_URL + Const.BUSINESS);
+    super(http,loginService, Const.API_URL + Const.BUSINESS);
     this.url = Const.API_URL + Const.BUSINESS;
   }
 
