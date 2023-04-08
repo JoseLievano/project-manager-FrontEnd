@@ -1,29 +1,38 @@
 import {User} from "../Shared/User";
 import {Invoice} from "./Invoice";
 
-export class Client{
+export class Client extends User{
 
-  public isActive : Boolean | undefined | null ;
+  public isActive : Boolean ;
 
-  public lastLogin : Date | undefined | null ;
+  public lastLogin : Date  ;
 
-  public invoice : Invoice[] | undefined | null ;
+  public invoice : Invoice[] ;
 
-  public user : User;
 
-  public Client(
-                isActive : Boolean | undefined | null ,
-                lastLogin : Date | undefined | null ,
-                invoice : Invoice[] | undefined | null ,
-                user : User
+  public constructor(
+                id ?: number | null | undefined,
+                username ?: string,
+                password ?: string | null | undefined,
+                roles ?: String[] ,
+                firstName ?: string,
+                lastName ?: string ,
+                email ?: string,
+                isActive ?: Boolean,
+                lastLogin ?: Date,
+                invoice ?: Invoice[]
   ){
-    this.isActive = isActive;
-    this.lastLogin = lastLogin;
-    this.invoice = invoice;
-    this.user = user;
+    super(id, username, password, roles, firstName, lastName, email);
+    if (isActive)
+      this.isActive = isActive;
+    if (lastLogin)
+      this.lastLogin = lastLogin;
+    if (invoice)
+      this.invoice = invoice;
+
   }
 
-  static builder() : Client{
+  static override builder() : Client{
     return new Client();
   }
 
@@ -42,12 +51,7 @@ export class Client{
     return this;
   }
 
-  public setUser (user : User) : Client{
-    this.user = user;
-    return this;
-  }
-
-  public build () : Client{
+  public override build () : Client{
     return this;
   }
 
