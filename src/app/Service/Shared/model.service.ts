@@ -5,6 +5,7 @@ import {Observable} from "rxjs";
 import {PageableResponse} from "../../Model/Shared/PageableResponse";
 import {User} from "../../Model/Shared/User";
 import {ActionsButtons} from "../../Model/Shared/actions-buttons";
+import {LoginService} from "./login.service";
 
 @Injectable({
   providedIn: 'root'
@@ -15,15 +16,11 @@ export abstract class ModelService<T>{
 
   protected apiBaseURL : String;
 
-  protected http : HttpClient;
-
-  protected constructor(http: HttpClient,
-                        actualUser: User | null,
+  protected constructor(protected http: HttpClient,
+                        protected loginService : LoginService,
                         apiBaseURL : String) {
-    this.actualUser = actualUser;
+    this.actualUser = loginService.getActualUser();
     this.apiBaseURL = apiBaseURL;
-    // @ts-ignore
-    console.log(actualUser?.firstName)
   }
 
   //Get one element
@@ -32,14 +29,10 @@ export abstract class ModelService<T>{
   }
 
   //Delete one
-  private deleteOne(id : number){
-
-  }
+  private deleteOne(id : number){}
 
   //Update one
-  private updateOne(id : number){
-
-  }
+  private updateOne(id : number){}
 
 
   //Get a list of all the items, based in the pageRequest
