@@ -12,9 +12,9 @@ import {Const} from "../../Constant/const";
 export class BsEmployeeService extends ModelService<bsEmployee>{
 
   constructor(protected override http : HttpClient,
-              private loginService : LoginService,
+              protected override loginService : LoginService,
               private router : Router) {
-    super(http, loginService.getActualUser(), Const.API_URL + Const.bs_EMPLOYEE)
+    super (http, loginService, Const.API_URL + Const.bs_EMPLOYEE);
   }
 
 }
