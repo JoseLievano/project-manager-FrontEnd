@@ -14,13 +14,13 @@ export abstract class ModelService<T>{
 
   protected actualUser : User | null;
 
-  protected apiBaseURL : String;
+  protected apiBaseURL : string;
 
   protected constructor(protected http: HttpClient,
                         protected loginService : LoginService,
                         apiBaseURL : String) {
     this.actualUser = loginService.getActualUser();
-    this.apiBaseURL = apiBaseURL;
+    this.apiBaseURL = apiBaseURL.toString();
   }
 
   //Get one element
@@ -40,25 +40,20 @@ export abstract class ModelService<T>{
 
     this.pageListViewRestrictions(pageRequest);
 
-    let url2 : String = this.apiBaseURL;
+    const url : string = `${this.apiBaseURL}page-list-view`;
 
-    console.log("URL2: " + url2);
-
-    return this.http.post<PageableResponse<T>>(url2 + "page-list-view", pageRequest);
+    return this.http.post<PageableResponse<T>>(url, pageRequest);
 
   }
 
-  protected pageListViewRestrictions(pageRequest : PageRequest) {
-
-    if (pageRequest.sort?.length == 0){
-      pageRequest.sort = [
-        {"property" : "id", "isAscending": true}
-      ];
+  protected pageListViewRestrictions(pageRequest: PageRequest): void {
+    if (!pageRequest.sort || pageRequest.sort.length === 0) {
+      pageRequest.sort = [{ property: 'id', isAscending: true }];
     }
   }
 
   public getButtonPermissions() : ActionsButtons[] {
-    let actions : ActionsButtons[] = [];
+    const actions: ActionsButtons[] = [];
     return actions;
   }
 
