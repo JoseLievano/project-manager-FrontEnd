@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {SidebarMenuService} from "../../../Service/Shared/sidebar-menu.service";
 import {SidebarMenuElement} from "../../../Model/Shared/SidebarMenuElement";
 import {Router} from "@angular/router";
+import {LoginService} from "../../../Service/Shared/login.service";
+import {userRole} from "../../../Constant/userRole";
 
 @Component({
   selector: 'app-sidebar',
@@ -14,7 +16,9 @@ export class SidebarComponent implements OnInit {
 
   private activeMenu : String = "";
 
-  constructor(private sidebarOptions : SidebarMenuService, private router : Router) {  }
+  constructor(private sidebarOptions : SidebarMenuService,
+              private router : Router,
+              private loginService : LoginService) {  }
 
   ngOnInit(): void {}
 
@@ -50,7 +54,10 @@ export class SidebarComponent implements OnInit {
   }
 
   protected businessIsLoaded() : Boolean{
-    return this.sidebarOptions.businessIsLoaded();
+    if (this.loginService.getActualUserRole() == userRole.CLIENT || this.loginService.getActualUserRole() == userRole.ADMIN){
+      return this.sidebarOptions.businessIsLoaded();
+    }
+    return false;
   }
 
   protected unloadBusiness() : void {
