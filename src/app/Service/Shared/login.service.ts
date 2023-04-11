@@ -4,6 +4,7 @@ import {User} from "../../Model/Shared/User";
 import {Const} from "../../Constant/const";
 import {Router} from "@angular/router";
 import {RoleService} from "./role.service";
+import {userRole} from "../../Constant/userRole";
 
 @Injectable({
   providedIn: 'root'
@@ -62,7 +63,7 @@ export class LoginService {
 
   }
 
-  getActualUser(){
+  getActualUser() : User | null{
 
     let userDetailsLength : number | null | undefined;
 
@@ -75,6 +76,18 @@ export class LoginService {
     }
 
     return this.actualUser;
+  }
+
+  public getActualUserRole() : String {
+
+    this.getActualUser();
+
+    if (this.actualUser == null){
+      return userRole.NO_ROLE;
+    }
+
+    return this.actualUser.roles[0];
+
   }
 
   isUserLoggedIn() : boolean{
