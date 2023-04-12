@@ -9,14 +9,21 @@ export class AlertService {
 
   private alerts : UiMessage[] = [];
 
+  private alertSubject : Subject<UiMessage[]> = new Subject<UiMessage[]>();
+
   constructor() {
     window.localStorage.setItem("alerts", "");
+  }
+
+  public getAlertsObservable() : Observable<UiMessage[]>{
+    return this.alertSubject.asObservable();
   }
 
   public addNewAlert(newAlert : UiMessage) : void {
     this.updateAlerts();
     this.alerts.push(newAlert);
     window.localStorage.setItem("alerts", JSON.stringify(this.alerts));
+    this.alertSubject.next(this.alerts);
   }
 
   public removeAlert(toRemove : UiMessage) : void {
@@ -24,6 +31,7 @@ export class AlertService {
     let toRemoveIndex = this.alerts.indexOf(toRemove);
     this.alerts.splice(toRemoveIndex, 1);
     window.localStorage.setItem("alerts", JSON.stringify(this.alerts));
+    this.alertSubject.next(this.alerts);
   }
 
   public getAlertsNorm() : UiMessage[]{
