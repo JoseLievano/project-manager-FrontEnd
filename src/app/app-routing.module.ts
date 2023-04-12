@@ -8,11 +8,13 @@ import {BusinessListComponent} from "./Components/Features/Business/business/bus
 import {SharedComponentsModule} from "./Components/Shared/shared-components.module";
 import {AuthUserGuard} from "./Guards/auth-user.guard";
 import {Paths} from "./Constant/paths";
+import {BsDocListComponent} from "./Components/Features/Business/bsDoc/bs-doc-list/bs-doc-list.component";
 
 const routes: Routes = [
   {path: '', component: IndexNormalComponent, canActivate: [AuthUserGuard],children: [
       {path: Paths.DASHBOARD.path, component: DashboardComponent},
-      {path: Paths.BUSINESS.path, component: BusinessListComponent}
+      {path: Paths.BUSINESS.path, component: BusinessListComponent},
+      {path: Paths.BS_DOC.path, component: BsDocListComponent}
   ]},
   {path: 'login', component: LoginComponent}
 ];
