@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {UiMessage} from "../../../Model/Shared/ui-message";
 import {AlertService} from "../../../Service/Shared/alert.service";
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-alerts',
@@ -11,12 +12,16 @@ export class AlertsComponent implements OnInit {
 
   public alerts : UiMessage[] = [];
 
+  private alertSubscription : Subscription;
+
   constructor(
     private alertService : AlertService
   ) { }
 
   ngOnInit(): void {
-    this.alerts = this.alertService.getAlertsNorm();
+    this.alertSubscription = this.alertService.getAlertsObservable().subscribe((updatedAlerts) => {
+      this.alerts = updatedAlerts;
+    })
   }
 
   public deleteAlert(alert : UiMessage) : void{
