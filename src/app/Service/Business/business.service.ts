@@ -4,11 +4,13 @@ import {HttpClient} from "@angular/common/http";
 import {ModelService} from "../Shared/model.service";
 import {Business} from "../../Model/Business/Business";
 import {LoginService} from "../Shared/login.service";
-import {User} from "../../Model/Shared/User";
 import {PageRequest} from "../../Model/Shared/pageRequest";
 import {ActionsButtons} from "../../Model/Shared/actions-buttons";
 import {tableActionButton} from "../../Constant/table-action-button";
 import {Router} from "@angular/router";
+import {userRole} from "../../Constant/userRole";
+import {ErrorHandlerService} from "../Shared/error-handler.service";
+import {errorMessages} from "../../Constant/errorMessages";
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +21,8 @@ export class BusinessService extends ModelService<Business> {
 
   constructor(protected override http: HttpClient,
               protected override loginService: LoginService,
-              private router: Router) {
+              private router: Router,
+              private errorService : ErrorHandlerService) {
     super(http,loginService, Const.API_URL + Const.BUSINESS);
     this.url = Const.API_URL + Const.BUSINESS;
   }
@@ -28,8 +31,11 @@ export class BusinessService extends ModelService<Business> {
 
     if (this.actualUser != null || this.actualUser != undefined) {
       // @ts-ignore
-      if (this.actualUser.roles[0] != "ROLE_CLIENT") {
-        throw {message: "You don't have permission to view this"};
+      if (this.actualUser.roles[0] != userRole.CLIENT) {
+        let newError : Error = new Error();
+        newError.message = errorMessages.FORBIDDEN;
+        newError.name = "Internal Error";
+        this.errorService.processError(newError);
       }
     }
 
@@ -42,9 +48,9 @@ export class BusinessService extends ModelService<Business> {
 
   override getButtonPermissions(): ActionsButtons[] {
     return [
-      {actionName: tableActionButton.LOAD, roles: ["ROLE_CLIENT"]},
-      {actionName: tableActionButton.EDIT, roles: ["ROLE_CLIENT"]},
-      {actionName: tableActionButton.DELETE, roles: ["ROLE_CLIENT"]}
+      {actionName: tableActionButton.LOAD, roles: [userRole.CLIENT]},
+      {actionName: tableActionButton.EDIT, roles: [userRole.CLIENT]},
+      {actionName: tableActionButton.DELETE, roles: [userRole.CLIENT]}
     ];
   }
 
