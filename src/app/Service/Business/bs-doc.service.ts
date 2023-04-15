@@ -8,6 +8,7 @@ import {Const} from "../../Constant/const";
 import {ActionsButtons} from "../../Model/Shared/actions-buttons";
 import {tableActionButton} from "../../Constant/table-action-button";
 import {userRole} from "../../Constant/userRole";
+import {HiddenKey} from "../../Model/Shared/hiddenKey";
 
 @Injectable({
   providedIn: 'root'
@@ -22,12 +23,17 @@ export class BsDocService extends ModelService<bsDoc>{
     this.url = Const.API_URL + Const.bs_DOC;
   }
 
-
   override getButtonPermissions(): ActionsButtons[] {
     return [
       {actionName: tableActionButton.VIEW, roles: [userRole.CLIENT]},
       {actionName: tableActionButton.DELETE, roles: [userRole.CLIENT]},
       {actionName: tableActionButton.EDIT, roles: [userRole.CLIENT]}
     ];
+  }
+
+  override hiddenKeys(): HiddenKey[] {
+    return [
+      new HiddenKey("content" )
+    ]
   }
 }
