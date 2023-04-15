@@ -2,7 +2,7 @@ export class User{
   public id : number | null | undefined;
   public username : string;
   public password : string | null | undefined;
-  public roles : String [];
+  public roles : string [];
   public firstName : string;
   public lastName : string;
   public email : string;
@@ -11,7 +11,7 @@ export class User{
                 id ?: number | null | undefined,
                 username ?: string,
                 password ?: string | null | undefined,
-                roles ?: String[] ,
+                roles ?: string[] ,
                 firstName ?: string,
                 lastName ?: string ,
                 email ?: string
@@ -50,7 +50,7 @@ export class User{
     return this;
   }
 
-  public setRoles (roles : String[]) : User{
+  public setRoles (roles : string[]) : User{
     this.roles = roles;
     return this;
   }
