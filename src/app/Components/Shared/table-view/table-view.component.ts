@@ -9,6 +9,8 @@ import {PageRequest} from "../../../Model/Shared/pageRequest";
 import {ActionsButtons} from "../../../Model/Shared/actions-buttons";
 import {User} from "../../../Model/Shared/User";
 import {ErrorHandlerService} from "../../../Service/Shared/error-handler.service";
+import {AlertService} from "../../../Service/Shared/alert.service";
+import {HiddenKey} from "../../../Model/Shared/hiddenKey";
 
 @Component({
   selector: 'app-table-view',
@@ -19,7 +21,8 @@ export class TableViewComponent<T> implements OnInit {
 
   @Input() model : T;
 
-  @Input() modelService : ModelService<T>
+  @Input() modelService : ModelService<T>;
+
   private sort : SortRequest[] = [];
 
   private filter : FilterRequest[];
@@ -34,7 +37,7 @@ export class TableViewComponent<T> implements OnInit {
 
   public modelsTransformed : { [key: string]: any }[];
 
-  public modelKeys : string[];
+  public modelKeys : string[] = [];
 
   public modelKeysTransformed : string[];
 
@@ -42,9 +45,12 @@ export class TableViewComponent<T> implements OnInit {
 
   public actions : ActionsButtons[] = [];
 
+  private user : User | null;
+
   constructor(
     private loginService : LoginService,
-    private errorHandler : ErrorHandlerService
+    private errorHandler : ErrorHandlerService,
+    private alertService : AlertService
   ) {
     //Set default pageRequest
     this.pageRequest.page = 0;
@@ -55,12 +61,12 @@ export class TableViewComponent<T> implements OnInit {
 
     this.getPageResponse();
 
-    let actualUSer : User | null = this.loginService.getActualUser() != null ? this.loginService.getActualUser() : null;
-    if (actualUSer != null){
+    this.user = this.loginService.getActualUser() != null ? this.loginService.getActualUser() : null;
+    if (this.user != null){
       for (let i = 0; i < this.modelService.getButtonPermissions().length; i ++){
         let action = this.modelService.getButtonPermissions()[i];
         // @ts-ignore
-        if (action.roles.indexOf(actualUSer.roles[0]) >= 0){
+        if (action.roles.indexOf(this.user.roles[0]) >= 0){
           this.actions.push(action);
         }
       }
@@ -76,19 +82,18 @@ export class TableViewComponent<T> implements OnInit {
     actions.classList.add("show-out");
   }
 
-
   private getPageResponse() {
 
     let data : PageableResponse<T>;
     this.pageRequest.sort = this.sort;
-    console.log(this.pageRequest)
 
     this.modelService.getPageListView<T>(this.pageRequest).subscribe({
       next : (response) => {
         this.pageAbleResponse = response;
         data = response;
         // @ts-ignore
-        this.modelKeys = Object.keys(data.content[0]);
+        let keys : string[] = Object.keys(data.content[0]);
+        this.setModelKeys(keys);
         if (this.firstLoad){
           this.modelKeysTransformed = this.modelKeys.slice();
           this.firstLoad = false;
@@ -99,6 +104,27 @@ export class TableViewComponent<T> implements OnInit {
       error : (e) => {
         this.errorHandler.processError(e.error);
       }
+    });
+  }
+
+  private setModelKeys(responseKeys : string[]) : void{
+
+    const actualUserRole : string | undefined = this.user?.roles[0].toString();
+
+    responseKeys.forEach((key : string) => {
+
+      let actualHiddenKey : HiddenKey | undefined = this.modelService.hiddenKeys().find((hiddenKey : HiddenKey) => hiddenKey.actualKey === key);
+
+      if (actualHiddenKey){
+        if (actualUserRole){
+          if (actualHiddenKey.authorizeRoles.indexOf(actualUserRole) >= 0){
+            this.modelKeys.push(key);
+          }
+        }
+      }else {
+        this.modelKeys.push(key);
+      }
+
     });
 
   }
@@ -111,25 +137,24 @@ export class TableViewComponent<T> implements OnInit {
 
     this.modelsTransformed.forEach((model) => {
 
-      let modelTomodify = model;
+      let modelToModify = model;
 
-      for (let key in modelTomodify) {
+      for (let key in modelToModify) {
 
-        let insideValue = modelTomodify[key];
+        let insideValue = modelToModify[key];
 
         if (insideValue != null && typeof insideValue === "object"){
 
           // @ts-ignore
           if (insideValue.hasOwnProperty("name")){
             // @ts-ignore
-            modelTomodify[key] = insideValue.name;
+            modelToModify[key] = insideValue.name;
           }// @ts-ignore
           else if (insideValue.hasOwnProperty("firstName")){
             // @ts-ignore
-            modelTomodify[key] = insideValue.firstName;
+            modelToModify[key] = insideValue.firstName;
           }
         }
-
       }
     });
 
@@ -191,10 +216,6 @@ export class TableViewComponent<T> implements OnInit {
     this.getPageResponse();
   }
 
-  public checkPageRequest(){
-    console.log(this.pageRequest);
-    console.log(this.pageAbleResponse);
-  }
 
   public getPaginationNumbers() : {page: number, isTopLeft : boolean, isTopRight : boolean, isActualPage: boolean}[] {
 
@@ -254,6 +275,7 @@ export class TableViewComponent<T> implements OnInit {
 
     //Check if we need to add a top right button
     let lastNumber = newPagination[newPagination.length-1].page;
+
     if (lastNumber < totalPages ) {
       newPagination.push(
         {page: totalPages, isTopLeft: false, isTopRight: true, isActualPage: false}
