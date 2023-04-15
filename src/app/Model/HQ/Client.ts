@@ -14,7 +14,7 @@ export class Client extends User{
                 id ?: number | null | undefined,
                 username ?: string,
                 password ?: string | null | undefined,
-                roles ?: String[] ,
+                roles ?: string[] ,
                 firstName ?: string,
                 lastName ?: string ,
                 email ?: string,
