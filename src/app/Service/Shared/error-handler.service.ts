@@ -4,6 +4,7 @@ import {LoginService} from "./login.service";
 import {UiMessage} from "../../Model/Shared/ui-message";
 import {messageType} from "../../Constant/messageType";
 import {AlertService} from "./alert.service";
+import {errorMessages} from "../../Constant/errorMessages";
 
 @Injectable({
   providedIn: 'root'
@@ -17,14 +18,23 @@ export class ErrorHandlerService {
   ) { }
 
   public processError(actualError : Error) : void{
+    console.log(actualError.message);
     this.errorFilter(actualError.message);
   }
 
   private errorFilter(errorMessage : string){
 
-    if (errorMessage === "Invalid Token received!"){
-      this.showErrorMessageUI(errorMessage);
-      this.clearUser();
+    switch (errorMessage){
+      case errorMessages.INVALID_TOKEN : {
+        this.showErrorMessageUI(errorMessage);
+        this.clearUser();
+        break;
+      }
+      case errorMessages.FORBIDDEN : {
+        this.showErrorMessageUI(errorMessage);
+        this.router.navigate([""]);
+        break;
+      }
     }
 
   }
