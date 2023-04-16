@@ -26,4 +26,5 @@ export class BusinessListComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  protected readonly Business = Business;
 }
