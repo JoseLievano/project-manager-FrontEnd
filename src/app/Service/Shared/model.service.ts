@@ -6,6 +6,8 @@ import {PageableResponse} from "../../Model/Shared/PageableResponse";
 import {User} from "../../Model/Shared/User";
 import {ActionsButtons} from "../../Model/Shared/actions-buttons";
 import {LoginService} from "./login.service";
+import {HiddenKey} from "../../Model/Shared/hiddenKey";
+import {ViewKey} from "../../Model/Shared/ViewKey";
 
 @Injectable({
   providedIn: 'root'
@@ -59,6 +61,59 @@ export abstract class ModelService<T>{
 
   public executeAction(action : string, id : number) : void {
     //Modify how actions are executed
+  }
+
+  public hiddenKeys() : HiddenKey[]{
+    return [];
+  }
+
+  public canAddNew() : boolean {
+
+    let actualRole : string | undefined = this.loginService.getActualUser()?.roles[0];
+
+    if (actualRole){
+      return this.rolesAbleToAddNew().indexOf(actualRole) != -1;
+    }else {
+      return false;
+    }
+
+  }
+
+  protected rolesAbleToAddNew () : string []{
+    return [];
+  }
+
+  protected getViewKeys () : ViewKey[] {
+    return [];
+  }
+
+  public getKeys() : string [] {
+
+    const actualViewKeys : ViewKey[] = this.getViewKeys();
+
+    const role : string = this.loginService.getActualUserRole().toString();
+
+    let keys : string [] = [];
+
+    actualViewKeys.forEach(key => {
+      /*console.log(key.privateKeyName + " | " + (key.accessRole.indexOf(role)))*/
+      if ((key.accessRole.indexOf(role)) != -1)
+        keys.push(key.privateKeyName)
+    })
+
+    return keys;
+  }
+
+  public getKeyPublicName(privateKeyName : string) : string {
+    let index : number = this.getKeys().indexOf(privateKeyName);
+
+    if (index == -1)
+      return "non";
+
+    let actualKey : ViewKey = this.getViewKeys()[index];
+
+    return actualKey.publicKeyName;
+
   }
 
 }
