@@ -4,9 +4,4 @@ export class ActionsButtons {
 
   public roles : string[];
 
-  /*public ActionsButtons(actionName : string, roles : string[]){
-    this.actionName = actionName;
-    this.roles = roles;
-  }*/
-
 }
