@@ -26,14 +26,20 @@ export class BsDocService extends ModelService<bsDoc>{
   override getButtonPermissions(): ActionsButtons[] {
     return [
       {actionName: tableActionButton.VIEW, roles: [userRole.CLIENT]},
-      {actionName: tableActionButton.DELETE, roles: [userRole.CLIENT]},
-      {actionName: tableActionButton.EDIT, roles: [userRole.CLIENT]}
+      {actionName: tableActionButton.EDIT, roles: [userRole.CLIENT]},
+      {actionName: tableActionButton.DELETE, roles: [userRole.CLIENT]}
     ];
   }
 
   override hiddenKeys(): HiddenKey[] {
     return [
-      new HiddenKey("content" )
+      new HiddenKey("content" ),
+      new HiddenKey("bsDocsCategory")
     ]
+  }
+
+
+  protected override rolesAbleToAddNew(): string[] {
+    return [userRole.CLIENT, userRole.ADMIN, userRole.BS_MANAGER]
   }
 }
