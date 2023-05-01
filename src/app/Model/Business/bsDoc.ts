@@ -1,64 +1,43 @@
 import {Business} from "./Business";
 import {bsDocsCategory} from "./bsDocsCategory";
+import {CatContent} from "../Shared/cat-content";
 
-export class bsDoc{
+export class bsDoc extends CatContent{
 
-  public id : Number | undefined | null;
+  public business : Business | null;
 
-  public title : String | undefined | null;
+  public bsDocCategory : bsDocsCategory | null;
 
-  public content : String | undefined | null;
+  public constructor(
+    business?: Business,
+    bsDocCategory? : bsDocsCategory,
+    id? : number,
+    title? : string,
+    content? : string
+  ) {
+    super();
+    if (business)
+      this.business = business;
 
-  public business : Business | undefined | null;
+    if (bsDocCategory){
+      this.bsDocCategory = bsDocCategory;
+      this.category = bsDocCategory;
+    }
 
-  public bsDocCategory : bsDocsCategory | undefined | null;
+    if (id)
+      this.id = id;
 
-  public bsDoc(
-                id : Number | undefined | null,
-                title : String | undefined | null,
-                content : String | undefined | null,
-                business : Business | undefined | null,
-                bsDocCategory : bsDocsCategory | undefined | null
-  ){
-    this.id = id;
-    this.title = title;
-    this.content = content;
-    this.business = business;
-    this.bsDocCategory = bsDocCategory;
-  }
+    if (title)
+      this.title = title;
 
-  static builder() : bsDoc{
-    return new bsDoc();
-  }
+    if (content)
+      this.content = content;
 
-  public setId (id : Number) : bsDoc{
-    this.id = id;
-    return this;
-  }
-
-  public setTitle (title : String) : bsDoc{
-    this.title = title;
-    return this;
-  }
-
-  public setContent (content : String) : bsDoc{
-    this.content = content;
-    return this;
-  }
-
-  public setBusiness (business : Business) : bsDoc{
-    this.business = business;
-    return this;
-  }
-
-  public setBsDocCategory (bsDocCategory : bsDocsCategory) : bsDoc{
-    this.bsDocCategory = bsDocCategory;
-    return this;
-  }
-
-  public build() : bsDoc{
-    return this;
   }
 
 
+  override setContent() {
+    if (this.bsDocCategory)
+      this.category = this.bsDocCategory;
+  }
 }
