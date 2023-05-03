@@ -1,54 +1,34 @@
 import {Business} from "./Business";
 import {bsDoc} from "./bsDoc";
+import {Category} from "../Shared/category";
 
-export class bsDocsCategory{
+export class bsDocsCategory extends Category{
 
-  public id : Number | undefined | null;
+  private business : Business;
 
-  public name : String | undefined | null;
+  private bsDocs : bsDoc[] | null;
 
-  public business : Business | undefined | null;
+  public constructor(
+    id : number | null,
+    name : string,
+    description : string,
+    business : Business,
+    bsDocs : bsDoc[]
+  ) {
+    super();
+    if (id)
+      this.id = id;
 
-  public bsDocs : bsDoc[] | undefined | null;
-
-  public bsDocsCategory(
-                        id : Number | undefined | null,
-                        name : String | undefined | null,
-                        business : Business | undefined | null,
-                        bsDocs : bsDoc[] | undefined | null
-  ){
-    this.id = id;
     this.name = name;
+    this.description = description;
     this.business = business;
     this.bsDocs = bsDocs;
+    this.content = bsDocs;
   }
 
-  static builder() : bsDocsCategory{
-    return new bsDocsCategory();
-  }
 
-  public setId (id : Number) : bsDocsCategory{
-    this.id = id;
-    return this;
+  override setContent() {
+    if (this.bsDocs)
+      this.content = this.bsDocs;
   }
-
-  public setName (name : String) : bsDocsCategory{
-    this.name = name;
-    return this;
-  }
-
-  public setBusiness (business : Business) : bsDocsCategory{
-    this.business = business;
-    return this;
-  }
-
-  public setBsDocs (bsDocs : bsDoc[]) : bsDocsCategory{
-    this.bsDocs = bsDocs;
-    return this;
-  }
-
-  public build() : bsDocsCategory{
-    return this;
-  }
-
 }
