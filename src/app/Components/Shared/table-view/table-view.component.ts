@@ -11,6 +11,8 @@ import {User} from "../../../Model/Shared/User";
 import {ErrorHandlerService} from "../../../Service/Shared/error-handler.service";
 import {AlertService} from "../../../Service/Shared/alert.service";
 import {HiddenKey} from "../../../Model/Shared/hiddenKey";
+import {FieldListGeneratorService} from "../../../Service/Shared/field-list-generator.service";
+import {ViewKey} from "../../../Model/Shared/ViewKey";
 
 @Component({
   selector: 'app-table-view',
@@ -37,9 +39,9 @@ export class TableViewComponent<T> implements OnInit {
 
   public modelsTransformed : { [key: string]: any }[];
 
-  public modelKeys : string[] = [];
+  public modelKeys : ViewKey[] = [];
 
-  public modelKeysTransformed : string[];
+  public modelKeysTransformed : ViewKey[];
 
   private firstLoad : boolean = true;
 
@@ -50,7 +52,8 @@ export class TableViewComponent<T> implements OnInit {
   constructor(
     private loginService : LoginService,
     private errorHandler : ErrorHandlerService,
-    private alertService : AlertService
+    private alertService : AlertService,
+    private fieldListGenerator : FieldListGeneratorService
   ) {
     //Set default pageRequest
     this.pageRequest.page = 0;
@@ -91,9 +94,7 @@ export class TableViewComponent<T> implements OnInit {
       next : (response) => {
         this.pageAbleResponse = response;
         data = response;
-        // @ts-ignore
-        let keys : string[] = Object.keys(data.content[0]);
-        this.setModelKeys(keys);
+        this.modelKeys = this.modelService.getKeys();
         if (this.firstLoad){
           this.modelKeysTransformed = this.modelKeys.slice();
           this.firstLoad = false;
@@ -105,28 +106,6 @@ export class TableViewComponent<T> implements OnInit {
         this.errorHandler.processError(e.error);
       }
     });
-  }
-
-  private setModelKeys(responseKeys : string[]) : void{
-
-    const actualUserRole : string | undefined = this.user?.roles[0].toString();
-
-    responseKeys.forEach((key : string) => {
-
-      let actualHiddenKey : HiddenKey | undefined = this.modelService.hiddenKeys().find((hiddenKey : HiddenKey) => hiddenKey.actualKey === key);
-
-      if (actualHiddenKey){
-        if (actualUserRole){
-          if (actualHiddenKey.authorizeRoles.indexOf(actualUserRole) >= 0){
-            this.modelKeys.push(key);
-          }
-        }
-      }else {
-        this.modelKeys.push(key);
-      }
-
-    });
-
   }
 
   private modifyModels( data : { [key: string]: any }[] ){
@@ -144,7 +123,6 @@ export class TableViewComponent<T> implements OnInit {
         let insideValue = modelToModify[key];
 
         if (insideValue != null && typeof insideValue === "object"){
-
           // @ts-ignore
           if (insideValue.hasOwnProperty("name")){
             // @ts-ignore
@@ -160,19 +138,19 @@ export class TableViewComponent<T> implements OnInit {
 
   }
 
-  public changeKey(keyName : string, e : Event){
+  public changeKey(key : ViewKey, e : Event){
 
     let checked : boolean = (e.target as HTMLInputElement).checked;
 
     if (checked){
-      let indexKey = this.modelKeysTransformed.indexOf(keyName);
+      let indexKey = this.modelKeysTransformed.findIndex((keyToFind : ViewKey) => keyToFind.privateKeyName === key.privateKeyName && keyToFind.publicKeyName === key.publicKeyName );
       if (indexKey < 0){
-        let normalIndexPosition = this.modelKeys.indexOf(keyName);
-        this.modelKeysTransformed.splice(normalIndexPosition, 0, keyName);
+        let normalIndexPosition = this.modelKeys.findIndex((keyToFind : ViewKey) => keyToFind.privateKeyName === key.privateKeyName && keyToFind.publicKeyName === key.publicKeyName );
+        this.modelKeysTransformed.splice(normalIndexPosition, 0, key);
       }
 
     }else{
-      this.modelKeysTransformed = this.modelKeysTransformed.filter(key => key !== keyName);
+      this.modelKeysTransformed = this.modelKeysTransformed.filter(actualKey => actualKey.privateKeyName !== key.privateKeyName);
     }
 
   }
@@ -295,6 +273,10 @@ export class TableViewComponent<T> implements OnInit {
     if (id != null){
       this.modelService.executeAction(action, id);
     }
+  }
+
+  public canAddNew () : boolean{
+    return this.modelService.canAddNew();
   }
 
 }
