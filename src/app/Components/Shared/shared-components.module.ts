@@ -8,6 +8,7 @@ import {RouterOutlet} from "@angular/router";
 import { LogoutBtnTopComponent } from './logout-btn-top/logout-btn-top.component';
 import { TableViewComponent } from './table-view/table-view.component';
 import { AlertsComponent } from './alerts/alerts.component';
+import { CategoryViewComponent } from './category-view/category-view.component';
 
 
 
@@ -19,7 +20,8 @@ import { AlertsComponent } from './alerts/alerts.component';
     DashboardComponent,
     LogoutBtnTopComponent,
     TableViewComponent,
-    AlertsComponent
+    AlertsComponent,
+    CategoryViewComponent
   ],
   imports: [
     CommonModule,
@@ -31,6 +33,7 @@ import { AlertsComponent } from './alerts/alerts.component';
         SidebarComponent,
         TableViewComponent,
         AlertsComponent,
+        CategoryViewComponent,
     ]
 })
 export class SharedComponentsModule { }
