@@ -6,22 +6,23 @@ export class bsDoc extends CatContent{
 
   public business : Business | null;
 
-  public bsDocCategory : bsDocsCategory | null;
+  public bsDocsCategory : bsDocsCategory | null;
 
   public constructor(
+    bsDocsCategory? : bsDocsCategory,
     business?: Business,
-    bsDocCategory? : bsDocsCategory,
+    content? : string,
     id? : number,
-    title? : string,
-    content? : string
+    title? : string
   ) {
     super();
-    if (business)
+    if (business){
       this.business = business;
+    }
 
-    if (bsDocCategory){
-      this.bsDocCategory = bsDocCategory;
-      this.category = bsDocCategory;
+    if (bsDocsCategory){
+      this.bsDocsCategory = bsDocsCategory;
+      this.category = bsDocsCategory;
     }
 
     if (id)
@@ -35,9 +36,8 @@ export class bsDoc extends CatContent{
 
   }
 
-
-  override setContent() {
-    if (this.bsDocCategory)
-      this.category = this.bsDocCategory;
+  override setCategory() {
+    if (this.bsDocsCategory)
+      this.category = this.bsDocsCategory;
   }
 }
