@@ -87,33 +87,21 @@ export abstract class ModelService<T>{
     return [];
   }
 
-  public getKeys() : string [] {
+  public getKeys() : ViewKey [] {
 
     const actualViewKeys : ViewKey[] = this.getViewKeys();
 
     const role : string = this.loginService.getActualUserRole().toString();
 
-    let keys : string [] = [];
+    let keys : ViewKey [] = [];
 
     actualViewKeys.forEach(key => {
       /*console.log(key.privateKeyName + " | " + (key.accessRole.indexOf(role)))*/
       if ((key.accessRole.indexOf(role)) != -1)
-        keys.push(key.privateKeyName)
+        keys.push(key)
     })
 
     return keys;
-  }
-
-  public getKeyPublicName(privateKeyName : string) : string {
-    let index : number = this.getKeys().indexOf(privateKeyName);
-
-    if (index == -1)
-      return "non";
-
-    let actualKey : ViewKey = this.getViewKeys()[index];
-
-    return actualKey.publicKeyName;
-
   }
 
 }
