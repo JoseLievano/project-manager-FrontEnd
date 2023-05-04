@@ -10,8 +10,6 @@ export class CatContent{
 
   public category : Category;
 
-  public setContent() : void {
-
-  }
+  public setCategory() : void {}
 
 }
