@@ -9,6 +9,7 @@ import {ActionsButtons} from "../../Model/Shared/actions-buttons";
 import {tableActionButton} from "../../Constant/table-action-button";
 import {userRole} from "../../Constant/userRole";
 import {HiddenKey} from "../../Model/Shared/hiddenKey";
+import {ViewKey, ViewKeyBuilder} from "../../Model/Shared/ViewKey";
 
 @Injectable({
   providedIn: 'root'
@@ -33,13 +34,27 @@ export class BsDocService extends ModelService<bsDoc>{
 
   override hiddenKeys(): HiddenKey[] {
     return [
-      new HiddenKey("content" ),
-      new HiddenKey("bsDocsCategory")
+      new HiddenKey("content"),
     ]
   }
 
 
   protected override rolesAbleToAddNew(): string[] {
     return [userRole.CLIENT, userRole.ADMIN, userRole.BS_MANAGER]
+  }
+
+
+  protected override getViewKeys(): ViewKey[] {
+
+    let commonRoles : string[] = [userRole.ADMIN, userRole.CLIENT, userRole.BS_MANAGER, userRole.BS_EMPLOYEE, userRole.BS_CLIENT]
+
+    return [
+      ViewKeyBuilder.builder().setPrivateKeyName("id").setPublicKeyName("ID").setAccessRole(commonRoles),
+      ViewKeyBuilder.builder().setPrivateKeyName("title").setPublicKeyName("Title").setAccessRole(commonRoles),
+      ViewKeyBuilder.builder().setPrivateKeyName("bsDocsCategory").setPublicKeyName("Category").setAccessRole(commonRoles),
+      ViewKeyBuilder.builder().setPrivateKeyName("content").setPublicKeyName("Content").setAccessRole([userRole.BS_MANAGER]),
+      ViewKeyBuilder.builder().setPrivateKeyName("business").setPublicKeyName("Business").setAccessRole(commonRoles)
+    ]
+
   }
 }
