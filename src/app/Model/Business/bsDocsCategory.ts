@@ -9,21 +9,28 @@ export class bsDocsCategory extends Category{
   private bsDocs : bsDoc[] | null;
 
   public constructor(
-    id : number | null,
-    name : string,
-    description : string,
-    business : Business,
-    bsDocs : bsDoc[]
+    id? : number | null,
+    name? : string,
+    description? : string,
+    business? : Business,
+    bsDocs? : bsDoc[]
   ) {
     super();
     if (id)
       this.id = id;
 
-    this.name = name;
-    this.description = description;
-    this.business = business;
-    this.bsDocs = bsDocs;
-    this.content = bsDocs;
+    if (name)
+      this.name = name;
+
+    if (description)
+      this.description = description;
+
+    if (business)
+      this.business = business;
+
+    if (bsDocs)
+      this.bsDocs = bsDocs;
+
   }
 
 
