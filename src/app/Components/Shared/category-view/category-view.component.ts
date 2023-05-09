@@ -27,6 +27,9 @@ export class CategoryViewComponent<T> implements OnInit {
   private pageRequest : PageRequest = new PageRequest();
 
   private user : User | null;
+
+  private pageableResponse : PageableResponse<T> = new PageableResponse<T>();
+
   constructor(
     private loginService : LoginService,
     private errorHandler : ErrorHandlerService,
@@ -65,6 +68,15 @@ export class CategoryViewComponent<T> implements OnInit {
 
     let data : PageableResponse<T>;
 
+    console.log(this.pageRequest);
+
+    this.modelService.getPageListView<T>(this.pageRequest).subscribe({
+      next : (response) => {
+        this.pageableResponse = response;
+        data = response;
+        console.log(data);
+      }
+    });
 
   }
 
