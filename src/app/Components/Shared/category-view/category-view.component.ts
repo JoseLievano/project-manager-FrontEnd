@@ -16,11 +16,23 @@ import {OperationRequest} from "../../../Model/Shared/operationRequest";
   templateUrl: './category-view.component.html',
   styleUrls: ['./category-view.component.css']
 })
-export class CategoryViewComponent<T> implements OnInit {
+export class CategoryViewComponent<T extends Category, C> implements OnInit {
 
   @Input() model : T;
 
   @Input() modelService : ModelService<T>;
+
+  @Input() contentModel : C;
+
+  @Input() contentModelService : ModelService<C>;
+
+  public contentFilter : FilterRequest[] = [];
+
+  public categoryHasContent : boolean = false;
+
+  public actualCategory : Category | null = null;
+
+  public categoryLoaded : boolean = false;
 
   public categories : Category[] = [];
 
@@ -58,7 +70,28 @@ export class CategoryViewComponent<T> implements OnInit {
 
     filter.operations = [operation];
 
-    this.pageRequest.filter = [filter];
+    this.pageRequest.filter = [
+      {
+        "field" : "business",
+        "operations" : [
+          {
+            "operator" : "=",
+            "value" : this.businessService.getLoadedBusiness().toString(),
+            "field": "id"
+          }
+        ]
+      },
+      {
+        "field" : "level",
+        "operations" : [
+          {
+            "operator" : "=",
+            "value" : "0",
+            "field" : "level"
+          }
+        ]
+      }
+    ];
 
     this.user = this.loginService.getActualUser() != null ? this.loginService.getActualUser() : null;
     this.getCategories();
@@ -68,16 +101,104 @@ export class CategoryViewComponent<T> implements OnInit {
 
     let data : PageableResponse<T>;
 
-    console.log(this.pageRequest);
-
     this.modelService.getPageListView<T>(this.pageRequest).subscribe({
       next : (response) => {
         this.pageableResponse = response;
-        data = response;
-        console.log(data);
+        // @ts-ignore
+        this.categories = response.content;
+        console.log(this.pageRequest.filter);
+        console.log("categories:")
+        console.log(this.categories);
       }
     });
+  }
+
+  private setActualCategory(id : number) : void{
+
+    this.categoryLoaded = false;
+
+    this.modelService.getOne<Category>(id).subscribe({
+      next : (response : Category) => {
+        this.actualCategory = response;
+        this.getActualCategoryContent();
+        this.getSubCategories();
+
+      }
+    })
 
   }
 
+  public viewCategory(id : number | null){
+    if (id){
+      this.setActualCategory(id);
+    }
+  }
+
+  private getActualCategoryContent(){
+
+    this.contentFilter = [];
+
+    let actualOperations : OperationRequest = new OperationRequest();
+    actualOperations.field = "id";
+    // @ts-ignore
+    actualOperations.value = this.actualCategory?.id.toString();
+    actualOperations.operator = "=";
+
+
+    this.contentFilter = [
+      {
+        "field" : "category",
+        "operations" : [actualOperations]
+      }
+    ]
+
+    this.categoryLoaded = true;
+
+  }
+
+  private getSubCategories(){
+
+    if (this.categoryLoaded){
+
+      this.pageRequest.filter = [];
+
+      this.pageRequest.filter = [
+        {
+          "field": "parentCategory",
+          "operations": [
+            {
+              "operator": "=",
+              // @ts-ignore
+              "value": this.actualCategory.id.toString(),
+              "field": "parentCategory"
+            }
+          ]
+        },
+        {
+          "field" : "business",
+          "operations" : [
+            {
+              "operator" : "=",
+              "value" : this.businessService.getLoadedBusiness().toString(),
+              "field": "id"
+            }
+          ]
+        },
+        {
+          "field" : "level",
+          "operations" : [
+            {
+              "operator" : "=",
+              // @ts-ignore
+              "value" : (this.actualCategory.level + 1).toString(),
+              "field" : "level"
+            }
+          ]
+        }
+      ]
+
+      this.getCategories();
+
+    }
+  }
 }
