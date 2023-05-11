@@ -25,9 +25,9 @@ export class TableViewComponent<T> implements OnInit {
 
   @Input() modelService : ModelService<T>;
 
-  private sort : SortRequest[] = [];
+  @Input() filter : FilterRequest[];
 
-  private filter : FilterRequest[];
+  private sort : SortRequest[] = [];
 
   private operationRequest : OperationRequest[];
 
@@ -88,7 +88,12 @@ export class TableViewComponent<T> implements OnInit {
   private getPageResponse() {
 
     let data : PageableResponse<T>;
+
     this.pageRequest.sort = this.sort;
+
+    if (this.filter){
+      this.pageRequest.filter = this.filter;
+    }
 
     this.modelService.getPageListView<T>(this.pageRequest).subscribe({
       next : (response) => {
