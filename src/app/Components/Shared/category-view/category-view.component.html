@@ -1,1 +1,18 @@
-<p>category-view works!</p>
+<div class="grid grid-cols-4 gap-5 mb-5">
+
+  <div *ngFor="let category of categories" class="card card-compact bg-base-100 shadow-xl">
+    <figure><img src="https://picsum.photos/400/150" alt="Shoes" /></figure>
+    <div class="card-body">
+      <h2 class="card-title">{{category.name}}</h2>
+      <p>{{category.description}}</p>
+      <div class="card-actions justify-end">
+        <button class="btn btn-primary" (click)="viewCategory(category.id)">View</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<app-table-view *ngIf="categoryLoaded" [model]="contentModel" [modelService]="contentModelService" [filter]="contentFilter"></app-table-view>
+
+
