@@ -26,7 +26,11 @@ export abstract class ModelService<T>{
   }
 
   //Get one element
-  private getOne(id : number){
+  public getOne<T>(id : number) : Observable<T>{
+
+    const url : string = this.apiBaseURL + id;
+
+    return this.http.get<T>(url);
 
   }
 
