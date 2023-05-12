@@ -13,7 +13,8 @@ export class bsDocsCategory extends Category{
     name? : string,
     description? : string,
     business? : Business,
-    bsDocs? : bsDoc[]
+    bsDocs? : bsDoc[],
+    level? : number
   ) {
     super();
     if (id)
