@@ -8,9 +8,11 @@ export class Category{
 
   public description : string;
 
-  public icon : string;
+  public coverImage : string;
 
   public content : CatContent[];
+
+  public level : number;
 
   public constructor() {
   }
