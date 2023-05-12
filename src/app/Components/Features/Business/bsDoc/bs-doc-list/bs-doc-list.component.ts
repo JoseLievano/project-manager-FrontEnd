@@ -17,14 +17,14 @@ export class BsDocListComponent implements OnInit {
 
   private user : User | null;
 
+  public contentModel : bsDoc = new bsDoc();
+
   constructor(public bsDocsCategoryService : BsDocsCategoryService,
+              public bsDocService : BsDocService,
               private loginService : LoginService) {
     this.user = loginService.getActualUser();
   }
 
   ngOnInit(): void {
   }
-
-  protected readonly bsDoc = bsDoc;
-  protected readonly bsDocsCategory = bsDocsCategory;
 }
