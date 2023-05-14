@@ -42,6 +42,8 @@ export class CategoryViewComponent<T extends Category, C> implements OnInit {
 
   private pageableResponse : PageableResponse<T> = new PageableResponse<T>();
 
+  public breadCrumbsCats : {id : number, name : string}[] = [];
+
   constructor(
     private loginService : LoginService,
     private errorHandler : ErrorHandlerService,
@@ -59,7 +61,28 @@ export class CategoryViewComponent<T extends Category, C> implements OnInit {
   }
 
   ngOnInit(): void {
+    this.setDefaultPageRequestFilters();
+    this.user = this.loginService.getActualUser() != null ? this.loginService.getActualUser() : null;
+    this.getCategories();
+  }
 
+  private getCategories() : void {
+
+    let data : PageableResponse<T>;
+
+    this.modelService.getPageListView<T>(this.pageRequest).subscribe({
+      next : (response) => {
+        console.log(this.pageRequest.filter);
+        console.log("Response");
+        console.log(response);
+        this.pageableResponse = response;
+        // @ts-ignore
+        this.categories = response.content;
+      }
+    });
+  }
+
+  private setDefaultPageRequestFilters() : void {
     let filter : FilterRequest = new FilterRequest();
     filter.field = "business";
 
@@ -92,25 +115,6 @@ export class CategoryViewComponent<T extends Category, C> implements OnInit {
         ]
       }
     ];
-
-    this.user = this.loginService.getActualUser() != null ? this.loginService.getActualUser() : null;
-    this.getCategories();
-  }
-
-  private getCategories() : void {
-
-    let data : PageableResponse<T>;
-
-    this.modelService.getPageListView<T>(this.pageRequest).subscribe({
-      next : (response) => {
-        this.pageableResponse = response;
-        // @ts-ignore
-        this.categories = response.content;
-        console.log(this.pageRequest.filter);
-        console.log("categories:")
-        console.log(this.categories);
-      }
-    });
   }
 
   private setActualCategory(id : number) : void{
@@ -122,7 +126,8 @@ export class CategoryViewComponent<T extends Category, C> implements OnInit {
         this.actualCategory = response;
         this.getActualCategoryContent();
         this.getSubCategories();
-
+        // @ts-ignore
+        this.checkBreadCrumbs({id : this.actualCategory.id, name: this.actualCategory.name});
       }
     })
 
@@ -170,7 +175,7 @@ export class CategoryViewComponent<T extends Category, C> implements OnInit {
               "operator": "=",
               // @ts-ignore
               "value": this.actualCategory.id.toString(),
-              "field": "parentCategory"
+              "field": "id"
             }
           ]
         },
@@ -201,4 +206,34 @@ export class CategoryViewComponent<T extends Category, C> implements OnInit {
 
     }
   }
+
+  public goHomeCategory() : void{
+    this.actualCategory = null;
+    this.categoryLoaded = false;
+    this.pageRequest.filter = [];
+    this.breadCrumbsCats = [];
+    this.setDefaultPageRequestFilters();
+    this.getCategories();
+  }
+
+  public checkBreadCrumbs(category : {id : number, name : string}) : void {
+
+    const isAlreadyInTheList : boolean = this.breadCrumbsCats.findIndex((cat) => cat.id == category.id && cat.name == category.name) != -1;
+
+    if (isAlreadyInTheList){
+
+      const actualIndex : number = this.breadCrumbsCats.findIndex((cat) => cat.id == category.id && cat.name == category.name);
+
+      this.breadCrumbsCats.splice(actualIndex + 1);
+
+    }else{
+      this.breadCrumbsCats.push(category);
+    }
+
+  }
+
+  public canAddNew() : boolean {
+    return this.modelService.canAddNew();
+  }
+
 }
