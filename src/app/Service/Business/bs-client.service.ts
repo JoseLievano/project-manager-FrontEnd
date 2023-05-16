@@ -13,8 +13,8 @@ export class BsClientService extends ModelService<bsClient>{
 
   constructor(protected override http: HttpClient,
               protected override loginService : LoginService,
-              private router : Router) {
-    super(http, loginService, Const.API_URL + Const.bs_CLIENT)
+              protected override router : Router) {
+    super(http, loginService, Const.API_URL + Const.bs_CLIENT, router)
   }
 
 }
