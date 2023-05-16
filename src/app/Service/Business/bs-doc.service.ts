@@ -19,8 +19,8 @@ export class BsDocService extends ModelService<bsDoc>{
   private url : String;
   constructor(protected override http : HttpClient,
               protected override loginService : LoginService,
-              private router : Router) {
-    super(http, loginService, Const.API_URL + Const.bs_DOC);
+              protected override router : Router) {
+    super(http, loginService, Const.API_URL + Const.bs_DOC, router);
     this.url = Const.API_URL + Const.bs_DOC;
   }
 
@@ -46,7 +46,7 @@ export class BsDocService extends ModelService<bsDoc>{
 
   protected override getViewKeys(): ViewKey[] {
 
-    let commonRoles : string[] = [userRole.ADMIN, userRole.CLIENT, userRole.BS_MANAGER, userRole.BS_EMPLOYEE, userRole.BS_CLIENT]
+    let commonRoles : string[] = [userRole.ADMIN, userRole.CLIENT, userRole.BS_MANAGER, userRole.BS_EMPLOYEE, userRole.BS_CLIENT];
 
     return [
       ViewKeyBuilder.builder().setPrivateKeyName("id").setPublicKeyName("ID").setAccessRole(commonRoles),
