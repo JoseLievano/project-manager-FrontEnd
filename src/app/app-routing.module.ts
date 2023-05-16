@@ -9,12 +9,36 @@ import {SharedComponentsModule} from "./Components/Shared/shared-components.modu
 import {AuthUserGuard} from "./Guards/auth-user.guard";
 import {Paths} from "./Constant/paths";
 import {BsDocListComponent} from "./Components/Features/Business/bsDoc/bs-doc-list/bs-doc-list.component";
+import {AddNewBsDocComponent} from "./Components/Features/Business/bsDoc/add-new-bs-doc/add-new-bs-doc.component";
+import {BsDocComponent} from "./Components/Features/Business/bsDoc/bs-doc/bs-doc.component";
+import {BusinessComponent} from "./Components/Features/Business/business/business/business.component";
+import {
+  AddNewBusinessComponent
+} from "./Components/Features/Business/business/add-new-business/add-new-business.component";
+import {
+  BsDocCategoryComponent
+} from "./Components/Features/Business/bsDocCategory/bs-doc-category/bs-doc-category.component";
+import {
+  AddNewBsDocCategoryComponent
+} from "./Components/Features/Business/bsDocCategory/add-new-bs-doc-category/add-new-bs-doc-category.component";
 
 const routes: Routes = [
   {path: '', component: IndexNormalComponent, canActivate: [AuthUserGuard],children: [
       {path: Paths.DASHBOARD.path, component: DashboardComponent},
-      {path: Paths.BUSINESS.path, component: BusinessListComponent},
-      {path: Paths.BS_DOC.path, component: BsDocListComponent}
+      {path: Paths.BUSINESS.path, component: BusinessComponent, children: [
+          {path: "", component: BusinessListComponent},
+          {path: "new", component: AddNewBusinessComponent}
+        ]
+      },
+      {path: Paths.BS_DOCS_CATEGORY.path, component: BsDocCategoryComponent, children: [
+          {path: "new", component: AddNewBsDocCategoryComponent}
+        ]
+      },
+      {path: Paths.BS_DOC.path, component: BsDocComponent, children: [
+          {path: "", component: BsDocListComponent},
+          {path: "new", component: AddNewBsDocComponent}
+        ]
+      }
   ]},
   {path: 'login', component: LoginComponent}
 ];
