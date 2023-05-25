@@ -14,7 +14,9 @@ export class LoginService {
 
   private actualUser : User | null;
 
-  constructor(private http : HttpClient, private router : Router, private roleService : RoleService) { }
+  constructor(private http : HttpClient,
+              private router : Router,
+              private roleService : RoleService) { }
 
   doLogin(user: User) {
     this.validateLoginDetails(user).subscribe({
