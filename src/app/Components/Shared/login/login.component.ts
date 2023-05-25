@@ -25,11 +25,7 @@ export class LoginComponent{
     if (this.form.value.password)
       this.User.password = this.form.value.password;
 
-    console.log("pasando el user al login service: " + this.User);
-
     this.loginService.doLogin(this.User);
-
-    console.log("login procesado, el usuario verificado es: " + this.loginService.getActualUser())
 
   }
 
