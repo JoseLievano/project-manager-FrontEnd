@@ -10,13 +10,18 @@ import {SortRequest} from "../../../Model/Shared/sortRequest";
 import {BusinessService} from "../../../Service/Business/business.service";
 import {FilterRequest} from "../../../Model/Shared/filterRequest";
 import {OperationRequest} from "../../../Model/Shared/operationRequest";
+import {CategoryService} from "../../../Service/Shared/category.service";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {AlertService} from "../../../Service/Shared/alert.service";
+import {UiMessage} from "../../../Model/Shared/ui-message";
+import {messageType} from "../../../Constant/messageType";
 
 @Component({
   selector: 'app-category-view',
   templateUrl: './category-view.component.html',
   styleUrls: ['./category-view.component.css']
 })
-export class CategoryViewComponent<T extends Category, C> implements OnInit {
+export class CategoryViewComponent<T extends Category<T>, C> implements OnInit {
 
   @Input() model : T;
 
@@ -30,11 +35,11 @@ export class CategoryViewComponent<T extends Category, C> implements OnInit {
 
   public categoryHasContent : boolean = false;
 
-  public actualCategory : Category | null = null;
+  public actualCategory : Category<T> | null = null;
 
   public categoryLoaded : boolean = false;
 
-  public categories : Category[] = [];
+  public categories : Category<T>[] = [];
 
   private pageRequest : PageRequest = new PageRequest();
 
@@ -44,10 +49,17 @@ export class CategoryViewComponent<T extends Category, C> implements OnInit {
 
   public breadCrumbsCats : {id : number, name : string}[] = [];
 
+  public newCategoryForm : FormGroup<{categoryName : FormControl, categoryDescription : FormControl}> = new FormGroup({
+      categoryName : new FormControl("", {validators: [Validators.required]}),
+      categoryDescription : new FormControl("", {validators: [Validators.required]})
+  });
+
   constructor(
     private loginService : LoginService,
     private errorHandler : ErrorHandlerService,
-    private businessService : BusinessService
+    private businessService : BusinessService,
+    private categoryService : CategoryService,
+    private alertService : AlertService
   ) {
     this.pageRequest.page = 0;
     this.pageRequest.size = 20;
@@ -68,13 +80,8 @@ export class CategoryViewComponent<T extends Category, C> implements OnInit {
 
   private getCategories() : void {
 
-    let data : PageableResponse<T>;
-
     this.modelService.getPageListView<T>(this.pageRequest).subscribe({
       next : (response) => {
-        console.log(this.pageRequest.filter);
-        console.log("Response");
-        console.log(response);
         this.pageableResponse = response;
         // @ts-ignore
         this.categories = response.content;
@@ -121,22 +128,72 @@ export class CategoryViewComponent<T extends Category, C> implements OnInit {
 
     this.categoryLoaded = false;
 
-    this.modelService.getOne<Category>(id).subscribe({
-      next : (response : Category) => {
-        this.actualCategory = response;
+    this.modelService.getOne<T>(id).subscribe({
+      next : (response : T) => {
+        this.actualCategory = this.modelService.createInstance(response);
         this.getActualCategoryContent();
         this.getSubCategories();
         // @ts-ignore
         this.checkBreadCrumbs({id : this.actualCategory.id, name: this.actualCategory.name});
+        this.categoryService.loadParentCategory(response.id);
       }
     })
-
   }
 
   public viewCategory(id : number | null){
     if (id){
       this.setActualCategory(id);
     }
+    this.clearNewCategoryForm();
+  }
+
+  public createNewCategory() : void {
+
+    let newCategory : Category<T> = new Category();
+
+    if (this.newCategoryForm.valid){
+      newCategory.name = this.newCategoryForm.value.categoryName;
+      newCategory.description = this.newCategoryForm.value.categoryDescription;
+    }
+
+    if (this.actualCategory)
+      newCategory.parentCategory = this.actualCategory.id;
+
+    newCategory.business = this.businessService.getLoadedBusiness();
+
+    this.modelService.createNew(newCategory).subscribe({
+      next : (response : Category<T>) => {
+        this.getSubCategories();
+        this.alertService.addNewAlert(
+          new UiMessage(`Category: ${response.name} has been added`, messageType.SUCCESS)
+        );
+        this.clearNewCategoryForm();
+      },
+      error : err => {
+        console.log("Error");
+        console.log(err);
+      }
+    });
+
+  }
+
+  public deleteCategory(id : number | null) {
+    if (id)
+      this.modelService.deleteOne(id).subscribe({
+        next : (response : Category<T>) =>{
+          this.getSubCategories();
+          this.alertService.addNewAlert(
+            new UiMessage( "Category: " + response.name + " has been deleted! ", messageType.ERROR)
+          )
+        },
+        error : err => {
+          console.log(err);
+        }
+      });
+  }
+
+  public clearNewCategoryForm() : void {
+    this.newCategoryForm.setValue({categoryName : "", categoryDescription : ""});
   }
 
   private getActualCategoryContent(){
@@ -204,6 +261,8 @@ export class CategoryViewComponent<T extends Category, C> implements OnInit {
 
       this.getCategories();
 
+    }else{
+      this.getCategories();
     }
   }
 
@@ -232,8 +291,5 @@ export class CategoryViewComponent<T extends Category, C> implements OnInit {
 
   }
 
-  public canAddNew() : boolean {
-    return this.modelService.canAddNew();
-  }
 
 }
