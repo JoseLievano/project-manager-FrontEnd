@@ -8,6 +8,8 @@ import {ActionsButtons} from "../../Model/Shared/actions-buttons";
 import {LoginService} from "./login.service";
 import {HiddenKey} from "../../Model/Shared/hiddenKey";
 import {ViewKey} from "../../Model/Shared/ViewKey";
+import {Router} from "@angular/router";
+import {tableActionButton} from "../../Constant/table-action-button";
 
 @Injectable({
   providedIn: 'root'
@@ -20,9 +22,11 @@ export abstract class ModelService<T>{
 
   protected constructor(protected http: HttpClient,
                         protected loginService : LoginService,
-                        apiBaseURL : String) {
+                        apiBaseURL : String,
+                        protected router : Router) {
     this.actualUser = loginService.getActualUser();
     this.apiBaseURL = apiBaseURL.toString();
+
   }
 
   //Get one element
@@ -34,12 +38,25 @@ export abstract class ModelService<T>{
 
   }
 
+  public createNew<T>(entity : T) : Observable<T>{
+
+    const url : string = this.apiBaseURL;
+
+    return this.http.post<T>(url, entity);
+
+  }
+
   //Delete one
-  private deleteOne(id : number){}
+  public deleteOne(id : number) : Observable<T>{
+
+    const url : string = this.apiBaseURL + id;
+
+    return this.http.delete<T>(url);
+
+  }
 
   //Update one
   private updateOne(id : number){}
-
 
   //Get a list of all the items, based in the pageRequest
   public getPageListView<T>(pageRequest : PageRequest) : Observable<PageableResponse<T>>{
@@ -72,14 +89,28 @@ export abstract class ModelService<T>{
   }
 
   public canAddNew() : boolean {
+    return this.checkIfRoleExistInButtonPermissions(tableActionButton.ADD);
+  }
 
-    let actualRole : string | undefined = this.loginService.getActualUser()?.roles[0];
+  public canDelete() : boolean {
 
-    if (actualRole){
-      return this.rolesAbleToAddNew().indexOf(actualRole) != -1;
-    }else {
-      return false;
-    }
+    return this.checkIfRoleExistInButtonPermissions(tableActionButton.DELETE);
+
+  }
+
+  private checkIfRoleExistInButtonPermissions(buttonToCheck : string) : boolean{
+
+    const addNewIndex = this.getButtonPermissions().findIndex(
+      (action) => action.actionName === buttonToCheck
+    );
+
+    const actionObj : ActionsButtons = this.getButtonPermissions()[addNewIndex];
+
+    const actualRoleIndex : number = actionObj.roles.findIndex(
+      (role) => role === this.loginService.getActualUserRole()
+    )
+
+    return actualRoleIndex >= 0;
 
   }
 
@@ -107,5 +138,12 @@ export abstract class ModelService<T>{
 
     return keys;
   }
+
+  public goToAddNewPage() : void {
+    let actualUrl = this.router.url + "/new";
+    this.router.navigateByUrl(actualUrl);
+  }
+
+  public abstract createInstance(data : any) : T;
 
 }
