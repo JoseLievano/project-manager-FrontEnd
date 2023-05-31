@@ -1,0 +1,75 @@
+/*Styles for Editor JS*/
+
+/*Modify the styles for headings*/
+.ce-block__content h1{
+  @apply text-5xl;
+}
+
+.ce-block__content h2 {
+  @apply text-4xl;
+}
+
+.ce-block__content h3 {
+  @apply text-3xl;
+}
+
+.ce-block__content h4 {
+  @apply text-2xl;
+}
+
+.ce-block__content h5 {
+  @apply text-xl;
+}
+
+.ce-block__content h6 {
+  @apply text-lg;
+}
+
+/*Modify styles for EditorJS UI*/
+/* + and burger button*/
+.ce-toolbar__plus{
+  @apply text-primary-content;
+}
+
+.ce-toolbar__plus:hover{
+  @apply bg-base-400;
+}
+
+.ce-toolbar__settings-btn{
+  @apply text-primary-content;
+}
+
+.ce-toolbar__settings-btn:hover{
+  @apply bg-base-400;
+}
+
+/*Burger popup*/
+.ce-popover{
+  @apply bg-base text-primary-content border-base-400 shadow-md;
+}
+
+.cdx-search-field{
+  @apply bg-base-100 border-base-300;
+}
+
+.ce-popover-item:hover {
+  @apply bg-base-400 shadow-sm !important;
+}
+
+.ce-popover-item__title{
+  @apply text-primary-content !important;
+}
+
+.ce-popover-item__icon{
+  @apply bg-base-300 border-base-400 text-primary-content !important;
+}
+
+.ce-popover-item--confirmation:not(.ce-popover-item--no-hover), .ce-popover-item--confirmation:not(.ce-popover-item--no-hover):hover{
+  @apply bg-error !important;
+}
+
+
+/*Content styles*/
+.ce-block--selected .ce-block__content{
+  @apply bg-base-300 rounded;
+}
