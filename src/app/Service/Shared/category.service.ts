@@ -8,8 +8,9 @@ export class CategoryService {
 
   constructor() { }
 
-  public loadParentCategory(categoryId : number) : void {
-    window.localStorage.setItem("parentCat", JSON.stringify(categoryId));
+  public loadParentCategory(categoryId : number | null) : void {
+    if (categoryId)
+      window.localStorage.setItem("parentCat", JSON.stringify(categoryId));
   }
 
   public getParentCategory() : number {
