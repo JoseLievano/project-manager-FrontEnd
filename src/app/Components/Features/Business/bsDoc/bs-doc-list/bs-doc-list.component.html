@@ -1,3 +1,6 @@
-<h1 class="my-6 mx-6">Docs List</h1>
-
-<app-table-view [model]="model" [modelService]="bsDocService" ></app-table-view>
+<app-category-view
+  [model]="model"
+  [modelService]="bsDocsCategoryService"
+  [contentModel]="contentModel"
+  [contentModelService]="bsDocService"
+></app-category-view>

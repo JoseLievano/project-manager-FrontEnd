@@ -9,6 +9,7 @@ import {ActionsButtons} from "../../Model/Shared/actions-buttons";
 import {tableActionButton} from "../../Constant/table-action-button";
 import {userRole} from "../../Constant/userRole";
 import {ViewKey, ViewKeyBuilder} from "../../Model/Shared/ViewKey";
+import {Paths} from "../../Constant/paths";
 
 @Injectable({
   providedIn: 'root'
@@ -19,11 +20,27 @@ export class BsDocsCategoryService extends ModelService<bsDocsCategory>{
 
   constructor(protected override http : HttpClient,
               protected override loginService : LoginService,
-              private router : Router) {
-    super(http, loginService, Const.API_URL + Const.bs_DOCS_CATEGORY);
+              protected override router : Router) {
+    super(http, loginService, Const.API_URL + Const.bs_DOCS_CATEGORY, router);
     this.url = Const.API_URL + Const.bs_DOCS_CATEGORY;
   }
 
+  public override createInstance(data: any): bsDocsCategory {
+
+    const newCategory = new bsDocsCategory();
+    newCategory.id = data.id;
+    newCategory.name = data.name;
+    newCategory.description = data.description;
+    newCategory.isAParentCategory = data.isAParentCategory;
+    newCategory.level = data.level;
+    newCategory.parentCategory = data.parentCategory;
+    newCategory.business = data.business;
+    newCategory.subCategories = data.subCategories;
+    newCategory.bsDocs = data.bsDocs;
+
+    return newCategory;
+
+  }
 
   override getButtonPermissions(): ActionsButtons[] {
 
@@ -34,7 +51,8 @@ export class BsDocsCategoryService extends ModelService<bsDocsCategory>{
       {actionName: tableActionButton.VIEW, roles: commonRoles},
       {actionName: tableActionButton.EDIT, roles: manageRoles},
       {actionName: tableActionButton.DELETE, roles : manageRoles},
-      {actionName: tableActionButton.UPDATE, roles: manageRoles}
+      {actionName: tableActionButton.UPDATE, roles: manageRoles},
+      {actionName: tableActionButton.ADD, roles: manageRoles}
     ]
   }
 
@@ -56,4 +74,10 @@ export class BsDocsCategoryService extends ModelService<bsDocsCategory>{
     ]
 
   }
+
+  public override goToAddNewPage() {
+    const url : string = Paths.BS_DOCS_CATEGORY.path + "/new";
+    this.router.navigateByUrl(url);
+  }
+
 }

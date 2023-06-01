@@ -9,9 +9,6 @@ import {PageRequest} from "../../../Model/Shared/pageRequest";
 import {ActionsButtons} from "../../../Model/Shared/actions-buttons";
 import {User} from "../../../Model/Shared/User";
 import {ErrorHandlerService} from "../../../Service/Shared/error-handler.service";
-import {AlertService} from "../../../Service/Shared/alert.service";
-import {HiddenKey} from "../../../Model/Shared/hiddenKey";
-import {FieldListGeneratorService} from "../../../Service/Shared/field-list-generator.service";
 import {ViewKey} from "../../../Model/Shared/ViewKey";
 
 @Component({
@@ -49,11 +46,11 @@ export class TableViewComponent<T> implements OnInit {
 
   private user : User | null;
 
+  public isLoading : boolean = true;
+
   constructor(
     private loginService : LoginService,
     private errorHandler : ErrorHandlerService,
-    private alertService : AlertService,
-    private fieldListGenerator : FieldListGeneratorService
   ) {
     //Set default pageRequest
     this.pageRequest.page = 0;
@@ -87,6 +84,8 @@ export class TableViewComponent<T> implements OnInit {
 
   private getPageResponse() {
 
+    this.isLoading = true;
+
     let data : PageableResponse<T>;
 
     this.pageRequest.sort = this.sort;
@@ -106,6 +105,7 @@ export class TableViewComponent<T> implements OnInit {
         }
         // @ts-ignore
         this.modifyModels(data.content);
+        this.isLoading = false;
       },
       error : (e) => {
         this.errorHandler.processError(e.error);
@@ -282,6 +282,13 @@ export class TableViewComponent<T> implements OnInit {
 
   public canAddNew () : boolean{
     return this.modelService.canAddNew();
+  }
+
+  public weHaveContent() : boolean {
+    if (!this.modelsTransformed)
+      return false;
+    return this.modelsTransformed.length > 0;
+
   }
 
 }

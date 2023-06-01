@@ -2,14 +2,12 @@ import {Business} from "./Business";
 import {bsDocsCategory} from "./bsDocsCategory";
 import {CatContent} from "../Shared/cat-content";
 
-export class bsDoc extends CatContent{
+export class bsDoc extends CatContent<bsDocsCategory>{
 
   public business : Business | null;
 
-  public bsDocsCategory : bsDocsCategory | null;
-
   public constructor(
-    bsDocsCategory? : bsDocsCategory,
+    category? : bsDocsCategory | number,
     business?: Business,
     content? : string,
     id? : number,
@@ -20,9 +18,8 @@ export class bsDoc extends CatContent{
       this.business = business;
     }
 
-    if (bsDocsCategory){
-      this.bsDocsCategory = bsDocsCategory;
-      this.category = bsDocsCategory;
+    if (category){
+      this.category = category;
     }
 
     if (id)
@@ -34,10 +31,5 @@ export class bsDoc extends CatContent{
     if (content)
       this.content = content;
 
-  }
-
-  override setCategory() {
-    if (this.bsDocsCategory)
-      this.category = this.bsDocsCategory;
   }
 }

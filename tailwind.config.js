@@ -59,6 +59,7 @@ module.exports = {
                   'warning-content': '#4B3A0A',
                   'error': '#A81036',
                   'error-content': '#ecf0f1',
+                  'ce-toolbar__plus': '#ffffff'
                 },
                 aurora: {
                   'primary': '#3498db',

@@ -1,22 +1,28 @@
 <div class="mt-10 flex gap-x-4">
 
-  <div class="bg-base grow p-4 rounded">
+  <div class="bg-base-100 grow p-6 rounded">
 
-    <input type="text" placeholder="Title" class="input input-bordered w-full text-3xl" />
+    <form [formGroup]="titleForm">
+      <input type="text" placeholder="Title" class="input input-bordered w-full text-3xl" formControlName="title" />
+    </form>
 
     <app-editor></app-editor>
-
 
   </div>
 
   <div class="w-1/4">
 
-    <h2 class="text-xl">
-      Category:
-      <span class="badge badge-lg">{{this.category.name}}</span>
-    </h2>
+    <div class="bg-base rounded p-6">
 
-    <button class="btn btn-primary">Save</button>
+      <h2 class="text-xl mb-4">
+        Category:
+        <span class="badge badge-lg">{{this.category.name}}</span>
+      </h2>
+
+      <button class="btn btn-primary" [disabled]="!this.titleForm.valid" (click)="this.saveContentButton()">Save</button>
+
+    </div>
+
 
   </div>
 

@@ -9,6 +9,9 @@ import { LogoutBtnTopComponent } from './logout-btn-top/logout-btn-top.component
 import { TableViewComponent } from './table-view/table-view.component';
 import { AlertsComponent } from './alerts/alerts.component';
 import { CategoryViewComponent } from './category-view/category-view.component';
+import { CategoryAddNewComponent } from './category-add-new/category-add-new.component';
+import {ReactiveFormsModule} from "@angular/forms";
+import {ContentModule} from "./content/content.module";
 
 
 
@@ -21,19 +24,23 @@ import { CategoryViewComponent } from './category-view/category-view.component';
     LogoutBtnTopComponent,
     TableViewComponent,
     AlertsComponent,
-    CategoryViewComponent
+    CategoryViewComponent,
+    CategoryAddNewComponent,
   ],
-  imports: [
-    CommonModule,
-    RouterOutlet,
-  ],
-    exports: [
-        TopBarComponent,
-        ThemeSelectorComponent,
-        SidebarComponent,
-        TableViewComponent,
-        AlertsComponent,
-        CategoryViewComponent,
-    ]
+    imports: [
+        ContentModule,
+        CommonModule,
+        RouterOutlet,
+        ReactiveFormsModule,
+    ],
+  exports: [
+    TopBarComponent,
+    ThemeSelectorComponent,
+    SidebarComponent,
+    TableViewComponent,
+    AlertsComponent,
+    CategoryViewComponent,
+    CategoryAddNewComponent,
+  ]
 })
 export class SharedComponentsModule { }

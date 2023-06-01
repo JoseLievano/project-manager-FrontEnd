@@ -22,10 +22,14 @@ export class BusinessService extends ModelService<Business> {
 
   constructor(protected override http: HttpClient,
               protected override loginService: LoginService,
-              private router: Router,
+              protected override router : Router,
               private errorService : ErrorHandlerService) {
-    super(http,loginService, Const.API_URL + Const.BUSINESS);
+    super(http,loginService, Const.API_URL + Const.BUSINESS, router);
     this.url = Const.API_URL + Const.BUSINESS;
+  }
+
+  public createInstance(data: any): Business {
+    return new Business();
   }
 
   protected override pageListViewRestrictions(pageRequest: PageRequest) {
@@ -51,7 +55,9 @@ export class BusinessService extends ModelService<Business> {
     return [
       {actionName: tableActionButton.LOAD, roles: [userRole.CLIENT]},
       {actionName: tableActionButton.EDIT, roles: [userRole.CLIENT]},
-      {actionName: tableActionButton.DELETE, roles: [userRole.CLIENT]}
+      {actionName: tableActionButton.DELETE, roles: [userRole.CLIENT]},
+      {actionName: tableActionButton.ADD, roles: [userRole.CLIENT]},
+      {actionName: tableActionButton.UPDATE, roles: [userRole.CLIENT]}
     ];
   }
 
@@ -76,7 +82,6 @@ export class BusinessService extends ModelService<Business> {
 
   public getLoadedBusiness(): number {
     let actualBusiness: number = JSON.parse(<string>window.localStorage.getItem("business"));
-
     if (actualBusiness >= 0) {
       return actualBusiness;
     }
@@ -84,9 +89,7 @@ export class BusinessService extends ModelService<Business> {
   }
 
   protected override rolesAbleToAddNew(): string[] {
-
     return [userRole.CLIENT, userRole.ADMIN];
-
   }
 
 
