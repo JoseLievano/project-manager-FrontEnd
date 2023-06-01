@@ -17,4 +17,8 @@ export class BsClientService extends ModelService<bsClient>{
     super(http, loginService, Const.API_URL + Const.bs_CLIENT, router)
   }
 
+  createInstance(data: any): bsClient {
+    return new bsClient();
+  }
+
 }
