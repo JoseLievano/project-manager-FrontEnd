@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { EditorComponent } from './editor/editor.component';
 import { ContentAddNewComponent } from './content-add-new/content-add-new.component';
+import {ReactiveFormsModule} from "@angular/forms";
 
 
 
@@ -15,7 +16,8 @@ import { ContentAddNewComponent } from './content-add-new/content-add-new.compon
     ContentAddNewComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    ReactiveFormsModule
   ]
 })
 export class ContentModule { }
