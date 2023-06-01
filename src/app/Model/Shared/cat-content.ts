@@ -1,15 +1,13 @@
 import {Category} from "./category";
 
-export class CatContent{
+export class CatContent<T>{
 
   public id : number | null;
 
   public title : string;
 
-  public content : string;
+  public content : any;
 
-  public category : Category;
-
-  public setCategory() : void {}
+  public category : Category<T> | number;
 
 }
