@@ -24,11 +24,23 @@ export class BsDocService extends ModelService<bsDoc>{
     this.url = Const.API_URL + Const.bs_DOC;
   }
 
+  public override createInstance(data: any): bsDoc {
+    return new bsDoc(
+      data.id,
+      data.title,
+      data.content,
+      data.category,
+      data.business
+    )
+  }
+
   override getButtonPermissions(): ActionsButtons[] {
     return [
       {actionName: tableActionButton.VIEW, roles: [userRole.CLIENT]},
       {actionName: tableActionButton.EDIT, roles: [userRole.CLIENT]},
-      {actionName: tableActionButton.DELETE, roles: [userRole.CLIENT]}
+      {actionName: tableActionButton.DELETE, roles: [userRole.CLIENT]},
+      {actionName: tableActionButton.ADD, roles: [userRole.CLIENT]},
+      {actionName: tableActionButton.UPDATE, roles: [userRole.CLIENT]}
     ];
   }
 
@@ -51,7 +63,7 @@ export class BsDocService extends ModelService<bsDoc>{
     return [
       ViewKeyBuilder.builder().setPrivateKeyName("id").setPublicKeyName("ID").setAccessRole(commonRoles),
       ViewKeyBuilder.builder().setPrivateKeyName("title").setPublicKeyName("Title").setAccessRole(commonRoles),
-      ViewKeyBuilder.builder().setPrivateKeyName("bsDocsCategory").setPublicKeyName("Category").setAccessRole(commonRoles),
+      ViewKeyBuilder.builder().setPrivateKeyName("category").setPublicKeyName("Category").setAccessRole(commonRoles),
       ViewKeyBuilder.builder().setPrivateKeyName("content").setPublicKeyName("Content").setAccessRole([userRole.BS_MANAGER]),
       ViewKeyBuilder.builder().setPrivateKeyName("business").setPublicKeyName("Business").setAccessRole(commonRoles)
     ]
