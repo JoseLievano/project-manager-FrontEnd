@@ -1,3 +1,15 @@
 .alert-error{
   @apply bg-error !important;
 }
+
+.alert-success{
+  @apply bg-success !important;
+}
+
+.alert-info{
+  @apply bg-info !important;
+}
+
+.alert-warning{
+  @apply bg-warning !important;
+}
