@@ -1,5 +1,5 @@
-<span class="loading loading-dots loading-lg"></span>
-<div class="drawer drawer-h">
+<div *ngIf="!this.isLoading">
+  <div class="drawer drawer-h">
   <input id="column-drawer" type="checkbox" class="drawer-toggle" />
   <div class="drawer-content">
     <div *ngIf="weHaveContent()" id="table_options" class="flex justify-end my-2 gap-3">
@@ -72,4 +72,9 @@
 
     </div>
   </div>
+</div>
+</div>
+
+<div *ngIf="this.isLoading" class="content-center">
+  <span class="loading loading-spinner loading-lg text-info"></span>
 </div>
