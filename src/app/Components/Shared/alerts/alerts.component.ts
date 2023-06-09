@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {UiMessage} from "../../../Model/Shared/ui-message";
 import {AlertService} from "../../../Service/Shared/alert.service";
 import {Subscription} from "rxjs";
+import {messageType} from "../../../Constant/messageType";
 
 @Component({
   selector: 'app-alerts',
@@ -29,4 +30,5 @@ export class AlertsComponent implements OnInit {
     this.alerts = this.alertService.getAlertsNorm();
   }
 
+    protected readonly messageType = messageType;
 }
