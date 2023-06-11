@@ -15,8 +15,7 @@
     <div class="bg-base rounded p-6">
 
       <h2 class="text-xl mb-4">
-        Category:
-        <span class="badge badge-lg">{{this.category.name}}</span>
+        Category: <span class="cursor-pointer bg-primary px-4 py-2 rounded">{{this.category.name}}</span>
       </h2>
 
       <button class="btn btn-primary" [disabled]="!this.titleForm.valid" (click)="this.saveContentButton()">Save</button>
