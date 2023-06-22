@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import EditorJS from "@editorjs/editorjs";
 import Header from "@editorjs/header";
 import {EditorService} from "../../../../Service/Shared/editor.service";
@@ -11,6 +11,8 @@ import {EditorService} from "../../../../Service/Shared/editor.service";
 export class EditorComponent implements OnInit {
 
   public editorJS : EditorJS;
+
+  @Input() prevData : any;
 
   private synonymsForAwesome = [
     'awesome',
@@ -189,15 +191,25 @@ export class EditorComponent implements OnInit {
     "(^̮^)",
     "(｡♥‿♥｡)",]
 
-    constructor(
+  constructor(
     private editorService : EditorService
   ) {
+  }
 
-    const randomIndexWords = Math.floor(Math.random() * this.synonymsForAwesome.length);
-    const randomIndexEmojis = Math.floor(Math.random() * this.charEmojis.length);
+  ngOnInit(): void {
 
+    const randomIndexWords : number = Math.floor(Math.random() * this.synonymsForAwesome.length);
+    const randomIndexEmojis : number = Math.floor(Math.random() * this.charEmojis.length);
+
+    let actualData : any = undefined;
+
+    if (this.prevData != undefined){
+      actualData = JSON.parse(this.prevData);
+    }
     this.editorJS = new EditorJS({
       holder : 'editorJs',
+      data : actualData,
+      minHeight : 2,
       tools : {
         header : {
           // @ts-ignore
@@ -207,9 +219,7 @@ export class EditorComponent implements OnInit {
       },
       placeholder : "Let's write something " + this.synonymsForAwesome[randomIndexWords] + " " + this.charEmojis[randomIndexEmojis]
     });
-  }
 
-  ngOnInit(): void {
     this.editorService.setEditor(this.editorJS);
   }
 
