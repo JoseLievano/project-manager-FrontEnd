@@ -131,7 +131,6 @@ export abstract class ModelService<T>{
     let keys : ViewKey [] = [];
 
     actualViewKeys.forEach(key => {
-      /*console.log(key.privateKeyName + " | " + (key.accessRole.indexOf(role)))*/
       if ((key.accessRole.indexOf(role)) != -1)
         keys.push(key)
     })
@@ -145,5 +144,15 @@ export abstract class ModelService<T>{
   }
 
   public abstract createInstance(data : any) : T;
+
+  public viewElement(id : number) : void{
+    let actualUrl : string = this.router.url + "/view/" + id;
+    this.router.navigateByUrl(actualUrl);
+  }
+
+  public editElement(id : number) : void {
+    let actualUrl : string = this.router.url + "/edit/" + id;
+    this.router.navigateByUrl(actualUrl);
+  }
 
 }
