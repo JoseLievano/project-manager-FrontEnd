@@ -21,6 +21,8 @@ import {
 import {
   AddNewBsDocCategoryComponent
 } from "./Components/Features/Business/bsDocCategory/add-new-bs-doc-category/add-new-bs-doc-category.component";
+import {ViewDocComponent} from "./Components/Features/Business/bsDoc/view-doc/view-doc.component";
+import {EditBsDocComponent} from "./Components/Features/Business/bsDoc/edit-bs-doc/edit-bs-doc.component";
 
 const routes: Routes = [
   {path: '', component: IndexNormalComponent, canActivate: [AuthUserGuard],children: [
@@ -36,7 +38,9 @@ const routes: Routes = [
       },
       {path: Paths.BS_DOC.path, component: BsDocComponent, children: [
           {path: "", component: BsDocListComponent},
-          {path: "new", component: AddNewBsDocComponent}
+          {path: "new", component: AddNewBsDocComponent},
+          {path: "view/" + ":id", component: ViewDocComponent},
+          {path: "edit/" + ":id", component: EditBsDocComponent}
         ]
       }
   ]},
