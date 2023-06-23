@@ -1,0 +1,12 @@
+<div class="grid place-items-center">
+  <div class="w-1/2">
+    <h1 class="text-5xl">{{this.model.title}}</h1>
+
+    <div *ngFor="let block of this.data.blocks" class="mt-4 mb-4">
+      <app-render-header [dataRaw]="block" *ngIf="block.type == editorBlockType.HEADER"></app-render-header>
+      <app-render-paragraph [dataRaw]="block" *ngIf="block.type == editorBlockType.PARAGRAPH"></app-render-paragraph>
+    </div>
+  </div>
+</div>
+
+
