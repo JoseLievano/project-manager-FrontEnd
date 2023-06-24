@@ -56,7 +56,14 @@ export abstract class ModelService<T>{
   }
 
   //Update one
-  private updateOne(id : number){}
+  public updateOne(id: number, entity : T) : Observable<T>{
+
+    console.log(entity);
+    const url : string = this.apiBaseURL + id;
+
+    return this.http.put<T>(url, entity);
+
+  }
 
   //Get a list of all the items, based in the pageRequest
   public getPageListView<T>(pageRequest : PageRequest) : Observable<PageableResponse<T>>{
