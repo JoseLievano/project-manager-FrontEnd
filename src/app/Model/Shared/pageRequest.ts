@@ -10,5 +10,16 @@ export class PageRequest{
 
   public filter : FilterRequest[] | null | undefined;
 
+  constructor(
+    page? : number,
+    size? : number
+  ) {
+    if (page)
+      this.page = page;
+
+    if (size)
+      this.size = size;
+  }
+
 }
 
