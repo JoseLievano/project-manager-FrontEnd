@@ -17,8 +17,7 @@ export class bsDocsCategory extends Category<bsDocsCategory>{
     business? : Business | number,
     subCategories? : bsDocsCategory[],
     bsDocs? : bsDoc[],
-
-  ) {
+    ) {
     super();
     if (id)
       this.id = id;
