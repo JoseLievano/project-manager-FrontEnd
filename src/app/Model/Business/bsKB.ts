@@ -1,63 +1,32 @@
 import {Business} from "./Business";
 import {bsKBCategory} from "./bsKBCategory";
+import {CatContent} from "../Shared/cat-content";
 
-export class bsKB{
+export class bsKB extends CatContent<bsKBCategory>{
 
-  public id : Number | undefined | null;
+  public constructor(
+    category? : bsKBCategory | number,
+    business?: Business,
+    content? : string,
+    id? : number,
+    title? : string
+  ) {
+    super();
+    if (business)
+      this.business = business;
 
-  public title : String | undefined | null;
+    if (category)
+      this.category = category;
 
-  public content : String | undefined | null;
+    if (id)
+      this.id = id;
 
-  public business : Business | undefined | null;
+    if (title)
+      this.title = title;
 
-  public bsKBCategory : bsKBCategory | undefined | null;
+    if (content)
+      this.content = content;
 
-  public bsKB(
-              id : Number | undefined | null,
-              title : String | undefined | null,
-              content : String | undefined | null,
-              business : Business | undefined | null,
-              bsKBCategory : bsKBCategory | undefined | null
-  ){
-    this.id = id;
-    this.title = title;
-    this.content = content;
-    this.business = business;
-    this.bsKBCategory = bsKBCategory;
-  }
-
-  static builder() : bsKB{
-    return new bsKB();
-  }
-
-  public setId (id : Number) : bsKB{
-    this.id = id;
-    return this;
-  }
-
-  public setTitle (title : String) : bsKB{
-    this.title = title;
-    return this;
-  }
-
-  public setContent (content : String) : bsKB{
-    this.content = content;
-    return this;
-  }
-
-  public setBusiness (business : Business) : bsKB{
-    this.business = business;
-    return this;
-  }
-
-  public setBsKBCategory (bsKBCategory : bsKBCategory) : bsKB{
-    this.bsKBCategory = bsKBCategory;
-    return this;
-  }
-
-  public build() : bsKB{
-    return this;
   }
 
 }
