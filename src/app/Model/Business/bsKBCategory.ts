@@ -1,55 +1,47 @@
 import {Business} from "./Business";
 import {bsKB} from "./bsKB";
+import {Category} from "../Shared/category";
+import {CatContent} from "../Shared/cat-content";
 
-export class bsKBCategory{
+export class bsKBCategory extends Category<bsKBCategory>{
 
-  public id : Number | undefined | null;
+  public bsKBs : bsKB[] | null;
 
-  public name : String | undefined | null;
+  public constructor(
+    id? : number | null,
+    name? : string,
+    description? : string,
+    isAParentCategory ? : boolean,
+    level? : number,
+    parentCategory? : bsKBCategory | number,
+    business? : Business | number,
+    subCategories? : bsKBCategory[],
+    bsKBs? : bsKB[]
+  ) {
+    super();
+    if (id)
+      this.id = id;
 
-  public business : Business | undefined | null;
+    if (name)
+      this.name = name;
 
-  public KBs : bsKB[] | undefined | null;
+    if (description)
+      this.description = description;
 
-  public bsKBCategory(
-                      id : Number | undefined | null,
-                      name : String | undefined | null,
-                      business : Business | undefined | null,
-                      KBs : bsKB[] | undefined | null
-  ){
-    this.id = id;
-    this.name = name;
-    this.business = business;
-    this.KBs = KBs;
+    if (business)
+      this.business = business;
+
+    if (bsKBs)
+      this.bsKBs = bsKBs;
   }
 
-  static builder() : bsKBCategory{
-    return new bsKBCategory();
+  public override setContent() {
+    if (this.bsKBs)
+      this.content = this.bsKBs;
   }
 
-  public setId (id : Number) : bsKBCategory{
-    this.id = id;
-    return this;
+  public override getContent(): CatContent<bsKBCategory>[] {
+    return this.bsKBs != null ? this.bsKBs : [];
   }
-
-  public setName (name : String) : bsKBCategory{
-    this.name = name;
-    return this;
-  }
-
-  public setBusiness (business : Business) : bsKBCategory{
-    this.business = business;
-    return this;
-  }
-
-  public setKBs (KBs : bsKB[]) : bsKBCategory{
-    this.KBs = KBs;
-    return this;
-  }
-
-  public build() : bsKBCategory{
-    return this;
-  }
-
 
 }
