@@ -4,8 +4,6 @@ import {CatContent} from "../Shared/cat-content";
 
 export class bsDoc extends CatContent<bsDocsCategory>{
 
-  public business : Business | null;
-
   public constructor(
     category? : bsDocsCategory | number,
     business?: Business,
@@ -14,13 +12,11 @@ export class bsDoc extends CatContent<bsDocsCategory>{
     title? : string
   ) {
     super();
-    if (business){
+    if (business)
       this.business = business;
-    }
 
-    if (category){
+    if (category)
       this.category = category;
-    }
 
     if (id)
       this.id = id;
