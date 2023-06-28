@@ -6,11 +6,15 @@ import { AddNewBsDocComponent } from './add-new-bs-doc/add-new-bs-doc.component'
 import {RouterOutlet} from "@angular/router";
 import { BsDocComponent } from './bs-doc/bs-doc.component';
 import {ContentModule} from "../../../Shared/content/content.module";
+import { ViewDocComponent } from './view-doc/view-doc.component';
+import { EditBsDocComponent } from './edit-bs-doc/edit-bs-doc.component';
 @NgModule({
   declarations: [
     BsDocListComponent,
     AddNewBsDocComponent,
-    BsDocComponent
+    BsDocComponent,
+    ViewDocComponent,
+    EditBsDocComponent
   ],
     imports: [
         CommonModule,
