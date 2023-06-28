@@ -18,9 +18,11 @@ export class BsDocsCategoryService extends ModelService<bsDocsCategory>{
 
   private url : string;
 
-  constructor(protected override http : HttpClient,
-              protected override loginService : LoginService,
-              protected override router : Router) {
+  constructor(
+    protected override http : HttpClient,
+    protected override loginService : LoginService,
+    protected override router : Router
+  ) {
     super(http, loginService, Const.API_URL + Const.bs_DOCS_CATEGORY, router);
     this.url = Const.API_URL + Const.bs_DOCS_CATEGORY;
   }
