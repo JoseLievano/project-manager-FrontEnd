@@ -3,6 +3,8 @@ import {CommonModule} from '@angular/common';
 import {BusinessComponentsModule} from "./business/business-components.module";
 import {BsDocComponentsModule} from "./bsDoc/bs-doc-components.module";
 import {BsDocCategoryComponentsModule} from "./bsDocCategory/bs-doc-category-components.module";
+import {BsKbComponentsModule} from "./bsKB/bs-kb-components.module";
+import {BsStatusModule} from "./bsStatus/bs-status.module";
 
 
 @NgModule({
@@ -11,12 +13,15 @@ import {BsDocCategoryComponentsModule} from "./bsDocCategory/bs-doc-category-com
     CommonModule,
     BusinessComponentsModule,
     BsDocComponentsModule,
-    BsDocCategoryComponentsModule
+    BsDocCategoryComponentsModule,
+    BsKbComponentsModule,
+    BsStatusModule
   ],
   exports: [
     BusinessComponentsModule,
     BsDocComponentsModule,
-    BsDocCategoryComponentsModule
+    BsDocCategoryComponentsModule,
+    BsKbComponentsModule
   ]
 })
 export class BusinessFeaturesModule { }
