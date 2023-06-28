@@ -23,6 +23,13 @@ import {
 } from "./Components/Features/Business/bsDocCategory/add-new-bs-doc-category/add-new-bs-doc-category.component";
 import {ViewDocComponent} from "./Components/Features/Business/bsDoc/view-doc/view-doc.component";
 import {EditBsDocComponent} from "./Components/Features/Business/bsDoc/edit-bs-doc/edit-bs-doc.component";
+import {BsKbComponent} from "./Components/Features/Business/bsKB/bs-kb/bs-kb.component";
+import {BsKbListComponent} from "./Components/Features/Business/bsKB/bs-kb-list/bs-kb-list.component";
+import {AddNewBsKbComponent} from "./Components/Features/Business/bsKB/add-new-bs-kb/add-new-bs-kb.component";
+import {ViewKbComponent} from "./Components/Features/Business/bsKB/view-kb/view-kb.component";
+import {EditBsKbComponent} from "./Components/Features/Business/bsKB/edit-bs-kb/edit-bs-kb.component";
+import {BsStatusComponent} from "./Components/Features/Business/bsStatus/bs-status/bs-status.component";
+import {BsStatusListComponent} from "./Components/Features/Business/bsStatus/bs-status-list/bs-status-list.component";
 
 const routes: Routes = [
   {path: '', component: IndexNormalComponent, canActivate: [AuthUserGuard],children: [
@@ -41,6 +48,17 @@ const routes: Routes = [
           {path: "new", component: AddNewBsDocComponent},
           {path: "view/" + ":id", component: ViewDocComponent},
           {path: "edit/" + ":id", component: EditBsDocComponent}
+        ]
+      },
+      {path : Paths.BS_KB.path, component : BsKbComponent, children : [
+          {path: "", component: BsKbListComponent},
+          {path: "new", component: AddNewBsKbComponent},
+          {path: "view/" + ":id", component: ViewKbComponent},
+          {path: "edit/" + ":id", component: EditBsKbComponent}
+        ]
+      },
+      {path : Paths.BS_STATUS.path, component : BsStatusComponent, children : [
+          {path: "", component: BsStatusListComponent}
         ]
       }
   ]},
