@@ -1,0 +1,37 @@
+<div class="p-4 m-4">
+
+  <div class="flex justify-end">
+    <app-add-new-bs-status (newStatus)="addNewStatus($event)" *ngIf="canAddNew()"></app-add-new-bs-status>
+  </div>
+
+  <div class="mt-4">
+    <table *ngIf="!isLoading" class="table-auto min-w-full text-primary-content">
+      <thead class="bg-base-100">
+        <tr>
+          <td>ID</td>
+          <td>Name</td>
+          <td>Color</td>
+          <td>Tasks</td>
+          <td></td>
+        </tr>
+      </thead>
+      <tbody class="overflow-hidden">
+        <tr *ngFor="let status of statuses" class="even:bg-base-300 odd:bg-base-200 z-0">
+          <td>{{status.id}}</td>
+          <td>{{status.name}}</td>
+          <td class="text-4xl font-bold" [style]="getColor(status)">◉</td>
+          <td>{{status.tasks}}</td>
+          <td class="flex justify-end">
+            <app-edit-bs-status [toEdit]="status" (statusUpdated)="updateStatus($event)"></app-edit-bs-status>
+            <button class="btn btn-error ml-4" (click)="deleteStatusItem(status.id)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="this.isLoading" class="content-center">
+    <span class="loading loading-spinner loading-lg text-info"></span>
+  </div>
+
+</div>
