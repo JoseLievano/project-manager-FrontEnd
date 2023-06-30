@@ -1,4 +1,4 @@
-<div class="flex justify-between gap-4 mb-4">
+<div *ngIf="!this.isLoading" class="flex justify-between gap-4 mb-4">
   <div class="text-sm breadcrumbs mb-5">
     <ul>
       <li>
@@ -68,3 +68,7 @@
 
 </div>
 <app-table-view *ngIf="categoryLoaded" [model]="contentModel" [modelService]="contentModelService" [filter]="contentFilter"></app-table-view>
+
+<div *ngIf="this.isLoading" class="content-center">
+  <span class="loading loading-spinner loading-lg text-info"></span>
+</div>
