@@ -25,6 +25,7 @@
     "codex-notifier": "^1.1.2",
     "codex-tooltip": "^1.0.5",
     "font-awesome": "^4.7.0",
+    "ngx-colors": "^3.5.2",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",
     "zone.js": "^0.13.0"
