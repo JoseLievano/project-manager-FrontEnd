@@ -1,0 +1,40 @@
+<div class="p-4">
+
+  <h1>Task Category List</h1>
+
+  <div *ngIf="!isLoading" class="mt-4">
+    <table class="table-auto min-w-full text-primary-content">
+      <thead class="bg-base-100">
+        <tr>
+          <td>ID</td>
+          <td>Name</td>
+          <td>Tasks</td>
+          <td></td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let taskCategory of taskCategories" class="even:bg-base-300 odd:bg-base-200 z-0">
+          <td>{{taskCategory.id}}</td>
+          <td>{{taskCategory.name}}</td>
+          <td>{{taskCategory.tasks}}</td>
+          <td>
+            <button class="btn btn-primary">Edit</button>
+
+            <div class="tooltip" data-tip="Can't delete a task category that has tasks" *ngIf="taskCategory.tasks != null ? taskCategory.tasks > 0 : true; else elseBlock">
+              <button class="btn btn-error ml-4" disabled>Eliminate</button>
+            </div>
+            <ng-template #elseBlock>
+              <button class="btn btn-error ml-4" (click)="deleteTaskCategory(taskCategory)">Eliminate</button>
+            </ng-template>
+
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="isLoading" class="content-center min-w-full">
+    <span class="loading loading-spinner loading-lg text-info"></span>
+  </div>
+
+</div>
