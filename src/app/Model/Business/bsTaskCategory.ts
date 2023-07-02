@@ -3,52 +3,32 @@ import {bsPrTask} from "../Project/bsPrTask";
 
 export class bsTaskCategory{
 
-  public id : Number | undefined | null;
+  public id : number | null;
 
-  public name : String | undefined | null;
+  public name : string | undefined | null;
 
-  public business : Business | undefined | null;
+  public business : Business | number | null;
 
-  public tasks : bsPrTask[] | undefined | null;
+  public tasks : bsPrTask[] | number | null;
 
-  public bsTaskCategory(
-                        id : Number | undefined | null,
-                        name : String | undefined | null,
-                        business : Business | undefined | null,
-                        tasks : bsPrTask[] | undefined | null
+  public constructor(
+    id? : number | null,
+    name? : string | null,
+    business? : Business | number | null,
+    tasks? : bsPrTask[] | number | null
   ){
-    this.id = id;
-    this.name = name;
-    this.business = business;
-    this.tasks = tasks;
+    if (id)
+      this.id = id;
+
+    if (name)
+      this.name = name;
+
+    if (business)
+      this.business = business;
+
+    if (tasks)
+      this.tasks = tasks;
   }
 
-  static builder() : bsTaskCategory{
-    return new bsTaskCategory();
-  }
-
-  public setID(id : Number) : bsTaskCategory{
-    this.id = id;
-    return this;
-  }
-
-  public setName(name : String) : bsTaskCategory{
-    this.name = name;
-    return this;
-  }
-
-  public setBusiness(business : Business) : bsTaskCategory{
-    this.business = business;
-    return this;
-  }
-
-  public setTasks(tasks : bsPrTask[]) : bsTaskCategory{
-    this.tasks = tasks;
-    return this;
-  }
-
-  public build() : bsTaskCategory{
-    return this;
-  }
 
 }
