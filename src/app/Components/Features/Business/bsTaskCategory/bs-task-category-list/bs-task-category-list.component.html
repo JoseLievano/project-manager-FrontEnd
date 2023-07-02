@@ -18,7 +18,8 @@
           <td>{{taskCategory.name}}</td>
           <td>{{taskCategory.tasks}}</td>
           <td>
-            <button class="btn btn-primary">Edit</button>
+
+            <app-edit-bs-task-category [toEdit]="taskCategory"></app-edit-bs-task-category>
 
             <div class="tooltip" data-tip="Can't delete a task category that has tasks" *ngIf="taskCategory.tasks != null ? taskCategory.tasks > 0 : true; else elseBlock">
               <button class="btn btn-error ml-4" disabled>Eliminate</button>
