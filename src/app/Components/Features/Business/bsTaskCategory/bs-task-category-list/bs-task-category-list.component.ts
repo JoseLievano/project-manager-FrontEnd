@@ -6,6 +6,9 @@ import {ErrorHandlerService} from "../../../../../Service/Shared/error-handler.s
 import {AlertService} from "../../../../../Service/Shared/alert.service";
 import {UiMessage} from "../../../../../Model/Shared/ui-message";
 import {messageType} from "../../../../../Constant/messageType";
+import {FilterRequest} from "../../../../../Model/Shared/filterRequest";
+import {BusinessService} from "../../../../../Service/Business/business.service";
+import {OperationRequest} from "../../../../../Model/Shared/operationRequest";
 
 @Component({
   selector: 'app-bs-task-category-list',
@@ -23,24 +26,42 @@ export class BsTaskCategoryListComponent implements OnInit{
   constructor(
     private bsTaskCategoryService : BsTaskCategoryService,
     private errorService : ErrorHandlerService,
-    private alertService : AlertService
+    private alertService : AlertService,
+    private businessService : BusinessService
   ) {
       bsTaskCategoryService.modelsChanged.subscribe({
       next : () => {
         this.getTaskCategories();
       }
       });
+
   }
 
   ngOnInit(): void {
-    this.pageRequest.page = 0;
-    this.pageRequest.size = 50;
+    this.setInitialPageReqState();
     this.getTaskCategories();
   }
 
+  private setInitialPageReqState(){
+    this.pageRequest.page = 0;
+    this.pageRequest.size = 50;
+
+    //Creates a filter request
+    const filterReq : FilterRequest = new FilterRequest();
+    filterReq.field = "business";
+    filterReq.operations = [new OperationRequest()]
+    filterReq.operations[0].value = this.businessService.getLoadedBusiness().toString();
+    filterReq.operations[0].operator = "=";
+    filterReq.operations[0].field = "id";
+
+    this.pageRequest.filter = [filterReq];
+
+  }
+
   private getTaskCategories(){
+    console.log(this.pageRequest);
     this.isLoading = true;
-    this.bsTaskCategoryService.getPageListView<bsTaskCategory>(this.pageRequest).subscribe({
+    let x = this.bsTaskCategoryService.getPageListView<bsTaskCategory>(this.pageRequest).subscribe({
       next : (response) => {
         if (response.content){
           this.taskCategories = response.content;
@@ -49,8 +70,12 @@ export class BsTaskCategoryListComponent implements OnInit{
       },
       error : err => {
         this.errorService.processError(err);
+      },
+      complete : () => {
+        x.unsubscribe();
       }
-    })
+    });
+
   }
 
   public deleteTaskCategory(taskCategory : bsTaskCategory){
@@ -71,7 +96,6 @@ export class BsTaskCategoryListComponent implements OnInit{
         new UiMessage("Can't delete this task category")
       )
     }
-
   }
 
 }
