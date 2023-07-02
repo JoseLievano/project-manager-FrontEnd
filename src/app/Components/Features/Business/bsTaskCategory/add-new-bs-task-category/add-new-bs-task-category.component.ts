@@ -33,13 +33,16 @@ export class AddNewBsTaskCategoryComponent {
     this.taskCategory.name = this.newTaskCategoryForm.value.name;
     this.newTaskCategoryForm.controls['name'].setValue("");
 
-    this.bsTaskCategoryService.createNew<bsTaskCategory>(this.taskCategory).subscribe({
+    let taskCatSubsCription = this.bsTaskCategoryService.createNew<bsTaskCategory>(this.taskCategory).subscribe({
       next : (response) => {
         if (response.id)
           this.bsTaskCategoryService.modelsChanged.emit(response.id);
         this.alertService.addNewAlert(
           new UiMessage("New task category " + response.name + " added", messageType.SUCCESS)
         )
+      },
+      complete : () =>{
+        taskCatSubsCription.unsubscribe();
       }
     })
   }
