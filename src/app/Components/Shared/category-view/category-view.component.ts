@@ -49,6 +49,8 @@ export class CategoryViewComponent<T extends Category<T>, C> implements OnInit {
 
   public breadCrumbsCats : {id : number, name : string}[] = [];
 
+  public isLoading : boolean = true;
+
   public newCategoryForm : FormGroup<{categoryName : FormControl, categoryDescription : FormControl}> = new FormGroup({
       categoryName : new FormControl("", {validators: [Validators.required]}),
       categoryDescription : new FormControl("", {validators: [Validators.required]})
@@ -79,12 +81,18 @@ export class CategoryViewComponent<T extends Category<T>, C> implements OnInit {
   }
 
   private getCategories() : void {
+    this.isLoading = true;
+    this.categories = [];
 
-    this.modelService.getPageListView<T>(this.pageRequest).subscribe({
+    let getCat = this.modelService.getPageListView<T>(this.pageRequest).subscribe({
       next : (response) => {
         this.pageableResponse = response;
         // @ts-ignore
         this.categories = response.content;
+        this.isLoading = false;
+      },
+      complete : () => {
+        getCat.unsubscribe();
       }
     });
   }
@@ -128,7 +136,7 @@ export class CategoryViewComponent<T extends Category<T>, C> implements OnInit {
 
     this.categoryLoaded = false;
 
-    this.modelService.getOne<T>(id).subscribe({
+    let getCat = this.modelService.getOne<T>(id).subscribe({
       next : (response : T) => {
         this.actualCategory = this.modelService.createInstance(response);
         this.getActualCategoryContent();
@@ -136,6 +144,9 @@ export class CategoryViewComponent<T extends Category<T>, C> implements OnInit {
         // @ts-ignore
         this.checkBreadCrumbs({id : this.actualCategory.id, name: this.actualCategory.name});
         this.categoryService.loadParentCategory(response.id);
+      },
+      complete : () => {
+        getCat.unsubscribe();
       }
     })
   }
@@ -161,7 +172,7 @@ export class CategoryViewComponent<T extends Category<T>, C> implements OnInit {
 
     newCategory.business = this.businessService.getLoadedBusiness();
 
-    this.modelService.createNew(newCategory).subscribe({
+    let createNewCat = this.modelService.createNew(newCategory).subscribe({
       next : (response : Category<T>) => {
         this.getSubCategories();
         this.alertService.addNewAlert(
@@ -172,14 +183,17 @@ export class CategoryViewComponent<T extends Category<T>, C> implements OnInit {
       error : err => {
         console.log("Error");
         console.log(err);
+      },
+      complete : () => {
+        createNewCat.unsubscribe();
       }
     });
 
   }
 
   public deleteCategory(id : number | null) {
-    if (id)
-      this.modelService.deleteOne(id).subscribe({
+    if (id){
+      let delCat = this.modelService.deleteOne(id).subscribe({
         next : (response : Category<T>) =>{
           this.getSubCategories();
           this.alertService.addNewAlert(
@@ -188,8 +202,12 @@ export class CategoryViewComponent<T extends Category<T>, C> implements OnInit {
         },
         error : err => {
           console.log(err);
+        },
+        complete : () => {
+          delCat.unsubscribe();
         }
       });
+    }
   }
 
   public clearNewCategoryForm() : void {
@@ -290,6 +308,5 @@ export class CategoryViewComponent<T extends Category<T>, C> implements OnInit {
     }
 
   }
-
 
 }
