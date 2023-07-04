@@ -6,6 +6,7 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {AlertService} from "../../../../../Service/Shared/alert.service";
 import {UiMessage} from "../../../../../Model/Shared/ui-message";
 import {messageType} from "../../../../../Constant/messageType";
+import {ErrorHandlerService} from "../../../../../Service/Shared/error-handler.service";
 
 @Component({
   selector: 'app-add-new-bs-task-category',
@@ -23,7 +24,8 @@ export class AddNewBsTaskCategoryComponent {
   constructor(
     private bsTaskCategoryService : BsTaskCategoryService,
     private businessService : BusinessService,
-    private alertService : AlertService
+    private alertService : AlertService,
+    private errorService : ErrorHandlerService
   ) {
     this.taskCategory.business = this.businessService.getLoadedBusiness();
   }
@@ -40,6 +42,9 @@ export class AddNewBsTaskCategoryComponent {
         this.alertService.addNewAlert(
           new UiMessage("New task category " + response.name + " added", messageType.SUCCESS)
         )
+      },
+      error : err => {
+        this.errorService.processError(err);
       },
       complete : () =>{
         taskCatSubsCription.unsubscribe();
