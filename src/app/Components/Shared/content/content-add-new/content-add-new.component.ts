@@ -5,11 +5,10 @@ import {CatContent} from "../../../../Model/Shared/cat-content";
 import {ModelService} from "../../../../Service/Shared/model.service";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {EditorService} from "../../../../Service/Shared/editor.service";
-import EditorJS, {OutputData} from "@editorjs/editorjs";
-import {CatContentService} from "../../../../Service/Shared/cat-content.service";
 import {AlertService} from "../../../../Service/Shared/alert.service";
 import {UiMessage} from "../../../../Model/Shared/ui-message";
 import {messageType} from "../../../../Constant/messageType";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-content-add-new',
@@ -28,6 +27,10 @@ export class ContentAddNewComponent<T extends Category<T>, C extends CatContent<
 
   public category : Category<T>;
 
+  private editorID : number;
+
+  public categoryLoaded : boolean = false;
+
   public titleForm = new FormGroup({
     title : new FormControl('' , {validators : [Validators.required, Validators.minLength(5)]})
   })
@@ -35,7 +38,8 @@ export class ContentAddNewComponent<T extends Category<T>, C extends CatContent<
   constructor(
     private categoryService : CategoryService,
     private editorService : EditorService,
-    private alertService : AlertService
+    private alertService : AlertService,
+    private router : Router
   ) { }
 
   ngOnInit(): void {
@@ -45,39 +49,46 @@ export class ContentAddNewComponent<T extends Category<T>, C extends CatContent<
     this.categoryModelService.getOne<T>(actualCatID).subscribe({
       next : (response : T) => {
         this.category = this.categoryModelService.createInstance(response);
-        console.log(this.category);
+        this.categoryLoaded = true;
       }
     })
 
   }
 
   public saveContentButton(){
-    this.editorService.saveContent().then(data => {
 
-      console.log("Creating new content");
+    this.editorService.saveContent(this.editorID).
+      then(data => {
+        if (this.titleForm.value.title && this.category.id){
+          this.contentModel.title = this.titleForm.value.title;
+          this.contentModel.category = this.category.id;
+        }
+        this.contentModel.content = JSON.stringify(data);
+        this.createNewContent();
 
-      if (this.titleForm.value.title && this.category.id){
-        this.contentModel.title = this.titleForm.value.title;
-        this.contentModel.category = this.category.id;
-      }
+      })
+      .catch(err => console.log(err));
 
-      this.contentModel.content = JSON.stringify(data);
+  }
 
-      this.createNewContent();
-
-    })
+  public changeEditorID(id : number){
+    this.editorID = id;
   }
 
   private createNewContent(){
-
-    console.log("Sending to spring: ", this.contentModel)
-
-    this.contentModelService.createNew<C>(this.contentModel).subscribe({
+    let newContent = this.contentModelService.createNew<C>(this.contentModel).subscribe({
       next : (response : C)=> {
-        console.log("Finished");
         this.alertService.addNewAlert(
           new UiMessage(`New Document added successfully: ${response.title}`, messageType.SUCCESS )
         )
+
+
+        const url = this.router.url.replace('new', 'edit/') + response.id;
+        this.router.navigateByUrl(url);
+
+      },
+      complete : () => {
+        newContent.unsubscribe();
       }
     })
   }
