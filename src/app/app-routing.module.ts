@@ -29,7 +29,10 @@ import {AddNewBsKbComponent} from "./Components/Features/Business/bsKB/add-new-b
 import {ViewKbComponent} from "./Components/Features/Business/bsKB/view-kb/view-kb.component";
 import {EditBsKbComponent} from "./Components/Features/Business/bsKB/edit-bs-kb/edit-bs-kb.component";
 import {BsStatusComponent} from "./Components/Features/Business/bsStatus/bs-status/bs-status.component";
-import {BsStatusListComponent} from "./Components/Features/Business/bsStatus/bs-status-list/bs-status-list.component";
+import {BsStatusListComponent} from "./Components/Features/Business/bsStatus/bs-status-list/bs-status-list.component";import {BsTaskCategoryModule} from "./Components/Features/Business/bsTaskCategory/bs-task-category.module";
+import {
+  BsTaskCategoryComponent
+} from "./Components/Features/Business/bsTaskCategory/bs-task-category/bs-task-category.component";
 
 const routes: Routes = [
   {path: '', component: IndexNormalComponent, canActivate: [AuthUserGuard],children: [
@@ -60,7 +63,8 @@ const routes: Routes = [
       {path : Paths.BS_STATUS.path, component : BsStatusComponent, children : [
           {path: "", component: BsStatusListComponent}
         ]
-      }
+      },
+      {path: Paths.BS_TASK_CATEGORY.path, component: BsTaskCategoryComponent}
   ]},
   {path: 'login', component: LoginComponent}
 ];
