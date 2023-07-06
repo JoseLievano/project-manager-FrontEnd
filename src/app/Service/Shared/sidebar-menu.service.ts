@@ -33,8 +33,25 @@ export class SidebarMenuService {
       .setPath(Paths.BS_DOC.path)
       .setNeedBusinessLoaded(true)
       .setShowWithBusinessLoaded(true)
+      .setCanActiveRoles([userRole.ADMIN, userRole.CLIENT, userRole.BS_EMPLOYEE, userRole.BS_MANAGER]),
+    SidebarMenuElement.builder()
+      .setName(Paths.BS_KB.name)
+      .setPath(Paths.BS_KB.path)
+      .setNeedBusinessLoaded(true)
+      .setShowWithBusinessLoaded(true)
+      .setCanActiveRoles([userRole.ADMIN, userRole.CLIENT, userRole.BS_EMPLOYEE, userRole.BS_MANAGER]),
+    SidebarMenuElement.builder()
+      .setName(Paths.BS_STATUS.name)
+      .setPath(Paths.BS_STATUS.path)
+      .setNeedBusinessLoaded(true)
+      .setShowWithBusinessLoaded(true)
+      .setCanActiveRoles([userRole.ADMIN, userRole.CLIENT, userRole.BS_EMPLOYEE, userRole.BS_MANAGER]),
+    SidebarMenuElement.builder()
+      .setName(Paths.BS_TASK_CATEGORY.name)
+      .setPath(Paths.BS_TASK_CATEGORY.path)
+      .setNeedBusinessLoaded(true)
+      .setShowWithBusinessLoaded(true)
       .setCanActiveRoles([userRole.ADMIN, userRole.CLIENT, userRole.BS_EMPLOYEE, userRole.BS_MANAGER])
-
   ]
 
   constructor(private loginService : LoginService, private businessService : BusinessService) {
