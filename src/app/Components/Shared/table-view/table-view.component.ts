@@ -10,6 +10,7 @@ import {ActionsButtons} from "../../../Model/Shared/actions-buttons";
 import {User} from "../../../Model/Shared/User";
 import {ErrorHandlerService} from "../../../Service/Shared/error-handler.service";
 import {ViewKey} from "../../../Model/Shared/ViewKey";
+import {tableActionButton} from "../../../Constant/table-action-button";
 
 @Component({
   selector: 'app-table-view',
@@ -66,7 +67,13 @@ export class TableViewComponent<T> implements OnInit {
       for (let i = 0; i < this.modelService.getButtonPermissions().length; i ++){
         let action = this.modelService.getButtonPermissions()[i];
         // @ts-ignore
-        if (action.roles.indexOf(this.user.roles[0]) >= 0){
+        if (action.roles.indexOf(this.user.roles[0]) >= 0 && (
+            action.actionName == tableActionButton.VIEW ||
+            action.actionName == tableActionButton.DELETE ||
+            action.actionName == tableActionButton.EDIT ||
+            action.actionName == tableActionButton.LOAD
+        )
+        ){
           this.actions.push(action);
         }
       }
@@ -199,7 +206,6 @@ export class TableViewComponent<T> implements OnInit {
     this.getPageResponse();
   }
 
-
   public getPaginationNumbers() : {page: number, isTopLeft : boolean, isTopRight : boolean, isActualPage: boolean}[] {
 
     let totalPages : number = this.pageAbleResponse.totalPages;
@@ -276,7 +282,20 @@ export class TableViewComponent<T> implements OnInit {
   protected executeAction(action : string, model : any){
     let id : number = model.id;
     if (id != null){
-      this.modelService.executeAction(action, id);
+      switch (action) {
+        case tableActionButton.DELETE :
+          this.deleteElement(id);
+          break;
+        case tableActionButton.VIEW :
+          this.viewElement(id);
+          break;
+        case tableActionButton.EDIT :
+          this.editElement(id);
+          break;
+        default : this.modelService.executeAction(action, id);
+      }
+    }else{
+
     }
   }
 
@@ -288,7 +307,26 @@ export class TableViewComponent<T> implements OnInit {
     if (!this.modelsTransformed)
       return false;
     return this.modelsTransformed.length > 0;
+  }
+
+  private deleteElement(id : number){
+    this.modelService.deleteOne(id).subscribe({
+      next : (respone : T) => {
+        this.getPageResponse();
+      },
+      error : (e) => {
+        this.errorHandler.processError(e.error);
+      }
+    })
+  }
+
+  private viewElement(id : number) {
+
+    this.modelService.viewElement(id);
 
   }
 
+  private editElement(id : number)  {
+    this.modelService.editElement(id);
+  }
 }
