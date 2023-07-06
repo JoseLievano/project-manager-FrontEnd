@@ -1,7 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
-import {id} from "@swimlane/ngx-datatable";
-import {ModelService} from "../../../../../Service/Shared/model.service";
 import {bsDoc} from "../../../../../Model/Business/bsDoc";
 import {BsDocService} from "../../../../../Service/Business/bs-doc.service";
 
@@ -24,7 +22,6 @@ export class ViewDocComponent implements OnInit{
   }
 
   ngOnInit(): void {
-
     this.activatedRoute.params.subscribe(
       params => {
         this.id = params['id'];
