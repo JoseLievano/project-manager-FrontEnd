@@ -1,0 +1,12 @@
+.taskCatSearcher{
+  @apply bg-base-200 shadow-lg p-1 rounded absolute top-24 min-w-full max-w-full;
+  opacity: 1;
+  transition: all 0.7s ease;
+}
+
+.taskSearchShow{
+  opacity: 0 !important;
+  min-width: 0;
+  max-width: 0;
+  transition: all 0.7s ease;
+}
