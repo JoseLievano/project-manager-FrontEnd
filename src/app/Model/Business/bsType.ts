@@ -1,54 +1,36 @@
 import {Business} from "./Business";
 import {bsPrTask} from "../Project/bsPrTask";
+import {bsTaskCategory} from "./bsTaskCategory";
 
 export class bsType{
 
-  public id : Number | undefined | null;
+  public id : number | null;
 
-  public name : String | undefined | null;
+  public name : string | null;
 
-  public business : Business | undefined | null;
+  public business : Business | number | null;
 
-  public tasks : bsPrTask[] | undefined | null;
+  public taskCategories : bsTaskCategory[] | number[] |number | null;
 
-  public bsType(
-                id : Number | undefined | null,
-                name : String | undefined | null,
-                business : Business | undefined | null,
-                tasks : bsPrTask[] | undefined | null
+  public tasks : bsPrTask[] | number | null;
+
+  public constructor(
+    id? : number | null,
+    name? : string | null,
+    business? : Business | number | null,
+    taskCategories ? : bsTaskCategory[] | number | null,
+    tasks? : bsPrTask[] | number | null
   ){
-    this.id = id;
-    this.name = name;
-    this.business = business;
-    this.tasks = tasks;
-  }
-
-  static builder() : bsType{
-    return new bsType();
-  }
-
-  public setId(id: Number) : bsType{
-    this.id = id;
-    return this;
-  }
-
-  public setName (name : String) : bsType{
-    this.name = name;
-    return this;
-  }
-
-  public setBusiness(business: Business) : bsType{
-    this.business = business;
-    return this;
-  }
-
-  public setTasks(tasks : bsPrTask[]) : bsType{
-    this.tasks = tasks;
-    return this;
-  }
-
-  public build() : bsType{
-    return this;
+    if (id)
+      this.id = id;
+    if (name)
+      this.name = name;
+    if (business)
+      this.business = business;
+    if (taskCategories)
+      this.taskCategories = taskCategories;
+    if (tasks)
+      this.tasks = tasks;
   }
 
 }
