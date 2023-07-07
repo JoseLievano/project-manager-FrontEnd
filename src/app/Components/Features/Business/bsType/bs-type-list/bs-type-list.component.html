@@ -1,0 +1,33 @@
+<div class="p-4">
+
+  <h1>Task Types List</h1>
+
+  <div class="mt-4">
+    <table class="table-auto min-w-full text-primary-content">
+      <thead class="bg-base-100">
+        <tr>
+          <td>ID</td>
+          <td>Name</td>
+          <td>Tasks</td>
+          <td>Task Cat</td>
+          <td></td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let type of bsTypes" class="even:bg-base-300 odd:bg-base-200 z-0">
+          <td>{{type.id}}</td>
+          <td>{{type.name}}</td>
+          <td>{{processTasks(type.tasks)}}</td>
+          <td>
+            <div *ngFor="let taskCat of processTaskCategories(type.taskCategories)" class="badge badge-neutral m-1">{{taskCat.name}}</div>
+          </td>
+          <td class="grid grid-cols-2">
+            <button class="btn btn-secondary ml-4">Edit</button>
+            <button class="btn btn-error ml-4">Eliminate</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>
