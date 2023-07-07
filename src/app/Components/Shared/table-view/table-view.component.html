@@ -1,7 +1,7 @@
 <div *ngIf="!this.isLoading">
   <div class="drawer drawer-h">
   <input id="column-drawer" type="checkbox" class="drawer-toggle" />
-  <div class="drawer-content container overflow-auto">
+  <div class="drawer-content overflow-auto">
     <div *ngIf="weHaveContent()" id="table_options" class="flex justify-end my-2 gap-3">
       <label (click)="this.modelService.goToAddNewPage()" *ngIf="canAddNew()" class="btn btn-primary drawer-button">Add new</label>
       <label for="column-drawer" class="btn btn-primary drawer-button">Edit Columns</label>
