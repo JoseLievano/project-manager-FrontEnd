@@ -30,6 +30,12 @@ export class AddNewBsTaskCategoryComponent {
     this.taskCategory.business = this.businessService.getLoadedBusiness();
   }
 
+  public nameValueIsEmpty() {
+    let name = this.newTaskCategoryForm.value.name;
+
+    return name != null && true && name != "";
+  }
+
   public addNewTaskCategory(){
 
     this.taskCategory.name = this.newTaskCategoryForm.value.name;
