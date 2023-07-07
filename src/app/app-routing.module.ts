@@ -33,6 +33,7 @@ import {BsStatusListComponent} from "./Components/Features/Business/bsStatus/bs-
 import {
   BsTaskCategoryComponent
 } from "./Components/Features/Business/bsTaskCategory/bs-task-category/bs-task-category.component";
+import {BsTypeComponent} from "./Components/Features/Business/bsType/bs-type/bs-type.component";
 
 const routes: Routes = [
   {path: '', component: IndexNormalComponent, canActivate: [AuthUserGuard],children: [
@@ -64,7 +65,8 @@ const routes: Routes = [
           {path: "", component: BsStatusListComponent}
         ]
       },
-      {path: Paths.BS_TASK_CATEGORY.path, component: BsTaskCategoryComponent}
+      {path: Paths.BS_TASK_CATEGORY.path, component: BsTaskCategoryComponent},
+      {path: Paths.BS_TYPE.path, component: BsTypeComponent}
   ]},
   {path: 'login', component: LoginComponent}
 ];
