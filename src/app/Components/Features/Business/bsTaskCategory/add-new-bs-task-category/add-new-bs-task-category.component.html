@@ -6,7 +6,7 @@
       <input type="text" class="input input-bordered w-full max-w-xs" id="newStatusName" placeholder="New Task Category name" formControlName="name">
     </div>
     <div class="modal-action my-8 justify-start">
-      <button class="btn btn-secondary" (click)="addNewTaskCategory()">Create New Task Category</button>
+      <button class="btn btn-secondary" [disabled]="!nameValueIsEmpty()" (click)="addNewTaskCategory()">Create New Task Category</button>
     </div>
   </form>
 </div>

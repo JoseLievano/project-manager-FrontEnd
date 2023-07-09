@@ -9,6 +9,7 @@
           <td>ID</td>
           <td>Name</td>
           <td>Tasks</td>
+          <td>Types</td>
           <td></td>
         </tr>
       </thead>
@@ -17,11 +18,12 @@
           <td>{{taskCategory.id}}</td>
           <td>{{taskCategory.name}}</td>
           <td>{{taskCategory.tasks}}</td>
+          <td>{{taskCategory.types}}</td>
           <td>
 
             <app-edit-bs-task-category [toEdit]="taskCategory"></app-edit-bs-task-category>
 
-            <div class="tooltip" data-tip="Can't delete a task category that has tasks" *ngIf="taskCategory.tasks != null ? taskCategory.tasks > 0 : true; else elseBlock">
+            <div class="tooltip cursor-not-allowed" data-tip="It is not possible to delete task categories containing tasks or types 😬" *ngIf="disableDeleteButton(taskCategory); else elseBlock">
               <button class="btn btn-error ml-4" disabled>Eliminate</button>
             </div>
             <ng-template #elseBlock>

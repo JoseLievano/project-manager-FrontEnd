@@ -4,7 +4,7 @@ import { EditBsTaskCategoryComponent } from './edit-bs-task-category/edit-bs-tas
 import { BsTaskCategoryComponent } from './bs-task-category/bs-task-category.component';
 import { AddNewBsTaskCategoryComponent } from './add-new-bs-task-category/add-new-bs-task-category.component';
 import { BsTaskCategoryListComponent } from './bs-task-category-list/bs-task-category-list.component';
-import {ReactiveFormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 
 
 
@@ -15,9 +15,10 @@ import {ReactiveFormsModule} from "@angular/forms";
     AddNewBsTaskCategoryComponent,
     BsTaskCategoryListComponent
   ],
-  imports: [
-    CommonModule,
-    ReactiveFormsModule
-  ]
+    imports: [
+        CommonModule,
+        ReactiveFormsModule,
+        FormsModule
+    ]
 })
 export class BsTaskCategoryModule { }

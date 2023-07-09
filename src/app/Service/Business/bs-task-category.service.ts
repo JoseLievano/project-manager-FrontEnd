@@ -18,7 +18,7 @@ export class BsTaskCategoryService extends ModelService<bsTaskCategory>{
     protected override loginService : LoginService,
     protected override router : Router
   ) {
-    super(http, loginService, Const.API_URL + Const.bs_TASK_CATEGORY, router)
+    super(http, loginService, Const.API_URL + Const.bs_TASK_CATEGORY, router);
     this.url = Const.API_URL + Const.bs_TASK_CATEGORY;
   }
 
