@@ -86,7 +86,6 @@ export class AddNewBsTypeComponent implements OnInit, OnDestroy{
 
       },
       error : err => {
-        console.log(err);
         this.errorService.processError(err);
       },
       complete : () => {
@@ -110,7 +109,7 @@ export class AddNewBsTypeComponent implements OnInit, OnDestroy{
             this.alertService.addNewAlert(
               new UiMessage("New Type " + response.name + " has been added", messageType.SUCCESS)
             );
-            console.log("added: ", response);
+            this.newTypeForm.controls["name"].setValue("");
           }
         },
         error : (err) => {
