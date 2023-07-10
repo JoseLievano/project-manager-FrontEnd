@@ -22,8 +22,15 @@
             <div *ngFor="let taskCat of processTaskCategories(type.taskCategories)" class="badge badge-neutral m-1">{{taskCat.name}}</div>
           </td>
           <td class="grid grid-cols-2">
-            <button class="btn btn-secondary ml-4">Edit</button>
-            <button class="btn btn-error ml-4">Eliminate</button>
+
+            <app-edit-bs-type [toEdit]="type"></app-edit-bs-type>
+
+            <div class="tooltip cursor-not-allowed" data-tip="It is not possible to delete a type containing tasks 😬" *ngIf="disableDeleteButton(type); else elseBlock">
+              <button class="btn btn-error ml-4" disabled>Eliminate</button>
+            </div>
+            <ng-template #elseBlock>
+              <button class="btn btn-error ml-4" (click)="deleteType(type)">Eliminate</button>
+            </ng-template>
           </td>
         </tr>
       </tbody>
