@@ -44,8 +44,6 @@ export class EditBsStatusComponent implements OnInit{
 
   public updateStatus(){
 
-    console.log("Form values", this.editForm.value.name, this.editForm.value.color);
-
     let newStatusInfo : bsStatus = new bsStatus();
     newStatusInfo.id = this.toEdit.id;
 
@@ -64,7 +62,7 @@ export class EditBsStatusComponent implements OnInit{
       newStatusInfo.color = this.toEdit.color;
     }
     newStatusInfo.business = this.businessService.getLoadedBusiness();
-    console.log("Pasando el status: ", newStatusInfo);
+
     this.statusUpdated.emit(newStatusInfo);
 
   }
