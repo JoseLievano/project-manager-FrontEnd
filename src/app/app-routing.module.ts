@@ -34,6 +34,7 @@ import {
   BsTaskCategoryComponent
 } from "./Components/Features/Business/bsTaskCategory/bs-task-category/bs-task-category.component";
 import {BsTypeComponent} from "./Components/Features/Business/bsType/bs-type/bs-type.component";
+import {BsPriorityComponent} from "./Components/Features/Business/bsPriority/bs-priority/bs-priority.component";
 
 const routes: Routes = [
   {path: '', component: IndexNormalComponent, canActivate: [AuthUserGuard],children: [
@@ -66,7 +67,8 @@ const routes: Routes = [
         ]
       },
       {path: Paths.BS_TASK_CATEGORY.path, component: BsTaskCategoryComponent},
-      {path: Paths.BS_TYPE.path, component: BsTypeComponent}
+      {path: Paths.BS_TYPE.path, component: BsTypeComponent},
+      {path: Paths.BS_PRIORITY.path, component: BsPriorityComponent}
   ]},
   {path: 'login', component: LoginComponent}
 ];
