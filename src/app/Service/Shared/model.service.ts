@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {EventEmitter, Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {PageRequest} from "../../Model/Shared/pageRequest";
 import {Observable} from "rxjs";
@@ -19,6 +19,8 @@ export abstract class ModelService<T>{
   protected actualUser : User | null;
 
   protected apiBaseURL : string;
+
+  public modelsChanged : EventEmitter<number> = new EventEmitter<number>();
 
   protected constructor(protected http: HttpClient,
                         protected loginService : LoginService,
@@ -43,7 +45,6 @@ export abstract class ModelService<T>{
     const url : string = this.apiBaseURL;
 
     return this.http.post<T>(url, entity);
-
   }
 
   //Delete one
@@ -65,7 +66,7 @@ export abstract class ModelService<T>{
 
   }
 
-  //Get a list of all the items, based in the pageRequest
+  //Get a list view of all the items, based in the pageRequest
   public getPageListView<T>(pageRequest : PageRequest) : Observable<PageableResponse<T>>{
 
     this.pageListViewRestrictions(pageRequest);
@@ -76,9 +77,20 @@ export abstract class ModelService<T>{
 
   }
 
+  //Get items based in a pageRequest
+  public getPageView<T>(pageRequest : PageRequest) : Observable<PageableResponse<T>>{
+
+    this.pageListViewRestrictions(pageRequest);
+
+    const url : string = `${this.apiBaseURL}page`;
+
+    return this.http.post<PageableResponse<T>>(url, pageRequest);
+
+  }
+
   protected pageListViewRestrictions(pageRequest: PageRequest): void {
     if (!pageRequest.sort || pageRequest.sort.length === 0) {
-      pageRequest.sort = [{ property: 'id', isAscending: true }];
+      pageRequest.sort = [{ property: 'id', isAscending: false }];
     }
   }
 
