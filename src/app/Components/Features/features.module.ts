@@ -4,8 +4,6 @@ import {BusinessFeaturesModule} from "./Business/business-features.module";
 import {HqFeaturesModule} from "./HQ/hq-features.module";
 import {ProjectFeaturesModule} from "./Project/project-features.module";
 
-
-
 @NgModule({
   declarations: [
 

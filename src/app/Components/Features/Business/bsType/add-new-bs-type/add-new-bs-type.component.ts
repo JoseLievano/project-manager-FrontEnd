@@ -139,7 +139,6 @@ export class AddNewBsTypeComponent implements OnInit, OnDestroy{
       })
     }
     this.bsType.taskCategories = numTaskCats;
-    console.log(this.bsType.taskCategories);
   }
 
   public isValidNewType() : boolean{

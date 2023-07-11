@@ -21,4 +21,7 @@ export class BsClientService extends ModelService<bsClient>{
     return new bsClient();
   }
 
+  override viewElement(id: number): void {
+  }
+
 }
