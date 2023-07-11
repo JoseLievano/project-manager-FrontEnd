@@ -1,5 +1,5 @@
-import {Component, Input, OnInit} from '@angular/core';
-import EditorJS from "@editorjs/editorjs";
+import {Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges} from '@angular/core';
+import EditorJS, {API} from "@editorjs/editorjs";
 import Header from "@editorjs/header";
 import {EditorService} from "../../../../Service/Shared/editor.service";
 
@@ -8,11 +8,17 @@ import {EditorService} from "../../../../Service/Shared/editor.service";
   templateUrl: './editor.component.html',
   styleUrls: ['./editor.component.css']
 })
-export class EditorComponent implements OnInit {
+export class EditorComponent implements OnInit, OnDestroy {
 
-  public editorJS : EditorJS;
+  public editorJS: EditorJS;
 
-  @Input() prevData : any;
+  @Input() prevData: any;
+
+  private editorID: number;
+
+  @Output() editorIDChange: EventEmitter<number> = new EventEmitter<number>();
+
+  @Output() contentHasChanged : EventEmitter<boolean> = new EventEmitter<boolean>();
 
   private synonymsForAwesome = [
     'awesome',
@@ -192,14 +198,21 @@ export class EditorComponent implements OnInit {
     "(｡♥‿♥｡)",]
 
   constructor(
-    private editorService : EditorService
+    private editorService: EditorService
   ) {
   }
+
+  ngOnDestroy(): void {
+        this.editorService.destroyEditor(this.editorID);
+    }
 
   ngOnInit(): void {
 
     const randomIndexWords : number = Math.floor(Math.random() * this.synonymsForAwesome.length);
+
     const randomIndexEmojis : number = Math.floor(Math.random() * this.charEmojis.length);
+
+    this.setEditorID();
 
     let actualData : any = undefined;
 
@@ -209,7 +222,10 @@ export class EditorComponent implements OnInit {
     this.editorJS = new EditorJS({
       holder : 'editorJs',
       data : actualData,
-      minHeight : 2,
+      minHeight : 20,
+      onChange: (api, event) => {
+        this.contentChanged();
+      },
       tools : {
         header : {
           // @ts-ignore
@@ -220,7 +236,16 @@ export class EditorComponent implements OnInit {
       placeholder : "Let's write something " + this.synonymsForAwesome[randomIndexWords] + " " + this.charEmojis[randomIndexEmojis]
     });
 
-    this.editorService.setEditor(this.editorJS);
+    this.editorService.addToEditorList(this.editorID, this.editorJS);
+  }
+
+  public setEditorID(){
+    this.editorID = Math.floor(Math.random() * 10000);
+    this.editorIDChange.emit(this.editorID);
+  }
+
+  public contentChanged(){
+    this.contentHasChanged.emit(true);
   }
 
 }
