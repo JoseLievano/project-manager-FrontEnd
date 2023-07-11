@@ -10,6 +10,8 @@ import {AlertService} from "../../../../../Service/Shared/alert.service";
 import {ErrorHandlerService} from "../../../../../Service/Shared/error-handler.service";
 import {bsPrTask} from "../../../../../Model/Project/bsPrTask";
 import {bsTaskCategory} from "../../../../../Model/Business/bsTaskCategory";
+import {UiMessage} from "../../../../../Model/Shared/ui-message";
+import {messageType} from "../../../../../Constant/messageType";
 
 @Component({
   selector: 'app-bs-type-list',
@@ -34,7 +36,7 @@ export class BsTypeListComponent implements OnInit, OnDestroy{
   ) {
     this.modelChangedSubscription = this.bsTypeService.modelsChanged.subscribe({
       next : () => {
-
+        this.getBsTypes();
       }
     });
   }
@@ -42,10 +44,6 @@ export class BsTypeListComponent implements OnInit, OnDestroy{
   ngOnInit(): void {
     this.setInitialPageReqState();
     this.getBsTypes();
-  }
-
-  ngOnDestroy(): void {
-    this.modelChangedSubscription.unsubscribe();
   }
 
   private setInitialPageReqState(){
@@ -94,11 +92,53 @@ export class BsTypeListComponent implements OnInit, OnDestroy{
     return 0;
   }
 
-  public processTaskCategories(taskCat : bsTaskCategory[] | number | null) : bsTaskCategory[]{
-    if (taskCat == null || typeof taskCat == "number")
-      return []
+  public processTaskCategories(taskCat : bsTaskCategory[] | number[] | number | null) : bsTaskCategory[]{
+    let taskCatList : bsTaskCategory[] = [];
 
-    else return taskCat;
+    if (Array.isArray(taskCat)){
+      taskCat.forEach(actualTask => {
+        if (typeof actualTask != "number")
+          taskCatList.push(actualTask);
+      })
+    }
+
+    return taskCatList;
   }
 
+  public disableDeleteButton(type : bsType) : boolean{
+
+    //Check tasks
+    const tasks = type.tasks;
+    if (tasks){
+      if (typeof tasks == "number" && tasks > 0)
+        return false;
+      if (Array.isArray(tasks) && tasks.length > 0)
+        return false;
+    }
+
+    return false;
+  }
+
+  public deleteType(type : bsType){
+    if (type.id){
+      let deleteSub = this.bsTypeService.deleteOne(type.id).subscribe({
+        next : (response) => {
+          this.alertService.addNewAlert(
+            new UiMessage("Type " + response.name + " has been deleted", messageType.SUCCESS)
+          );
+          this.getBsTypes();
+        },
+        error : err => {
+          this.errorService.processError(err);
+        },
+        complete : () => {
+          deleteSub.unsubscribe();
+        }
+      });
+    }
+  }
+
+  ngOnDestroy(): void {
+    this.modelChangedSubscription.unsubscribe();
+  }
 }
