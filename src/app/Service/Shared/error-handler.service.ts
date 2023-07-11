@@ -17,9 +17,14 @@ export class ErrorHandlerService {
     private alertService : AlertService
   ) { }
 
-  public processError(actualError : Error) : void{
-    console.log(actualError.message);
-    this.errorFilter(actualError.message);
+  public processError(actualError : any) : void{
+
+    if (actualError.error){
+      this.errorFilter(actualError.error.message);
+    }else{
+      this.errorFilter(actualError.message);
+    }
+
   }
 
   private errorFilter(errorMessage : string){
@@ -33,6 +38,10 @@ export class ErrorHandlerService {
       case errorMessages.FORBIDDEN : {
         this.showErrorMessageUI(errorMessage);
         this.router.navigate([""]);
+        break;
+      }
+      default : {
+        this.showErrorMessageUI(errorMessage);
         break;
       }
     }
