@@ -3,4 +3,13 @@ export class SortRequest{
 
   public isAscending : boolean;
 
+  constructor(
+    property? : string,
+    isAscending? : boolean
+  ) {
+    if (property)
+      this.property = property;
+    if (isAscending)
+      this.isAscending = isAscending;
+  }
 }
