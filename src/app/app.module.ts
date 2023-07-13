@@ -8,6 +8,8 @@ import {JWTInterceptorInterceptor} from "./Interceptor/jwtinterceptor.intercepto
 import {FeaturesModule} from "./Components/Features/features.module";
 import {AuthUserGuard} from "./Guards/auth-user.guard";
 import {SharedComponentsModule} from "./Components/Shared/shared-components.module";
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 
 
 @NgModule({
@@ -22,7 +24,9 @@ import {SharedComponentsModule} from "./Components/Shared/shared-components.modu
         HttpClientModule,
         HttpClientXsrfModule,
         FeaturesModule,
-        SharedComponentsModule
+        SharedComponentsModule,
+        BrowserAnimationsModule,
+        FontAwesomeModule
     ],
     providers: [
       {
