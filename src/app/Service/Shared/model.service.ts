@@ -10,6 +10,7 @@ import {HiddenKey} from "../../Model/Shared/hiddenKey";
 import {ViewKey} from "../../Model/Shared/ViewKey";
 import {Router} from "@angular/router";
 import {tableActionButton} from "../../Constant/table-action-button";
+import {ActionModelEmit} from "../../Model/Shared/actionModelEmit";
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +21,7 @@ export abstract class ModelService<T>{
 
   protected apiBaseURL : string;
 
-  public modelsChanged : EventEmitter<number> = new EventEmitter<number>();
+  public modelsChanged : EventEmitter<ActionModelEmit<T>> = new EventEmitter<ActionModelEmit<T>>();
 
   protected constructor(protected http: HttpClient,
                         protected loginService : LoginService,
