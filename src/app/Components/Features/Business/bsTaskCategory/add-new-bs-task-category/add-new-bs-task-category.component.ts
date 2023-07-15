@@ -7,6 +7,8 @@ import {AlertService} from "../../../../../Service/Shared/alert.service";
 import {UiMessage} from "../../../../../Model/Shared/ui-message";
 import {messageType} from "../../../../../Constant/messageType";
 import {ErrorHandlerService} from "../../../../../Service/Shared/error-handler.service";
+import {ActionModelEmit} from "../../../../../Model/Shared/actionModelEmit";
+import {actionType} from "../../../../../Constant/actionType";
 
 @Component({
   selector: 'app-add-new-bs-task-category',
@@ -43,8 +45,10 @@ export class AddNewBsTaskCategoryComponent {
 
     let taskCatSubsCription = this.bsTaskCategoryService.createNew<bsTaskCategory>(this.taskCategory).subscribe({
       next : (response) => {
-        if (response.id)
-          this.bsTaskCategoryService.modelsChanged.emit(response.id);
+        if (response.id){
+          const emitModel : ActionModelEmit<bsTaskCategory> = new ActionModelEmit<bsTaskCategory>(actionType.NEW, response);
+          this.bsTaskCategoryService.modelsChanged.emit(emitModel);
+        }
         this.alertService.addNewAlert(
           new UiMessage("New task category " + response.name + " added", messageType.SUCCESS)
         )

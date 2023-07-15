@@ -7,6 +7,8 @@ import {AlertService} from "../../../../../Service/Shared/alert.service";
 import {UiMessage} from "../../../../../Model/Shared/ui-message";
 import {messageType} from "../../../../../Constant/messageType";
 import {ErrorHandlerService} from "../../../../../Service/Shared/error-handler.service";
+import {ActionModelEmit} from "../../../../../Model/Shared/actionModelEmit";
+import {actionType} from "../../../../../Constant/actionType";
 
 @Component({
   selector: 'app-edit-bs-task-category',
@@ -68,7 +70,8 @@ export class EditBsTaskCategoryComponent implements OnInit{
     if (newTaskCat.id){
       let updateReq = this.bsTaskCategoryService.updateOne(newTaskCat.id, newTaskCat).subscribe({
         next : (response) => {
-          console.log("After update response: " + response.name);
+          const emitModel : ActionModelEmit<bsTaskCategory> = new ActionModelEmit<bsTaskCategory>(actionType.EDIT, response);
+          this.bsTaskCategoryService.modelsChanged.emit(emitModel);
           this.alertService.addNewAlert(
             new UiMessage("New Task Category " + response.name + " has been added", messageType.SUCCESS)
           )
@@ -77,9 +80,6 @@ export class EditBsTaskCategoryComponent implements OnInit{
           this.errorService.processError(err);
         },
         complete : () =>{
-          if (newTaskCat.id)
-            this.bsTaskCategoryService.modelsChanged.emit(newTaskCat.id);
-
           updateReq.unsubscribe();
         }
       })

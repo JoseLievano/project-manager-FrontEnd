@@ -8,6 +8,8 @@ import {AlertService} from "../../../../../Service/Shared/alert.service";
 import {ErrorHandlerService} from "../../../../../Service/Shared/error-handler.service";
 import {UiMessage} from "../../../../../Model/Shared/ui-message";
 import {messageType} from "../../../../../Constant/messageType";
+import {ActionModelEmit} from "../../../../../Model/Shared/actionModelEmit";
+import {actionType} from "../../../../../Constant/actionType";
 
 @Component({
   selector: 'app-add-new-bs-priority',
@@ -57,7 +59,8 @@ export class AddNewBsPriorityComponent implements OnInit, OnDestroy{
               new UiMessage("Priority " + bsPriorityReturned.name + " has been created", messageType.SUCCESS)
             )
             this.newPriorityForm.controls["name"].setValue("");
-            this.bsPriorityService.modelsChanged.emit(bsPriorityReturned.id);
+            const emitModel : ActionModelEmit<bsPriority> = new ActionModelEmit<bsPriority>(actionType.NEW, bsPriorityReturned);
+            this.bsPriorityService.modelsChanged.emit(emitModel);
           }
         },
         error : (err) => {

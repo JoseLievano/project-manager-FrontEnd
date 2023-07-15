@@ -14,6 +14,8 @@ import {SortRequest} from "../../../../../Model/Shared/sortRequest";
 import {AlertService} from "../../../../../Service/Shared/alert.service";
 import {UiMessage} from "../../../../../Model/Shared/ui-message";
 import {messageType} from "../../../../../Constant/messageType";
+import {actionType} from "../../../../../Constant/actionType";
+import {ActionModelEmit} from "../../../../../Model/Shared/actionModelEmit";
 
 @Component({
   selector: 'app-add-new-bs-type',
@@ -95,17 +97,13 @@ export class AddNewBsTypeComponent implements OnInit, OnDestroy{
   }
 
   public addNewType(){
-
     if (this.isValidNewType()){
-
       this.transformTaskCatToNum();
-
-      console.log(this.bsType);
-
       let addNewType = this.bsTypeService.createNew(this.bsType).subscribe({
         next : (response) => {
           if (response.id){
-            this.bsTypeService.modelsChanged.emit(response.id);
+            const emitActionModel : ActionModelEmit<bsType> = new ActionModelEmit<bsType>(actionType.NEW, response)
+            this.bsTypeService.modelsChanged.emit(emitActionModel);
             this.alertService.addNewAlert(
               new UiMessage("New Type " + response.name + " has been added", messageType.SUCCESS)
             );
