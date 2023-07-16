@@ -17,16 +17,16 @@ import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
         AppComponent
     ],
     imports: [
-        BrowserModule,
-        FormsModule,
-        ReactiveFormsModule,
-        AppRoutingModule,
-        HttpClientModule,
-        HttpClientXsrfModule,
-        FeaturesModule,
-        SharedComponentsModule,
-        BrowserAnimationsModule,
-        FontAwesomeModule
+      BrowserModule,
+      AppRoutingModule,
+      FormsModule,
+      ReactiveFormsModule,
+      HttpClientModule,
+      HttpClientXsrfModule,
+      SharedComponentsModule,
+      BrowserAnimationsModule,
+      FontAwesomeModule,
+      FeaturesModule
     ],
     providers: [
       {
