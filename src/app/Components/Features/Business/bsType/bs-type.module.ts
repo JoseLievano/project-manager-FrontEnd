@@ -9,12 +9,15 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 
 
 @NgModule({
-  declarations: [
-    AddNewBsTypeComponent,
-    BsTypeComponent,
-    EditBsTypeComponent,
-    BsTypeListComponent
-  ],
+    declarations: [
+        AddNewBsTypeComponent,
+        BsTypeComponent,
+        EditBsTypeComponent,
+        BsTypeListComponent
+    ],
+    exports: [
+        BsTypeListComponent
+    ],
     imports: [
         CommonModule,
         FormsModule,

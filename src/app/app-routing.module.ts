@@ -1,74 +1,47 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import {Routes, RouterModule, PreloadAllModules} from '@angular/router';
 import {IndexNormalComponent} from "./Components/Shared/index-normal/index-normal.component";
 import {LoginComponent} from "./Components/Shared/login/login.component";
 import {ReactiveFormsModule} from "@angular/forms";
 import {DashboardComponent} from "./Components/Shared/dashboard/dashboard.component";
-import {BusinessListComponent} from "./Components/Features/Business/business/business-list/business-list.component";
 import {SharedComponentsModule} from "./Components/Shared/shared-components.module";
 import {AuthUserGuard} from "./Guards/auth-user.guard";
 import {Paths} from "./Constant/paths";
-import {BsDocListComponent} from "./Components/Features/Business/bsDoc/bs-doc-list/bs-doc-list.component";
-import {AddNewBsDocComponent} from "./Components/Features/Business/bsDoc/add-new-bs-doc/add-new-bs-doc.component";
 import {BsDocComponent} from "./Components/Features/Business/bsDoc/bs-doc/bs-doc.component";
 import {BusinessComponent} from "./Components/Features/Business/business/business/business.component";
 import {
-  AddNewBusinessComponent
-} from "./Components/Features/Business/business/add-new-business/add-new-business.component";
-import {
   BsDocCategoryComponent
 } from "./Components/Features/Business/bsDocCategory/bs-doc-category/bs-doc-category.component";
-import {
-  AddNewBsDocCategoryComponent
-} from "./Components/Features/Business/bsDocCategory/add-new-bs-doc-category/add-new-bs-doc-category.component";
-import {ViewDocComponent} from "./Components/Features/Business/bsDoc/view-doc/view-doc.component";
-import {EditBsDocComponent} from "./Components/Features/Business/bsDoc/edit-bs-doc/edit-bs-doc.component";
 import {BsKbComponent} from "./Components/Features/Business/bsKB/bs-kb/bs-kb.component";
-import {BsKbListComponent} from "./Components/Features/Business/bsKB/bs-kb-list/bs-kb-list.component";
-import {AddNewBsKbComponent} from "./Components/Features/Business/bsKB/add-new-bs-kb/add-new-bs-kb.component";
-import {ViewKbComponent} from "./Components/Features/Business/bsKB/view-kb/view-kb.component";
-import {EditBsKbComponent} from "./Components/Features/Business/bsKB/edit-bs-kb/edit-bs-kb.component";
 import {BsStatusComponent} from "./Components/Features/Business/bsStatus/bs-status/bs-status.component";
-import {BsStatusListComponent} from "./Components/Features/Business/bsStatus/bs-status-list/bs-status-list.component";import {BsTaskCategoryModule} from "./Components/Features/Business/bsTaskCategory/bs-task-category.module";
+import {BsStatusListComponent} from "./Components/Features/Business/bsStatus/bs-status-list/bs-status-list.component";
 import {
   BsTaskCategoryComponent
 } from "./Components/Features/Business/bsTaskCategory/bs-task-category/bs-task-category.component";
 import {BsTypeComponent} from "./Components/Features/Business/bsType/bs-type/bs-type.component";
 import {BsPriorityComponent} from "./Components/Features/Business/bsPriority/bs-priority/bs-priority.component";
+import {BsClientComponent} from "./Components/Features/Business/bsClient/bs-client/bs-client.component";
 
 const routes: Routes = [
   {path: '', component: IndexNormalComponent, canActivate: [AuthUserGuard],children: [
       {path: Paths.DASHBOARD.path, component: DashboardComponent},
-      {path: Paths.BUSINESS.path, component: BusinessComponent, children: [
-          {path: "", component: BusinessListComponent},
-          {path: "new", component: AddNewBusinessComponent}
-        ]
-      },
-      {path: Paths.BS_DOCS_CATEGORY.path, component: BsDocCategoryComponent, children: [
-          {path: "new", component: AddNewBsDocCategoryComponent}
-        ]
-      },
-      {path: Paths.BS_DOC.path, component: BsDocComponent, children: [
-          {path: "", component: BsDocListComponent},
-          {path: "new", component: AddNewBsDocComponent},
-          {path: "view/" + ":id", component: ViewDocComponent},
-          {path: "edit/" + ":id", component: EditBsDocComponent}
-        ]
-      },
-      {path : Paths.BS_KB.path, component : BsKbComponent, children : [
-          {path: "", component: BsKbListComponent},
-          {path: "new", component: AddNewBsKbComponent},
-          {path: "view/" + ":id", component: ViewKbComponent},
-          {path: "edit/" + ":id", component: EditBsKbComponent}
-        ]
-      },
+      {path: Paths.BUSINESS.path, component: BusinessComponent, loadChildren : () =>
+        import("./Components/Features/Business/business-features.module").then(m => m.BusinessFeaturesModule)},
+      {path: Paths.BS_DOCS_CATEGORY.path, component: BsDocCategoryComponent, loadChildren : () =>
+        import("./Components/Features/Business/bsDocCategory/bs-doc-category-components.module").then(m => m.BsDocCategoryComponentsModule)},
+      {path: Paths.BS_DOC.path, component: BsDocComponent, loadChildren : () =>
+        import("./Components/Features/Business/bsDoc/bs-doc-components.module").then(m => m.BsDocComponentsModule)},
+      {path : Paths.BS_KB.path, component : BsKbComponent, loadChildren : () =>
+        import("./Components/Features/Business/bsKB/bs-kb-components.module").then(m => m.BsKbComponentsModule)},
       {path : Paths.BS_STATUS.path, component : BsStatusComponent, children : [
           {path: "", component: BsStatusListComponent}
         ]
       },
       {path: Paths.BS_TASK_CATEGORY.path, component: BsTaskCategoryComponent},
       {path: Paths.BS_TYPE.path, component: BsTypeComponent},
-      {path: Paths.BS_PRIORITY.path, component: BsPriorityComponent}
+      {path: Paths.BS_PRIORITY.path, component: BsPriorityComponent},
+      {path: Paths.BS_CLIENT.path, component: BsClientComponent, loadChildren : () =>
+        import("./Components/Features/Business/bsClient/bs-client-components.module").then(m => m.BsClientComponentsModule)},
   ]},
   {path: 'login', component: LoginComponent}
 ];
@@ -78,7 +51,7 @@ const routes: Routes = [
     IndexNormalComponent,
     LoginComponent,
     ],
-    imports: [RouterModule.forRoot(routes), ReactiveFormsModule, SharedComponentsModule],
+    imports: [RouterModule.forRoot(routes, {preloadingStrategy: PreloadAllModules}), ReactiveFormsModule, SharedComponentsModule],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

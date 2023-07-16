@@ -6,24 +6,33 @@ import {BsDocCategoryComponentsModule} from "./bsDocCategory/bs-doc-category-com
 import {BsKbComponentsModule} from "./bsKB/bs-kb-components.module";
 import {BsStatusModule} from "./bsStatus/bs-status.module";
 import {BsTaskCategoryModule} from "./bsTaskCategory/bs-task-category.module";
+import {BsTypeModule} from "./bsType/bs-type.module";
+import {BsPriorityModule} from "./bsPriority/bs-priority.module";
+import {BsClientComponentsModule} from "./bsClient/bs-client-components.module";
 
 @NgModule({
   declarations: [],
   imports: [
     CommonModule,
     BusinessComponentsModule,
+    BsClientComponentsModule,
     BsDocComponentsModule,
     BsDocCategoryComponentsModule,
     BsKbComponentsModule,
     BsStatusModule,
-    BsTaskCategoryModule
+    BsTaskCategoryModule,
+    BsTypeModule,
+    BsPriorityModule
   ],
   exports: [
     BusinessComponentsModule,
+    BsClientComponentsModule,
     BsDocComponentsModule,
     BsDocCategoryComponentsModule,
     BsKbComponentsModule,
-    BsTaskCategoryModule
+    BsTaskCategoryModule,
+    BsTypeModule,
+    BsPriorityModule
   ]
 })
 export class BusinessFeaturesModule { }
