@@ -27,7 +27,11 @@ export class BsStatusService extends ModelService<bsStatus>{
 
   createInstance(data: any): bsStatus {
     return new bsStatus(
-
+      data.id,
+      data.name,
+      data.color,
+      data.business,
+      data.tasks
     );
   }
 
