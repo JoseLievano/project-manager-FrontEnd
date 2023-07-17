@@ -2,6 +2,7 @@ import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {bsStatus} from "../../../../../Model/Business/bsStatus";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {BusinessService} from "../../../../../Service/Business/business.service";
+import {BsStatusService} from "../../../../../Service/Business/bs-status.service";
 
 @Component({
   selector: 'app-add-new-bs-status',
@@ -18,7 +19,8 @@ export class AddNewBsStatusComponent implements OnInit{
   })
 
   constructor(
-    private businessService : BusinessService
+    private businessService : BusinessService,
+    private bsStatusService : BsStatusService
   ) {
   }
 

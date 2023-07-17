@@ -12,6 +12,8 @@ import {userRole} from "../../Constant/userRole";
 import {ErrorHandlerService} from "../Shared/error-handler.service";
 import {errorMessages} from "../../Constant/errorMessages";
 import {ViewKey, ViewKeyBuilder} from "../../Model/Shared/ViewKey";
+import {FilterRequest} from "../../Model/Shared/filterRequest";
+import {OperationRequest} from "../../Model/Shared/operationRequest";
 
 @Injectable({
   providedIn: 'root'
@@ -123,6 +125,19 @@ export class BusinessService extends ModelService<Business> {
       ViewKeyBuilder.builder().setPrivateKeyName("bsProjects").setPublicKeyName("Projects").setAccessRole(commonRoles),
       ViewKeyBuilder.builder().setPrivateKeyName("bsPrTasks").setPublicKeyName("Tasks").setAccessRole(commonRoles)
     ];
+
+  }
+
+  public filterReqWithLoadedBusiness() : FilterRequest{
+
+    const filterReq : FilterRequest = new FilterRequest();
+    filterReq.field = "business";
+    filterReq.operations = [new OperationRequest()];
+    filterReq.operations[0].field = "id";
+    filterReq.operations[0].operator = "=";
+    filterReq.operations[0].value = this.getLoadedBusiness().toString();
+
+    return filterReq;
 
   }
 

@@ -1,1 +1,31 @@
-<p>edit-bs-type works!</p>
+<button class="btn btn-secondary" (click)="showEditModal()">Edit</button>
+<dialog id="{{modalID}}" class="modal text-primary-content">
+  <form method="dialog" class="modal-box grid grid-cols-1 gap-y-4" [formGroup]="editTypeForm">
+    <button class="btn btn-sm btn-circle btn-ghost absolute right-2 bg-error top-2 text-error-content">X</button>
+    <h3 class="font-bold text-lg">Edit {{toEdit.name}} type.</h3>
+
+    <div class="grid grid-cols-1 my-4">
+      <label for="editTypeName" class="mr-4 mb-4">Name: </label>
+      <input type="text" class="input input-bordered w-full max-w-xs" id="editTypeName" placeholder="New Type name" formControlName="name">
+    </div>
+
+    <div class="grid grid-cols-1 my-4 relative">
+      <label [for]="typeTaskInputId" class="mr-4 mb-4">Task Category: </label>
+      <input type="text" class="input input-bordered w-full max-w-xs" [id]="typeTaskInputId" placeholder="Task Category name" formControlName="taskCat">
+      <div class="taskCatSearcher" [ngClass]="{'taskSearchShow' : !showSearchTaskCat()}">
+        <button *ngFor="let taskCat of taskCatsFromAPI" (click)="addTaskCatToTypeModel(taskCat)" class="badge badge-neutral m-1 cursor-pointer">{{taskCat.name}}</button>
+      </div>
+    </div>
+    <div>
+      <button class="badge badge-neutral m-1 cursor-pointer" *ngFor="let taskCat of taskCats" (click)="deleteTaskCat(taskCat)">{{taskCat.name}}</button>
+    </div>
+
+    <div class="modal-action">
+      <button class="btn btn-error">Cancel</button>
+      <button class="btn btn-secondary" [disabled]="!hasBeenModified()" (click)="updateType()">Update</button>
+    </div>
+  </form>
+  <form method="dialog" class="modal-backdrop">
+    <button>close</button>
+  </form>
+</dialog>

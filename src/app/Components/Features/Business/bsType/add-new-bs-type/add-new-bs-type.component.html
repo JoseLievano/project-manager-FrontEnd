@@ -1,4 +1,4 @@
-<div class="bg-base-400 p-4 rounded">
+<div class="bg-base-400 rounded">
   <h3 class="font-bold text-lg">Create a new Task Type</h3>
   <form [formGroup]="newTypeForm" >
 
@@ -9,7 +9,7 @@
 
     <div class="grid grid-cols-1 my-4 relative">
       <label for="typeTasks" class="mr-4 mb-4 mt-4">Task Category: </label>
-      <input type="text" class="input input-bordered w-full max-w-xs" id="typeTasks" placeholder="Task Category name" formControlName="taskCat">
+      <input type="text" class="input input-bordered w-full max-w-xs" id="typeTasks" placeholder="Task Cat name" formControlName="taskCat">
       <div class="taskCatSearcher" [ngClass]="{'taskSearchShow' : !showSearchTaskCat()}">
         <button *ngFor="let taskCat of bsTaskCats" (click)="addTaskCatToTypeModel(taskCat)" class="badge badge-neutral m-1 cursor-pointer">{{taskCat.name}}</button>
       </div>

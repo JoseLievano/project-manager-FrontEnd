@@ -1,1 +1,18 @@
-<p>edit-bs-priority works!</p>
+<button class="btn btn-secondary" (click)="showEditModal()">Edit</button>
+<dialog [id]="modalID" class="modal text-primary-content">
+  <form method="dialog" class="modal-box grid grid-cols-1 gap-y-4" [formGroup]="editForm">
+    <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 bg-error text-error-content">X</button>
+    <h3 class="font-bold text-lg">Edit {{toEdit.name}} priority.</h3>
+    <div class="grid grid-cols-1">
+      <label for="newStatusName" class="mr-4">Name: </label>
+      <input type="text" class="input input-bordered w-full max-w-xs" id="newStatusName" placeholder="New Status name" formControlName="name">
+    </div>
+    <div class="modal-action">
+      <button class="btn btn-error">Cancel</button>
+      <button class="btn btn-secondary" [disabled]="!validName()" (click)="updatePriority()">Update</button>
+    </div>
+  </form>
+  <form method="dialog" class="modal-backdrop">
+    <button>close</button>
+  </form>
+</dialog>

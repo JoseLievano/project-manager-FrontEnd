@@ -3,56 +3,42 @@ import {Invoice} from "./Invoice";
 
 export class Client extends User{
 
-  public isActive : Boolean ;
+  public isActive : Boolean | null;
 
-  public lastLogin : Date  ;
+  public dateCreated : Date | null;
 
-  public invoice : Invoice[] ;
+  public lastLoginDate : Date | null;
+
+  public invoice : Invoice[] | number[] | null;
 
 
   public constructor(
-                id ?: number | null | undefined,
-                username ?: string,
-                password ?: string | null | undefined,
-                roles ?: string[] ,
-                firstName ?: string,
-                lastName ?: string ,
-                email ?: string,
-                isActive ?: Boolean,
-                lastLogin ?: Date,
-                invoice ?: Invoice[]
+    id ?: number | null ,
+    firstName ?: string ,
+    lastName ?: string ,
+    email ?: string,
+    roles ?: string[],
+    password ?: string | null,
+    username ?: string,
+    accountNonExpired ?: boolean,
+    accountNonLocked ?: boolean,
+    credentialsNonExpired ?: boolean,
+    enabled ?: boolean,
+    isActive ?: boolean | null,
+    dateCreated ?: Date | null,
+    lastLoginDate ?: Date | null,
+    invoice ?: Invoice[] | number[] | null
   ){
-    super(id, username, password, roles, firstName, lastName, email);
+    super(id, firstName, lastName, email, roles, password, username, accountNonExpired, accountNonLocked, credentialsNonExpired, enabled);
     if (isActive)
       this.isActive = isActive;
-    if (lastLogin)
-      this.lastLogin = lastLogin;
+    if (dateCreated)
+      this.dateCreated = dateCreated;
+    if (lastLoginDate)
+      this.lastLoginDate = lastLoginDate;
     if (invoice)
       this.invoice = invoice;
 
-  }
-
-  static override builder() : Client{
-    return new Client();
-  }
-
-  public setIsActive (isActive : Boolean) : Client{
-    this.isActive = isActive;
-    return this;
-  }
-
-  public setLastLogin (lastLogin : Date) : Client{
-    this.lastLogin = lastLogin;
-    return this;
-  }
-
-  public setInvoice (invoice : Invoice[]) : Client{
-    this.invoice = invoice;
-    return this;
-  }
-
-  public override build () : Client{
-    return this;
   }
 
 }

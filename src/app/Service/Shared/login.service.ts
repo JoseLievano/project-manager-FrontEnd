@@ -81,15 +81,12 @@ export class LoginService {
   }
 
   public getActualUserRole() : String {
-
     this.getActualUser();
-
-    if (this.actualUser == null){
+    if (this.actualUser?.roles[0]){
+      return this.actualUser.roles[0];
+    }else{
       return userRole.NO_ROLE;
     }
-
-    return this.actualUser.roles[0];
-
   }
 
   isUserLoggedIn() : boolean{

@@ -10,7 +10,10 @@ import {AlertService} from "../../../../../Service/Shared/alert.service";
 import {ErrorHandlerService} from "../../../../../Service/Shared/error-handler.service";
 import {messageType} from "../../../../../Constant/messageType";
 import {UiMessage} from "../../../../../Model/Shared/ui-message";
-import { faEllipsisVertical } from '@fortawesome/free-solid-svg-icons';
+import { faEllipsisVertical, faGripVertical } from '@fortawesome/free-solid-svg-icons';
+import {IconDefinition} from "@fortawesome/fontawesome-svg-core";
+import {ActionModelEmit} from "../../../../../Model/Shared/actionModelEmit";
+import {actionType} from "../../../../../Constant/actionType";
 
 @Component({
   selector: 'app-bs-priority-list',
@@ -29,7 +32,7 @@ export class BsPriorityListComponent implements OnInit, OnDestroy{
 
   private orderHasBeenModified : boolean = false;
 
-  public faEllipsisVertical = faEllipsisVertical;
+  public faGripVertical : IconDefinition = faGripVertical;
 
   constructor(
     private businessService : BusinessService,
@@ -42,8 +45,20 @@ export class BsPriorityListComponent implements OnInit, OnDestroy{
 
   ngOnInit(): void {
     this.listChangedSub = this.bsPriorityService.modelsChanged.subscribe({
-      next : (response : any) => {
-        this.getPriorities()
+      next : (response : ActionModelEmit<bsPriority>) => {
+        let action = response.getAction();
+        let bsPriority : bsPriority = response.getModel();
+        switch (action){
+          case actionType.NEW :
+            this.addNewPriority(bsPriority);
+            break;
+          case actionType.EDIT :
+            this.editModel(bsPriority)
+            break;
+          default :
+            this.alertService.addNewAlert(new UiMessage("Can't get a valid priority", messageType.ERROR));
+            break;
+        }
       },
       error : (err : any) =>{
         this.alertService.addNewAlert(
@@ -94,32 +109,49 @@ export class BsPriorityListComponent implements OnInit, OnDestroy{
   public drop(event: CdkDragDrop<bsPriority[]>) {
     moveItemInArray(this.priorities, event.previousIndex, event.currentIndex);
     console.log("prev: " + event.previousIndex + " current: " + event.currentIndex);
-    this.changePriorityOrder();
+    let changedPriorities = [];
+    for (let i = event.previousIndex; i <= event.currentIndex; i++){
+      changedPriorities.push(this.priorities[i])
+    }
+    this.sendOrderModificationReq(this.changedPriorities(event.previousIndex, event.currentIndex))
   }
 
-  private changePriorityOrder(){
-    let priorityIndex : number = 1;
-    this.priorities.forEach(priority => {
-      priority.business = this.actualBusiness;
-      priority.priorityOrder = priorityIndex;
-      priorityIndex++;
-    });
-    this.sendOrderModificationReq();
-    this.orderHasBeenModified = true;
+  private changedPriorities(previousIndex : number, currentIndex : number) : bsPriority[]{
+
+    let changedPriorities : bsPriority[] = [];
+
+    if (previousIndex < currentIndex){
+      for (let i = previousIndex; i <= currentIndex; i++){
+        this.priorities[i].priorityOrder = i+1;
+        let newPriority : bsPriority = new bsPriority();
+        newPriority.name = this.priorities[i].name;
+        newPriority.id = this.priorities[i].id;
+        newPriority.business = this.actualBusiness;
+        newPriority.priorityOrder = this.priorities[i].priorityOrder;
+        changedPriorities.push(newPriority);
+      }
+    }else{
+      for (let i = currentIndex; i <= previousIndex; i++){
+        this.priorities[i].priorityOrder = i+1;
+        let newPriority : bsPriority = new bsPriority();
+        newPriority.id = this.priorities[i].id;
+        newPriority.name = this.priorities[i].name;
+        newPriority.business = this.actualBusiness;
+        newPriority.priorityOrder = this.priorities[i].priorityOrder;
+        changedPriorities.push(newPriority);
+      }
+    }
+
+    console.log(changedPriorities);
+
+    return changedPriorities;
+
   }
 
-  public saveOrder(){
-    this.sendOrderModificationReq();
-    /*if (this.orderHasBeenModified){
-      this.sendOrderModificationReq();
-      this.orderHasBeenModified = false;
-    }*/
-  }
-
-  private sendOrderModificationReq(){
-    let orderUpdateSub = this.bsPriorityService.updateOrder(this.priorities).subscribe({
+  private sendOrderModificationReq(changedPriorities : bsPriority[]){
+    let orderUpdateSub = this.bsPriorityService.updateOrder(changedPriorities).subscribe({
       next : (response) => {
-        /*console.log("Order has been modified: ", response);*/
+        console.log("Order has been modified: ", response);
       },
       error : err => {
         this.errorService.processError(err);
@@ -135,11 +167,11 @@ export class BsPriorityListComponent implements OnInit, OnDestroy{
     if (priority.id){
       let deletePrioritySubs = this.bsPriorityService.deleteOne(priority.id).subscribe({
         next : (response) => {
-          if (response.name){
+          if (response.name && response.id){
+            this.deleteBox(response);
             this.alertService.addNewAlert(
               new UiMessage("Priority " + response.name + " has been deleted", messageType.SUCCESS)
             )
-            this.getPriorities();
           }
         },
         error : err => {
@@ -150,7 +182,33 @@ export class BsPriorityListComponent implements OnInit, OnDestroy{
         }
       })
     }
+  }
 
+  private deleteBox(deletedPriority : bsPriority){
+    if (deletedPriority.id && deletedPriority.name){
+      let deletedIndex : number = this.priorities.findIndex(priority => priority.id === deletedPriority.id);
+      this.priorities.splice(deletedIndex, 1);
+      this.updatePriorityOrderAfterDeletion(deletedIndex);
+    }
+  }
+
+  private updatePriorityOrderAfterDeletion(deletedIndex : number){
+    const actualSize : number = this.priorities.length;
+    for (let i = deletedIndex; i < actualSize; i ++){
+      // @ts-ignore
+      let actualPriorityOrder : number = this.priorities[i].priorityOrder -1 ;
+      this.priorities[i].priorityOrder = actualPriorityOrder;
+    }
+  }
+
+  private addNewPriority(newPriority : bsPriority){
+    newPriority.tasks = 0;
+    this.priorities.push(newPriority);
+  }
+
+  private editModel(modifiedPriority : bsPriority){
+    const toModifiedIndex = this.priorities.findIndex(priotiy => priotiy.id == modifiedPriority.id);
+    this.priorities[toModifiedIndex].name = modifiedPriority.name;
   }
 
   ngOnDestroy(): void {

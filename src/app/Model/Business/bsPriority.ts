@@ -3,61 +3,37 @@ import {bsPrTask} from "../Project/bsPrTask";
 
 export class bsPriority{
 
-  public id : Number | undefined | null;
+  public id : number | null;
 
-  public name : String | undefined | null;
+  public name : string | null;
 
-  public priorityOrder : Number | undefined | null;
+  public priorityOrder : number | null;
 
-  public business : Business | undefined | null;
+  public business : Business | number | null;
 
-  public tasks : bsPrTask[] | undefined | null;
+  public tasks : bsPrTask[] | number | null;
 
-  public bsPriority (
-                      id : Number | undefined | null,
-                      name : String | undefined | null,
-                      priorityOrder : Number | undefined | null,
-                      business : Business | undefined | null,
-                      tasks : bsPrTask[] | undefined | null
+  public constructor (
+    id? : number | null,
+    name? : string | null,
+    priorityOrder? : number | null,
+    business? : Business | number | null,
+    tasks? : bsPrTask[] | null
   ){
-    this.id = id;
-    this.name = name;
-    this.priorityOrder = priorityOrder;
-    this.business = business;
-    this.tasks = tasks;
-  }
+    if (id)
+      this.id = id;
 
-  static builder() : bsPriority{
-    return new bsPriority();
-  }
+    if (name)
+      this.name = name;
 
-  public setId(id: Number) : bsPriority{
-    this.id = id;
-    return this;
-  }
+    if (priorityOrder)
+      this.priorityOrder = priorityOrder;
 
-  public setName(name: String) : bsPriority{
-    this.name = name;
-    return this;
-  }
+    if (business)
+      this.business = business;
 
-  public setPriorityOrder(priorityOrder: Number) : bsPriority{
-    this.priorityOrder = priorityOrder;
-    return this;
-  }
-
-  public setBusiness(business: Business) : bsPriority{
-    this.business = business;
-    return this;
-  }
-
-  public setTasks(tasks : bsPrTask[]) : bsPriority{
-    this.tasks = tasks;
-    return this;
-  }
-
-  public build() : bsPriority{
-    return this;
+    if (tasks)
+      this.tasks = tasks;
   }
 
 }

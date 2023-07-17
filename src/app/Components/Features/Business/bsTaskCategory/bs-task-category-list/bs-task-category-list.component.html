@@ -1,7 +1,5 @@
-<div class="p-4">
-
+<div>
   <h1>Task Category List</h1>
-
   <div *ngIf="!isLoading" class="mt-4">
     <table class="table-auto min-w-full text-primary-content">
       <thead class="bg-base-100">
@@ -24,10 +22,10 @@
             <app-edit-bs-task-category [toEdit]="taskCategory"></app-edit-bs-task-category>
 
             <div class="tooltip cursor-not-allowed" data-tip="It is not possible to delete task categories containing tasks or types 😬" *ngIf="disableDeleteButton(taskCategory); else elseBlock">
-              <button class="btn btn-error ml-4" disabled>Eliminate</button>
+              <button class="btn btn-error ml-4 font-medium" disabled>Eliminate</button>
             </div>
             <ng-template #elseBlock>
-              <button class="btn btn-error ml-4" (click)="deleteTaskCategory(taskCategory)">Eliminate</button>
+              <button class="btn btn-error ml-4 font-medium" (click)="deleteTaskCategory(taskCategory)">Eliminate</button>
             </ng-template>
 
           </td>

@@ -6,7 +6,7 @@
       <input type="text" placeholder="Title" [value]="contentModel.title" class="input input-bordered w-full text-3xl" formControlName="title" />
     </form>
 
-    <app-editor *ngIf="contentDataLoaded" [prevData]="contentModel.content" ></app-editor>
+    <app-editor *ngIf="contentDataLoaded" [prevData]="contentModel.content" (contentHasChanged)="checkIfContentHasBeenModified($event)" (editorIDChange)="changeEditorID($event)"></app-editor>
 
   </div>
 
@@ -18,7 +18,7 @@
         Category: <span class="cursor-pointer bg-primary px-4 py-2 rounded">{{categoryModel.name}}</span>
       </h2>
 
-      <button class="btn btn-primary" [disabled]="!this.titleForm.valid">Save</button>
+      <button class="btn btn-primary" [disabled]="!this.validToSave()" (click)="saveChanges()">Update</button>
 
     </div>
 

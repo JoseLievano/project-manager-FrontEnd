@@ -1,63 +1,79 @@
 import {Business} from "./Business";
 import {User} from "../Shared/User";
+import {Projects} from "@angular/cli/lib/config/workspace-schema";
+import {bsInvoice} from "./bsInvoice";
 
-export class bsClient{
+export class bsClient extends User{
 
-  public isActive : Boolean | undefined | null;
+  public isActive : Boolean | null;
 
-  public dateCreated : Date | undefined | null;
+  public dateCreated : Date | null;
 
-  public lastLogin : Date | undefined | null;
+  public lastLoginDate : Date | null;
 
-  public business : Business | undefined | null;
+  public business : Business | number | null;
 
-  public user : User | undefined | null;
+  public projects : Projects[] | number[] | null;
 
-  public bsClient(
-                  isActive : Boolean | undefined | null,
-                  dateCreated : Date | undefined | null,
-                  lastLogin : Date | undefined | null,
-                  business : Business | undefined | null,
-                  user : User | undefined | null
+  public invoices : bsInvoice[] | number[] | null;
+
+  public address : string | null;
+
+  public website : string | null;
+
+  public phone : string | null;
+
+  public country : string | null;
+
+  public companyName : string | null;
+
+  public constructor(
+    id ?: number | null ,
+    firstName ?: string ,
+    lastName ?: string ,
+    email ?: string,
+    roles ?: string[],
+    password ?: string | null,
+    username ?: string,
+    accountNonExpired ?: boolean,
+    accountNonLocked ?: boolean,
+    credentialsNonExpired ?: boolean,
+    enabled ?: boolean,
+    isActive ?: boolean | null,
+    dateCreated ?: Date | null,
+    lastLoginDate ?: Date | null,
+    business ?: Business | number | null,
+    projects ?: Projects[] | number[] | null,
+    invoices ?: bsInvoice[] | number[] | null,
+    address ?: string | null,
+    website ?: string | null,
+    phone ?: string | null,
+    country ?: string | null,
+    companyName ?: string | null
   ){
-    this.isActive = isActive;
-    this.dateCreated = dateCreated;
-    this.lastLogin = lastLogin;
-    this.business = business;
-    this.user = user;
-  }
-
-  static builder() : bsClient{
-    return new bsClient();
-  }
-
-  public setIsActive(isActive: Boolean) : bsClient{
-    this.isActive = isActive;
-    return this;
-  }
-
-  public setDateCreated(dateCreated: Date) : bsClient{
-    this.dateCreated = dateCreated;
-    return this;
-  }
-
-  public setLastLogin(lastLogin: Date) : bsClient{
-    this.lastLogin = lastLogin;
-    return this;
-  }
-
-  public setBusiness(business: Business) : bsClient{
-    this.business = business;
-    return this;
-  }
-
-  public setUser(user: User) : bsClient{
-    this.user = user;
-    return this;
-  }
-
-  public build() : bsClient{
-    return this;
+    super(id, firstName, lastName, email, roles, password, username, accountNonExpired, accountNonLocked, credentialsNonExpired, enabled);
+    if (isActive)
+      this.isActive = isActive;
+    if (dateCreated)
+      this.dateCreated = dateCreated;
+    if (lastLoginDate)
+      this.lastLoginDate = lastLoginDate;
+    if (business)
+      this.business = business;
+    if (projects)
+      this.projects = projects;
+    if (invoices)
+      this.invoices = invoices;
+    if (address)
+      this.address = address;
+    if (website)
+      this.website = website;
+    if (phone)
+      this.phone = phone;
+    if (country)
+      this.country = country;
+    if (companyName)
+      this.companyName = companyName;
   }
 
 }

@@ -6,3 +6,11 @@
 body{
   @apply text-primary-content;
 }
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.btn{
+  font-weight: 500 !important;
+}
+

@@ -23,6 +23,12 @@ export class SidebarMenuService {
       .setShowWithBusinessLoaded(true)
       .setCanActiveRoles([userRole.ADMIN, userRole.CLIENT, userRole.BS_CLIENT, userRole.BS_EMPLOYEE, userRole.BS_MANAGER]),
     SidebarMenuElement.builder()
+      .setName(Paths.BS_CLIENT.name)
+      .setPath(Paths.BS_CLIENT.path)
+      .setNeedBusinessLoaded(true)
+      .setShowWithBusinessLoaded(true)
+      .setCanActiveRoles([userRole.ADMIN, userRole.CLIENT, userRole.BS_EMPLOYEE, userRole.BS_MANAGER]),
+    SidebarMenuElement.builder()
       .setName(Paths.BUSINESS.name)
       .setPath(Paths.BUSINESS.path)
       .setNeedBusinessLoaded(false)

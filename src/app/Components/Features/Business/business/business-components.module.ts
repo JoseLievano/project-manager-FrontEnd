@@ -3,9 +3,13 @@ import { CommonModule } from '@angular/common';
 import {BusinessListComponent} from "./business-list/business-list.component";
 import {SharedComponentsModule} from "../../../Shared/shared-components.module";
 import { BusinessComponent } from './business/business.component';
-import {RouterOutlet} from "@angular/router";
+import {RouterModule, RouterOutlet, Routes} from "@angular/router";
 import { AddNewBusinessComponent } from './add-new-business/add-new-business.component';
 
+const routes: Routes = [
+  {path : "", component : BusinessListComponent},
+  {path : "new", component : AddNewBusinessComponent}
+]
 
 @NgModule({
   declarations: [
@@ -16,7 +20,8 @@ import { AddNewBusinessComponent } from './add-new-business/add-new-business.com
   imports: [
     CommonModule,
     SharedComponentsModule,
-    RouterOutlet
+    RouterOutlet,
+    RouterModule.forChild(routes)
   ]
 })
 export class BusinessComponentsModule { }

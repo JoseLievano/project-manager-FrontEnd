@@ -50,14 +50,9 @@ export class BsTypeListComponent implements OnInit, OnDestroy{
     this.pageRequest.page = 0;
     this.pageRequest.size = 5;
 
-    //Creates a filter request
-    const filterReq : FilterRequest = new FilterRequest();
-    filterReq.field = "business";
-    filterReq.operations = [new OperationRequest()]
-    filterReq.operations[0].value = this.businessService.getLoadedBusiness().toString();
-    filterReq.operations[0].operator = "=";
-    filterReq.operations[0].field = "id";
-    this.pageRequest.filter = [filterReq];
+    //Filter Request to get all items related to the current loaded business
+    this.pageRequest.filter = [this.businessService.filterReqWithLoadedBusiness()];
+
   }
 
   private getBsTypes() {

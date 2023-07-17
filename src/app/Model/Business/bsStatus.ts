@@ -13,10 +13,10 @@ export class bsStatus{
 
   public tasks : bsPrTask[] | number | null;
 
-  public bsStatus(
-    id? : number | undefined | null,
-    name? : string | undefined | null,
-    color? : string | undefined | null,
+  public constructor(
+    id? : number | null,
+    name? : string | null,
+    color? : string | null,
     business? : Business | number | null,
     tasks? : bsPrTask[] | number | null
   ){

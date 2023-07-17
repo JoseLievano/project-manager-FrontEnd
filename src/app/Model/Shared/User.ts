@@ -1,22 +1,31 @@
 export class User{
-  public id : number | null | undefined;
-  public username : string;
-  public password : string | null | undefined;
-  public roles : string [];
-  public firstName : string;
-  public lastName : string;
+  public id : number | null;
+  public firstName : string | null;
+  public lastName : string | null;
   public email : string;
+  public roles : string [];
+  public password : string | null;
+  public username : string;
+  public accountNonExpired : boolean;
+  public accountNonLocked : boolean;
+  public credentialsNonExpired : boolean;
+  public enabled : boolean;
 
   public constructor (
-                id ?: number | null | undefined,
-                username ?: string,
-                password ?: string | null | undefined,
-                roles ?: string[] ,
-                firstName ?: string,
-                lastName ?: string ,
-                email ?: string
+    id ?: number | null ,
+    firstName ?: string ,
+    lastName ?: string ,
+    email ?: string,
+    roles ?: string[],
+    password ?: string | null,
+    username ?: string,
+    accountNonExpired ?: boolean,
+    accountNonLocked ?: boolean,
+    credentialsNonExpired ?: boolean,
+    enabled ?: boolean
   ){
-    this.id = id;
+    if (id)
+      this.id = id;
     if (username)
       this.username = username;
     if (password)
@@ -29,6 +38,14 @@ export class User{
       this.lastName = lastName;
     if (email)
       this.email = email;
+    if (accountNonExpired)
+      this.accountNonExpired = accountNonExpired;
+    if (accountNonLocked)
+      this.accountNonLocked = accountNonLocked;
+    if (credentialsNonExpired)
+      this.credentialsNonExpired = credentialsNonExpired;
+    if (enabled)
+      this.enabled = enabled;
   }
 
   static builder() : User{
