@@ -1,4 +1,6 @@
 import {SidebarSubMenuElement} from "./SidebarSubMenuElement";
+import {IconDefinition} from "@fortawesome/fontawesome-svg-core";
+import {faFolder} from "@fortawesome/free-solid-svg-icons";
 
 export class SidebarMenuElement{
 
@@ -10,15 +12,19 @@ export class SidebarMenuElement{
   public submenu : SidebarSubMenuElement[];
   public needBusinessLoaded : Boolean;
   public showWithBusinessLoaded : Boolean;
+  public icon : IconDefinition
 
-  constructor (name? : String,
-               path? : String,
-               isSeparator? : Boolean,
-               hasSubmenu? : Boolean,
-               canActiveRoles? : String[],
-               submenu? : SidebarSubMenuElement[],
-               needBusinessLoaded? : Boolean,
-               showWithBusinessLoaded? : Boolean){
+  constructor (
+    name? : String,
+    path? : String,
+    isSeparator? : Boolean,
+    hasSubmenu? : Boolean,
+    canActiveRoles? : String[],
+    submenu? : SidebarSubMenuElement[],
+    needBusinessLoaded? : Boolean,
+    showWithBusinessLoaded? : Boolean,
+    icon? : IconDefinition
+  ){
     this.name = name ?? "";
     this.path = path ?? "";
     this.isSeparator = isSeparator ?? false;
@@ -27,6 +33,7 @@ export class SidebarMenuElement{
     this.submenu = submenu ?? [];
     this.needBusinessLoaded = needBusinessLoaded ?? true;
     this.showWithBusinessLoaded = showWithBusinessLoaded ?? true;
+    this.icon = icon ?? faFolder
   }
 
   static builder() : SidebarMenuElement{
@@ -70,6 +77,11 @@ export class SidebarMenuElement{
 
   public setShowWithBusinessLoaded(show : Boolean) : SidebarMenuElement{
     this.showWithBusinessLoaded = show;
+    return this;
+  }
+
+  public setIcon(icon : IconDefinition) : SidebarMenuElement{
+    this.icon = icon;
     return this;
   }
 
