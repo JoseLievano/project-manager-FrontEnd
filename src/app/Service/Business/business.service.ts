@@ -94,7 +94,6 @@ export class BusinessService extends ModelService<Business> {
     return [userRole.CLIENT, userRole.ADMIN];
   }
 
-
   protected override getViewKeys(): ViewKey[] {
 
     let commonRoles : string[] = [userRole.ADMIN, userRole.CLIENT, userRole.EMPLOYEE];

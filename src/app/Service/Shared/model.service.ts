@@ -159,7 +159,7 @@ export abstract class ModelService<T>{
   }
 
   public goToAddNewPage() : void {
-    let actualUrl = this.router.url + "/new";
+    let actualUrl : string = this.router.url + "/new";
     this.router.navigateByUrl(actualUrl);
   }
 

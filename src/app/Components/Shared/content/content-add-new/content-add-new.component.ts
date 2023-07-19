@@ -81,8 +81,6 @@ export class ContentAddNewComponent<T extends Category<T>, C extends CatContent<
         this.alertService.addNewAlert(
           new UiMessage(`New Document added successfully: ${response.title}`, messageType.SUCCESS )
         )
-
-
         const url = this.router.url.replace('new', 'edit/') + response.id;
         this.router.navigateByUrl(url);
 

@@ -46,8 +46,6 @@ export class ViewBsClientComponent implements OnInit, OnDestroy{
       next : (response) => {
         if (response.id)
           this.bsClient = response;
-
-        console.log("this.bsClient", this.bsClient);
       },
       error : (error) => {
         this.errorService.processError(error);

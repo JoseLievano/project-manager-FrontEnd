@@ -103,6 +103,7 @@ export class TableViewComponent<T> implements OnInit {
 
     this.modelService.getPageListView<T>(this.pageRequest).subscribe({
       next : (response) => {
+        console.log(response.content);
         this.pageAbleResponse = response;
         data = response;
         this.modelKeys = this.modelService.getKeys();
