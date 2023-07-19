@@ -39,6 +39,8 @@ export class AddNewBsTypeComponent implements OnInit, OnDestroy{
 
   private formSubscription : Subscription;
 
+  public taskCatsIsEmpty : boolean = true;
+
   constructor(
     private businessService : BusinessService,
     private bsTypeService : BsTypeService,
@@ -60,6 +62,23 @@ export class AddNewBsTypeComponent implements OnInit, OnDestroy{
     this.formSubscription = this.newTypeForm.valueChanges.subscribe({
       next : (response : {name : string, taskCat : string}) => {
         this.verifyTaskCatName(response.taskCat);
+      }
+    });
+
+    this.initialTaskCatCheck();
+  }
+
+  private initialTaskCatCheck(){
+    let taskCatVerification = this.bsTaskCategoryService.taskCategoriesAreEmpty().subscribe({
+      next : (response) => {
+        console.log("checking task cats", response);
+        this.taskCatsIsEmpty = response;
+      },
+      error : err => {
+        this.errorService.processError(err);
+      },
+      complete : () => {
+        taskCatVerification.unsubscribe();
       }
     })
   }
@@ -85,7 +104,6 @@ export class AddNewBsTypeComponent implements OnInit, OnDestroy{
         const content = response.content;
         if (content)
           this.bsTaskCats = content;
-
       },
       error : err => {
         this.errorService.processError(err);
@@ -198,9 +216,7 @@ export class AddNewBsTypeComponent implements OnInit, OnDestroy{
       })
       const toDelIndex = taskCats.findIndex((actualTaskCat) => actualTaskCat.id === taskCat.id );
       this.bsType.taskCategories.splice(toDelIndex, 1);
-
     }
-
   }
 
   ngOnDestroy(): void {
