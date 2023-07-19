@@ -8,6 +8,7 @@ import {RouterModule, RouterOutlet, Routes} from "@angular/router";
 import {SharedComponentsModule} from "../../../Shared/shared-components.module";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { ViewBsClientComponent } from './view-bs-client/view-bs-client.component';
+import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 
 const routes: Routes = [
   {path : "", component : BsClientListComponent},
@@ -30,7 +31,8 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     SharedComponentsModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    FontAwesomeModule
   ]
 })
 export class BsClientComponentsModule { }
