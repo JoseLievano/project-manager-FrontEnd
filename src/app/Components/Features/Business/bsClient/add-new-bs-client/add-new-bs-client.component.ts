@@ -10,6 +10,7 @@ import {UiMessage} from "../../../../../Model/Shared/ui-message";
 import {messageType} from "../../../../../Constant/messageType";
 import {ActionModelEmit} from "../../../../../Model/Shared/actionModelEmit";
 import {actionType} from "../../../../../Constant/actionType";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-add-new-bs-client',
@@ -41,7 +42,8 @@ export class AddNewBsClientComponent implements OnInit, OnDestroy{
     private businessService : BusinessService,
     private bsClientService : BsClientService,
     private alertService : AlertService,
-    private errorService : ErrorHandlerService
+    private errorService : ErrorHandlerService,
+    private router : Router
   ) {}
 
   ngOnInit(): void {
@@ -60,19 +62,41 @@ export class AddNewBsClientComponent implements OnInit, OnDestroy{
 
   public addNewBsClient(){
     if (this.newBsClientForm.valid){
-      let newClientSub : Subscription = this.bsClientService.createNew(this.newBsClient).subscribe({
+      this.newBsClient.firstName = this.newBsClientForm.value.firstName;
+      this.newBsClient.lastName = this.newBsClientForm.value.lastName;
+      this.newBsClient.email = this.newBsClientForm.value.email;
+      this.newBsClient.password = this.newBsClientForm.value.password;
+      this.newBsClient.username = this.newBsClientForm.value.username;
+      this.newBsClient.address = this.newBsClientForm.value.address;
+      this.newBsClient.website = this.newBsClientForm.value.website;
+      this.newBsClient.phone = this.newBsClientForm.value.phone;
+      this.newBsClient.country = this.newBsClientForm.value.country;
+      this.newBsClient.companyName = this.newBsClientForm.value.companyName;
+      this.newBsClient.business = this.businessService.getLoadedBusiness();
+      this.sendNewBsClientRequest(this.newBsClient);
+    }else {
+      this.alertService.addNewAlert(
+        new UiMessage("Invalid client details", messageType.ERROR)
+      )
+    }
+  }
+
+  private sendNewBsClientRequest(newBsClient : bsClient){
+    if (this.newBsClientForm.valid){
+      let newClientSub : Subscription = this.bsClientService.createNew(newBsClient).subscribe({
         next : (response) => {
           this.alertService.addNewAlert(
             new UiMessage("Client added successfully", messageType.SUCCESS)
           );
           const newClientEmit : ActionModelEmit<bsClient> = new ActionModelEmit<bsClient>(actionType.NEW, response)
           this.bsClientService.modelsChanged.emit(newClientEmit);
+          this.newBsClientForm.reset();
+          this.router.navigateByUrl("bs_client");
         },
         error : (error) => {
           this.errorService.processError(error);
         },
         complete : () => {
-          this.newBsClientForm.reset();
           newClientSub.unsubscribe();
         }
       })
