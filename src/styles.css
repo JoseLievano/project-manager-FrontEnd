@@ -3,12 +3,35 @@
 @tailwind components;
 @tailwind utilities;
 
-body{
+html, body { height: 100%; }
+body {
   @apply text-primary-content;
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+h1{
+  @apply text-4xl !important;
+}
+h2{
+  @apply text-3xl !important;
+}
+h3{
+  @apply text-2xl !important;
+}
+h4{
+  @apply text-xl !important;
+}
+h5{
+  @apply text-lg !important;
+}
+h6{
+  @apply text-lg !important;
+}
+
+p{
+  font-size: 1rem !important;
+}
 
 .btn{
   font-weight: 500 !important;

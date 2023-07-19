@@ -48,7 +48,8 @@
 }
 
 .menuItem{
-  @apply flex items-center p-2 font-normal rounded-lg transition duration-500 hover:bg-primary hover:text-primary-content hover:cursor-pointer;
+  @apply flex items-center p-4 font-normal rounded-lg transition duration-500 hover:bg-primary hover:text-primary-content hover:cursor-pointer;
+  font-size: 1.1rem;
 }
 
 .submenuElements{
