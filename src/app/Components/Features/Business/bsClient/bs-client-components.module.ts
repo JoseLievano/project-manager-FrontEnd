@@ -6,12 +6,14 @@ import { BsClientComponent } from './bs-client/bs-client.component';
 import { EditBsClientComponent } from './edit-bs-client/edit-bs-client.component';
 import {RouterModule, RouterOutlet, Routes} from "@angular/router";
 import {SharedComponentsModule} from "../../../Shared/shared-components.module";
-import {ReactiveFormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import { ViewBsClientComponent } from './view-bs-client/view-bs-client.component';
 
 const routes: Routes = [
   {path : "", component : BsClientListComponent},
   {path : "new", component : AddNewBsClientComponent},
   {path : "edit/:id", component : EditBsClientComponent},
+  {path : "view/:id", component : ViewBsClientComponent},
 ]
 
 @NgModule({
@@ -19,14 +21,16 @@ const routes: Routes = [
     BsClientListComponent,
     AddNewBsClientComponent,
     BsClientComponent,
-    EditBsClientComponent
+    EditBsClientComponent,
+    ViewBsClientComponent
   ],
   imports: [
     CommonModule,
     RouterOutlet,
     RouterModule.forChild(routes),
     SharedComponentsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FormsModule
   ]
 })
 export class BsClientComponentsModule { }
