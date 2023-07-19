@@ -10,10 +10,9 @@ import {AlertService} from "../../../../../Service/Shared/alert.service";
 import {ErrorHandlerService} from "../../../../../Service/Shared/error-handler.service";
 import {messageType} from "../../../../../Constant/messageType";
 import {UiMessage} from "../../../../../Model/Shared/ui-message";
-import { faEllipsisVertical, faGripVertical } from '@fortawesome/free-solid-svg-icons';
-import {IconDefinition} from "@fortawesome/fontawesome-svg-core";
 import {ActionModelEmit} from "../../../../../Model/Shared/actionModelEmit";
 import {actionType} from "../../../../../Constant/actionType";
+import {FaIconsService} from "../../../../../Service/Shared/fa-icons.service";
 
 @Component({
   selector: 'app-bs-priority-list',
@@ -32,13 +31,12 @@ export class BsPriorityListComponent implements OnInit, OnDestroy{
 
   private orderHasBeenModified : boolean = false;
 
-  public faGripVertical : IconDefinition = faGripVertical;
-
   constructor(
     private businessService : BusinessService,
     private bsPriorityService : BsPriorityService,
     private alertService : AlertService,
-    private errorService : ErrorHandlerService
+    private errorService : ErrorHandlerService,
+    public faIcons : FaIconsService
   ) {
     this.actualBusiness = this.businessService.getLoadedBusiness();
   }

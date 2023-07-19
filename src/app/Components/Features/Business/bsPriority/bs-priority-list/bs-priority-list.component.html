@@ -2,7 +2,7 @@
   <div  class="bg-400 priority-list grid grid-cols-1 gap-y-1" cdkDropList (cdkDropListDropped)="drop($event)">
     <div class="priority-box bg-base-200 rounded p-4 text-lg grid grid-cols-6 w-full cursor-move" *ngFor="let priority of priorities" cdkDrag>
       <div *cdkDragPlaceholder class="bg-base-300 text-base-l-100 text-lg rounded p-4 grid grid-cols-6">
-        <fa-icon [icon]="faGripVertical"></fa-icon>
+        <fa-icon [icon]="faIcons.faGripVertical"></fa-icon>
         <span>{{priority.name}}</span>
         <span>{{priority.priorityOrder}}</span>
         <span>{{priority.tasks}}</span>
@@ -11,7 +11,7 @@
           <button class="btn btn-error" disabled>Eliminate</button>
         </div>
       </div>
-      <fa-icon [icon]="faGripVertical"></fa-icon>
+      <fa-icon [icon]="faIcons.faGripVertical"></fa-icon>
       <span>{{priority.name}}</span>
       <span>{{priority.priorityOrder}}</span>
       <span>{{priority.tasks}}</span>
