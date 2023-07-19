@@ -2,10 +2,10 @@
   <form [formGroup]="newBsClientForm">
     <div class="flex justify-between mb-6">
       <h1>Add new client</h1>
-      <button class="btn btn-secondary" *ngIf="validForm; else elseFormButton">Add Client</button>
+      <button class="btn btn-secondary" *ngIf="validForm; else elseFormButton" (click)="addNewBsClient()">Add Client</button>
       <ng-template #elseFormButton>
         <div class="tooltip cursor-not-allowed" data-tip="New client is missing some fields 😬">
-          <button class="btn btn-error ml-4 font-medium" disabled>Eliminate</button>
+          <button class="btn btn-error ml-4 font-medium" disabled>Add Client</button>
         </div>
       </ng-template>
     </div>
