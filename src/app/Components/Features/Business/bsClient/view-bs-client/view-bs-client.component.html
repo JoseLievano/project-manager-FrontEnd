@@ -1,1 +1,28 @@
-<p>view-bs-client works!</p>
+<div *ngIf="clientLoaded; else elseBlock">
+
+  <div class="grid grid-cols-3 gap-8">
+
+    <div class="grid grid-cols-1 gap-y-2 bg-base-100 p-6 rounded">
+      <h1>Client Information: </h1>
+      <p><fa-icon class="mr-2" [icon]="iconService.faAddressCard"></fa-icon><strong>Name: </strong> {{bsClient.firstName}} {{bsClient.lastName}}</p>
+      <p><fa-icon class="mr-2" [icon]="iconService.faUser"></fa-icon><strong>Username: </strong> {{bsClient.username}}</p>
+      <p><fa-icon class="mr-2" [icon]="iconService.faEnvelope"></fa-icon><strong>Email: </strong> <a class="text-secondary underline" href="mailto:{{bsClient.email}}">{{bsClient.email}}</a></p>
+      <p><fa-icon class="mr-2" [icon]="iconService.faPhone"></fa-icon><strong>Phone: </strong> {{bsClient.phone}}</p>
+      <p><fa-icon class="mr-2" [icon]="iconService.faGlobe"></fa-icon><strong>Website: </strong>{{bsClient.website}}</p>
+      <p><fa-icon class="mr-2" [icon]="iconService.faBuilding"></fa-icon><strong>Company: </strong> {{bsClient.companyName}}</p>
+      <p><fa-icon class="mr-2" [icon]="iconService.faLocationDot"></fa-icon><strong>Address: </strong> {{bsClient.address}}</p>
+      <p><fa-icon class="mr-2" [icon]="iconService.faCalendar"></fa-icon><strong>Created: </strong> {{bsClient.dateCreated | date: 'dd/MM/yyyy' }}</p>
+    </div>
+
+    <div class="col-span-2 bg-base p-4 rounded">
+      <p> Task</p>
+    </div>
+
+  </div>
+
+</div>
+<ng-template #elseBlock>
+  <div>
+    <span class="loading loading-spinner text-primary"></span>
+  </div>
+</ng-template>

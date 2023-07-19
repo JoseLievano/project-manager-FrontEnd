@@ -5,6 +5,7 @@ import {bsClient} from "../../../../../Model/Business/bsClient";
 import {Subscription} from "rxjs";
 import {AlertService} from "../../../../../Service/Shared/alert.service";
 import {ErrorHandlerService} from "../../../../../Service/Shared/error-handler.service";
+import {FaIconsService} from "../../../../../Service/Shared/fa-icons.service";
 
 @Component({
   selector: 'app-view-bs-client',
@@ -24,7 +25,8 @@ export class ViewBsClientComponent implements OnInit, OnDestroy{
     private activatedRoute : ActivatedRoute,
     private alertService : AlertService,
     private errorService : ErrorHandlerService,
-    private router : Router
+    private router : Router,
+    public iconService : FaIconsService
   ) {
   }
 
