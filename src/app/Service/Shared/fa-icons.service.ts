@@ -28,13 +28,21 @@ import {
   faPhone,
   faBuilding,
   faGlobe,
-  faCalendar
+  faCalendar,
+  faMoneyBill,
+  faMoneyBillWave,
+  faListCheck,
+  faDiagramProject
 } from "@fortawesome/free-solid-svg-icons";
 @Injectable({
   providedIn: 'root'
 })
 export class FaIconsService {
 
+  public readonly faDiagramProject : IconDefinition = faDiagramProject;
+  public readonly faListCheck : IconDefinition = faListCheck;
+  public readonly faMoneyBillWave : IconDefinition = faMoneyBillWave;
+  public readonly faMoneyBill : IconDefinition = faMoneyBill;
   public readonly faCalendar : IconDefinition = faCalendar;
   public readonly faGlobe : IconDefinition = faGlobe;
   public readonly faBuilding : IconDefinition = faBuilding;
