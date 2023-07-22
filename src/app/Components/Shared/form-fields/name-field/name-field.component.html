@@ -1,0 +1,15 @@
+<div *ngIf="dataFieldLoaded" class="grid grid-cols-1 my-4">
+  <label for="name-{{label}}" class="mr-4 mb-4">Name *: </label>
+  <form [formGroup]="form">
+    <input type="text"
+           [ngClass]="{'input-is-invalid' : form.controls['name'].invalid, 'input-is-valid' : form.controls['name'].valid && form.controls['name'].touched}"
+           class="input-bs-client"
+           id="name" placeholder="{{label}}"
+           formControlName="name">
+    <label *ngIf="form.controls['name'].invalid" class="label">
+      <span class="label-text-alt"></span>
+      <span class="invalid-input-label-message">The client's first name is required. (min 3 characters)</span>
+    </label>
+  </form>
+  <button class="btn btn-secondary" (click)="getFormControlData()">FormControl data</button>
+</div>
