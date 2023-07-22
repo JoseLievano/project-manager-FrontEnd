@@ -41,6 +41,8 @@ export class AddNewBsTypeComponent implements OnInit, OnDestroy{
 
   public taskCatsIsEmpty : boolean = true;
 
+  public taskCatChecked : boolean = false;
+
   constructor(
     private businessService : BusinessService,
     private bsTypeService : BsTypeService,
@@ -71,8 +73,8 @@ export class AddNewBsTypeComponent implements OnInit, OnDestroy{
   private initialTaskCatCheck(){
     let taskCatVerification = this.bsTaskCategoryService.taskCategoriesAreEmpty().subscribe({
       next : (response) => {
-        console.log("checking task cats", response);
         this.taskCatsIsEmpty = response;
+        this.taskCatChecked = true;
       },
       error : err => {
         this.errorService.processError(err);
