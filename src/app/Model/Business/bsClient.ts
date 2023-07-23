@@ -2,6 +2,7 @@ import {Business} from "./Business";
 import {User} from "../Shared/User";
 import {Projects} from "@angular/cli/lib/config/workspace-schema";
 import {bsInvoice} from "./bsInvoice";
+import {bsProject} from "../Project/bsProject";
 
 export class bsClient extends User{
 
@@ -13,7 +14,7 @@ export class bsClient extends User{
 
   public business : Business | number | null;
 
-  public projects : Projects[] | number[] | null;
+  public projects : bsProject[] | number[] | null;
 
   public invoices : bsInvoice[] | number[] | null;
 
@@ -43,7 +44,7 @@ export class bsClient extends User{
     dateCreated ?: Date | null,
     lastLoginDate ?: Date | null,
     business ?: Business | number | null,
-    projects ?: Projects[] | number[] | null,
+    projects ?: bsProject[] | number[] | null,
     invoices ?: bsInvoice[] | number[] | null,
     address ?: string | null,
     website ?: string | null,
