@@ -1,1 +1,79 @@
-<p>edit-bs-client works!</p>
+<div class="bg-base-100 p-8 rounded">
+  <form *ngIf="clientLoaded" [formGroup]="editForm">
+    <div class="flex justify-between mb-6">
+      <h1>Editing {{toEditClient.username}}</h1>
+      <button class="btn btn-secondary" *ngIf="informationChangedAndValid; else elseFormButton">Update Client</button>
+      <ng-template #elseFormButton>
+        <div class="tooltip cursor-not-allowed" data-tip="Change information to update client 😬">
+          <button class="btn btn-error ml-4 font-medium" disabled>Update Client</button>
+        </div>
+      </ng-template>
+    </div>
+    <div class="flex justify-between gap-x-20">
+      <div class="w-4/5">
+        <div class="grid grid-cols-1 my-4">
+          <label for="firstClientName" class="mr-4 mb-4">First Name *: </label>
+          <input type="text" [ngClass]="{'input-is-invalid' : fieldIsInvalid('firstName'), 'input-is-valid' : touchedAndValid('firstName')}" class="input-bs-client" id="firstClientName" placeholder="First Name (required)" formControlName="firstName">
+          <label *ngIf="fieldIsInvalid('firstName')" class="label">
+            <span class="label-text-alt"></span>
+            <span class="invalid-input-label-message">The client's first name is required. (min 3 characters)</span>
+          </label>
+        </div>
+        <div class="grid grid-cols-1 my-4">
+          <label for="lastClientName" class="mr-4 mb-4">Last Name *: </label>
+          <input type="text" [ngClass]="{'input-is-invalid' : fieldIsInvalid('lastName'), 'input-is-valid' : touchedAndValid('lastName')}" class="input-bs-client" id="lastClientName" placeholder="Last Name (required)" formControlName="lastName">
+          <label *ngIf="fieldIsInvalid('lastName')" class="label">
+            <span class="label-text-alt"></span>
+            <span class="invalid-input-label-message">The client's last name is required. (min 3 characters)</span>
+          </label>
+        </div>
+        <div class="grid grid-cols-1 my-4">
+          <label for="userName" class="mr-4 mb-4">UserName *: </label>
+          <input type="text" [ngClass]="{'input-is-invalid' : fieldIsInvalid('username'), 'input-is-valid' : touchedAndValid('username')}" class="input-bs-client" id="userName" placeholder="Username (required)" formControlName="username">
+          <label *ngIf="fieldIsInvalid('username')" class="label">
+            <span class="label-text-alt"></span>
+            <span class="invalid-input-label-message">The client's Username is required. (min 5 characters)</span>
+          </label>
+        </div>
+        <div class="grid grid-cols-1 my-4">
+          <label for="emailClient" class="mr-4 mb-4">Email *: </label>
+          <input type="text" [ngClass]="{'input-is-invalid' : fieldIsInvalid('email'), 'input-is-valid' : touchedAndValid('email')}" class="input-bs-client" id="emailClient" placeholder="Email (required)" formControlName="email">
+          <label *ngIf="fieldIsInvalid('email')" class="label">
+            <span class="label-text-alt"></span>
+            <span class="invalid-input-label-message">Please enter a valid email address</span>
+          </label>
+        </div>
+        <div class="grid grid-cols-1 my-4">
+          <label for="passwordClient" class="mr-4 mb-4">Password *: </label>
+          <input type="password" [ngClass]="{'input-is-invalid' : fieldIsInvalid('password'), 'input-is-valid' : touchedAndValid('password')}" class="input-bs-client" id="passwordClient" placeholder="Password (required)" formControlName="password">
+          <label *ngIf="fieldIsInvalid('password')" class="label">
+            <span class="label-text-alt"></span>
+            <span class="invalid-input-label-message">Password it too short (min 8 characters)</span>
+          </label>
+        </div>
+      </div>
+      <div class="w-4/5">
+        <div class="grid grid-cols-1 my-4">
+          <label for="addressClient" class="mr-4 mb-4">Address: </label>
+          <input type="text" [ngClass]="{'input-is-valid' : touchedAndValid('address')}" class="input-bs-client" id="addressClient" placeholder="Client's address" formControlName="address">
+        </div>
+        <div class="grid grid-cols-1 my-4">
+          <label for="countryClient" class="mr-4 mb-4">Country: </label>
+          <input type="text" [ngClass]="{'input-is-valid' : touchedAndValid('country')}" class="input-bs-client" id="countryClient" placeholder="Client's country" formControlName="country">
+        </div>
+        <div class="grid grid-cols-1 my-4">
+          <label for="phoneClient" class="mr-4 mb-4">Phone: </label>
+          <input type="text" [ngClass]="{'input-is-valid' : touchedAndValid('phone')}" class="input-bs-client" id="phoneClient" placeholder="Client's phone" formControlName="phone">
+        </div>
+        <div class="grid grid-cols-1 my-4">
+          <label for="websiteClient" class="mr-4 mb-4">Website: </label>
+          <input type="text" [ngClass]="{'input-is-valid' : touchedAndValid('website')}" class="input-bs-client" id="websiteClient" placeholder="Client's website" formControlName="website">
+        </div>
+        <div class="grid grid-cols-1 my-4">
+          <label for="companyNameClient" class="mr-4 mb-4">Company Name: </label>
+          <input type="text" [ngClass]="{'input-is-valid' : touchedAndValid('companyName')}" class="input-bs-client" id="companyNameClient" placeholder="Client's Company Name" formControlName="companyName">
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
