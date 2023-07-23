@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import {BsTaskCategoryService} from "../../../../../Service/Business/bs-task-category.service";
 import {BusinessService} from "../../../../../Service/Business/business.service";
 import {bsTaskCategory} from "../../../../../Model/Business/bsTaskCategory";
-import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {FormControl, FormGroup, NonNullableFormBuilder, Validators} from "@angular/forms";
 import {AlertService} from "../../../../../Service/Shared/alert.service";
 import {UiMessage} from "../../../../../Model/Shared/ui-message";
 import {messageType} from "../../../../../Constant/messageType";
@@ -19,23 +19,28 @@ export class AddNewBsTaskCategoryComponent {
 
   private taskCategory : bsTaskCategory = new bsTaskCategory();
 
-  public newTaskCategoryForm : FormGroup = new FormGroup<any>({
+  /*public newTaskCategoryForm : FormGroup = new FormGroup<any>({
     name : new FormControl('', {validators : [Validators.required]})
+  })*/
+
+  public newTaskCategoryForm = this.formBuilder.group({
+    name : "xs"
   })
 
   constructor(
     private bsTaskCategoryService : BsTaskCategoryService,
     private businessService : BusinessService,
     private alertService : AlertService,
-    private errorService : ErrorHandlerService
+    private errorService : ErrorHandlerService,
+    private formBuilder : NonNullableFormBuilder
   ) {
     this.taskCategory.business = this.businessService.getLoadedBusiness();
   }
 
   public nameValueIsEmpty() {
-    let name = this.newTaskCategoryForm.value.name;
-
-    return name != null && true && name != "";
+    /*let name = this.newTaskCategoryForm.value.name;
+    return name != null && true && name != "";*/
+    return true;
   }
 
   public addNewTaskCategory(){
@@ -62,4 +67,9 @@ export class AddNewBsTaskCategoryComponent {
     })
   }
 
+  getFormData() {
+    console.log(this.newTaskCategoryForm);
+    console.log("Data name", this.newTaskCategoryForm.controls['name'].value);
+    console.log("Form validity", this.newTaskCategoryForm.valid);
+  }
 }
