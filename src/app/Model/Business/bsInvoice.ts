@@ -10,7 +10,7 @@ export class bsInvoice{
 
   public limitDate : Date | undefined | null;
 
-  public amount : Number | undefined | null;
+  public amount : number;
 
   public isPaid : Boolean | undefined | null;
 
@@ -28,7 +28,7 @@ export class bsInvoice{
                     id : Number | undefined | null,
                     dateGenerated : Date | undefined | null,
                     limitDate : Date | undefined | null,
-                    amount : Number | undefined | null,
+                    amount : number,
                     isPaid : Boolean | undefined | null,
                     isOverDue : Boolean | undefined | null,
                     number : String | undefined | null,
@@ -48,63 +48,7 @@ export class bsInvoice{
     this.task = task;
   }
 
-  static builder() : bsInvoice{
-    return new bsInvoice();
-  }
 
-  public setId (id : Number) : bsInvoice{
-    this.id = id;
-    return this;
-  }
-
-  public setDateGenerated (dateGenerated : Date) : bsInvoice{
-    this.dateGenerated = dateGenerated;
-    return this;
-  }
-
-  public setLimitDate (limitDate : Date) : bsInvoice{
-    this.limitDate = limitDate;
-    return this;
-  }
-
-  public setAmount (amount : Number) : bsInvoice{
-    this.amount = amount;
-    return this;
-  }
-
-  public setIsPaid (isPaid : Boolean) : bsInvoice{
-    this.isPaid = isPaid;
-    return this;
-  }
-
-  public setIsOverDue (isOverDue : Boolean) : bsInvoice{
-    this.isOverDue = isOverDue;
-    return this;
-  }
-
-  public setNumber (number : String) : bsInvoice{
-    this.number = number;
-    return this;
-  }
-
-  public setClient (client : bsClient) : bsInvoice{
-    this.client = client;
-    return this;
-  }
-
-  public setBusiness (business : Business) : bsInvoice{
-    this.business = business;
-    return this;
-  }
-
-  public setTask (task : bsPrTask[]) : bsInvoice{
-    this.task = task;
-    return this;
-  }
-
-  public build() : bsInvoice{
-    return this;
-  }
 
 
 }
