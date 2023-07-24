@@ -14,8 +14,39 @@
       <p><fa-icon class="mr-2" [icon]="iconService.faCalendar"></fa-icon><strong>Created: </strong> {{bsClient.dateCreated | date: 'dd/MM/yyyy' }}</p>
     </div>
 
-    <div class="col-span-2 bg-base p-4 rounded">
-      <p> Task</p>
+    <div class="col-span-2 rounded">
+      <div class="stats shadow min-w-full">
+
+        <div class="stat place-items-center">
+          <div class="stat-figure text-secondary">
+            <fa-icon class="text-secondary text-3xl" [icon]="iconService.faDiagramProject"></fa-icon>
+          </div>
+          <div class="stat-title">Projects</div>
+          <div class="stat-value">{{getProjectsNumber()}}</div>
+          <div class="stat-desc">Jan 1st - Feb 1st</div>
+        </div>
+
+        <div class="stat place-items-center">
+          <div class="stat-figure text-secondary">
+            <fa-icon class="text-secondary text-3xl" [icon]="iconService.faMoneyBill"></fa-icon>
+          </div>
+          <div class="stat-title">Invoices Paid</div>
+          <div class="stat-value">$ {{getPaidInvoicesValue()}}</div>
+          <div class="stat-desc">↗︎ 400 (22%)</div>
+        </div>
+
+        <div class="stat place-items-center">
+          <div class="stat-figure text-secondary">
+            <fa-icon class="text-secondary text-3xl" [icon]="iconService.faListCheck"></fa-icon>
+          </div>
+          <div class="stat-title">Tasks Open</div>
+          <div class="stat-value">27</div>
+          <div class="stat-desc">↘︎ 90 (14%)</div>
+        </div>
+
+
+
+      </div>
     </div>
 
   </div>
