@@ -6,6 +6,7 @@ import {userRole} from "../../Constant/userRole";
 import {BusinessService} from "../Business/business.service";
 import {Paths} from "../../Constant/paths";
 import {FaIconsService} from "./fa-icons.service";
+import {SidebarSubMenuElement} from "../../Model/Shared/SidebarSubMenuElement";
 
 @Injectable({
   providedIn: 'root'
@@ -30,7 +31,14 @@ export class SidebarMenuService {
       .setIcon(this.iconService.faUserTie)
       .setNeedBusinessLoaded(true)
       .setShowWithBusinessLoaded(true)
-      .setCanActiveRoles([userRole.ADMIN, userRole.CLIENT, userRole.BS_EMPLOYEE, userRole.BS_MANAGER]),
+      .setCanActiveRoles([userRole.ADMIN, userRole.CLIENT, userRole.BS_EMPLOYEE, userRole.BS_MANAGER])
+      .setHasSubmenu(true)
+      .setSubmenu([
+        SidebarSubMenuElement.builder()
+          .setName("New " + Paths.BS_CLIENT.name)
+          .setPath(Paths.BS_CLIENT.path + "/new")
+          .setCanActiveRoles([userRole.ADMIN, userRole.CLIENT, userRole.BS_MANAGER])
+      ]),
     SidebarMenuElement.builder()
       .setName(Paths.BUSINESS.name)
       .setPath(Paths.BUSINESS.path)
