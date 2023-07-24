@@ -6,6 +6,8 @@ import {Subscription} from "rxjs";
 import {AlertService} from "../../../../../Service/Shared/alert.service";
 import {ErrorHandlerService} from "../../../../../Service/Shared/error-handler.service";
 import {FaIconsService} from "../../../../../Service/Shared/fa-icons.service";
+import {bsProject} from "../../../../../Model/Project/bsProject";
+import {bsInvoice} from "../../../../../Model/Business/bsInvoice";
 
 @Component({
   selector: 'app-view-bs-client',
@@ -19,6 +21,10 @@ export class ViewBsClientComponent implements OnInit, OnDestroy{
   public clientLoaded : boolean = false;
 
   private paramSub : Subscription;
+
+  private projects : bsProject[] = [];
+
+  private invoices : bsInvoice[] = [];
 
   constructor(
     private bsClientService : BsClientService,
@@ -48,6 +54,8 @@ export class ViewBsClientComponent implements OnInit, OnDestroy{
       next : (response) => {
         if (response.id)
           this.bsClient = response;
+
+        this.setProjects(response.projects);
       },
       error : (error) => {
         this.errorService.processError(error);
@@ -58,7 +66,35 @@ export class ViewBsClientComponent implements OnInit, OnDestroy{
         loadBsClientSub.unsubscribe();
       }
     })
+  }
 
+  private setProjects(projects : bsProject[] | number[] | null ){
+    if (Array.isArray(bsProject) && projects && projects.length > 0 && projects[0] instanceof bsProject){
+      this.projects = projects as bsProject[];
+    }
+  }
+
+  public getProjectsNumber() : number{
+    return this.projects.length;
+  }
+
+  private setInvoices(invoices : bsInvoice[] | number[] | null ){
+    if (Array.isArray(bsInvoice) && invoices && invoices.length > 0 && invoices[0] instanceof bsInvoice){
+      this.invoices = invoices as bsInvoice[];
+    }
+  }
+
+  public getPaidInvoicesValue() : number{
+
+    if (this.invoices.length == 0)
+      return 0;
+
+    let value : number = 0;
+    for (const invoice of this.invoices){
+      if (invoice.isPaid)
+        value += invoice.amount;
+    }
+    return value;
   }
 
   ngOnDestroy(): void {
