@@ -13,6 +13,7 @@ import { CategoryAddNewComponent } from './category-add-new/category-add-new.com
 import {ReactiveFormsModule} from "@angular/forms";
 import {ContentModule} from "./content/content.module";
 import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
+import {FormFieldsModule} from "./form-fields/form-fields.module";
 
 
 
@@ -26,7 +27,7 @@ import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
     TableViewComponent,
     AlertsComponent,
     CategoryViewComponent,
-    CategoryAddNewComponent,
+    CategoryAddNewComponent
   ],
   imports: [
     ContentModule,
@@ -34,6 +35,7 @@ import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
     RouterOutlet,
     ReactiveFormsModule,
     FontAwesomeModule,
+    FormFieldsModule
   ],
   exports: [
     TopBarComponent,
