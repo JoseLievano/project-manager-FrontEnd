@@ -9,7 +9,7 @@
         </a>
         <ul *ngIf="element.hasSubmenu" class="space-y-2 mt-2 transitionSubMenu" [ngClass]="{ hideSubMenu : getActualSubMenu() != element.name}">
           <li *ngFor="let subElement of element.submenu" [ngClass]="{hideMenuElement : !getSidebarToggleStatus()}" class="transitionMenuElement">
-            <a class="submenuElements">
+            <a (click)="setActive(subElement.name, subElement.path)" class="submenuElements">
               <span class="ml-3">{{subElement.name}}</span>
             </a>
           </li>
