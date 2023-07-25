@@ -1,40 +1,108 @@
-import {Component, Input, OnChanges, OnInit} from '@angular/core';
-import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import {
+  AbstractControl,
+  ControlValueAccessor, NG_VALIDATORS,
+  NG_VALUE_ACCESSOR, ValidationErrors, Validator,
+} from "@angular/forms";
 
 @Component({
   selector: 'app-name-field',
   templateUrl: './name-field.component.html',
-  styleUrls: ['./name-field.component.css']
+  styleUrls: ['./name-field.component.css'],
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      multi: true,
+      useExisting: NameFieldComponent
+    },
+    {
+      provide: NG_VALIDATORS,
+      multi: true,
+      useExisting: NameFieldComponent
+    }
+  ]
 })
-export class NameFieldComponent implements OnInit{
+export class NameFieldComponent implements ControlValueAccessor, Validator{
 
   @Input() label: string;
 
-  @Input() form : FormGroup<any>;
+  public actualName : string = "";
 
-  /*@Input() formControl : FormControl;*/
+  public onChange: any = () => {};
 
-  public dataFieldLoaded = false;
+  public onTouched: any = () => {};
+
+  public touched : boolean = false;
+
+  public disabled : boolean = false;
+
+  public onValidatorChange = () => {};
+
+  private nameField : HTMLInputElement;
+
+  public hasLessThanTwoCharacters : boolean = true;
 
   constructor() {
-    /*;*/
-    /*while (this.form.controls['name'] == null) {
-      console.log(this.form.controls['name'] == null);
-      this.form.controls['name'] = new FormControl('', Validators.required);
-    }*/
   }
 
   ngOnInit(): void {
-    console.log("OnInit", this.form);
-    while (this.form.controls['name'] == null) {
-      console.log(this.form.controls['name'] == null);
-      this.form.addControl("name", new FormControl('xs', Validators.required));
-      this.dataFieldLoaded = true;
-    }
+    this.nameField = document.getElementById("name") as HTMLInputElement;
+
   }
 
-  public getFormControlData(){
-    console.log(this.form.controls['name']);
+  public fieldChangeDetected(event: any) {
+    this.onChange(event.target.value);
+    this.actualName = event.target.value;
+    this.onValidatorChange();
   }
+
+  writeValue(value: any): void {
+    this.actualName = value;
+  }
+
+  registerOnChange(fn: any): void {
+    this.onChange = fn;
+  }
+
+  registerOnTouched(fn: any): void {
+    this.onTouched = fn;
+  }
+
+  setDisabledState(isDisabled: boolean): void {
+    this.disabled = isDisabled;
+  }
+
+  setTouched() {
+    this.onTouched();
+    this.touched = true;
+  }
+
+  registerOnValidatorChange(fn: () => void) {
+    this.onValidatorChange = fn;
+  }
+
+  validate(control: AbstractControl): ValidationErrors | null {
+
+    //Check if actualName is not empty
+    if (this.actualName != null && this.actualName != ""){
+
+      //Check if actualName has 3 or more characters
+      if (this.actualName.length < 3) {
+        this.hasLessThanTwoCharacters = true;
+        return {nameHasLessThanTwoCharacters: true};
+      }else{
+        this.hasLessThanTwoCharacters = false;
+      }
+
+    }else{
+      return {nameIsEmpty: true};
+    }
+
+
+
+    return null;
+  }
+
+
 
 }
