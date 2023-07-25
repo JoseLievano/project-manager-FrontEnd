@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import {BsTaskCategoryService} from "../../../../../Service/Business/bs-task-category.service";
 import {BusinessService} from "../../../../../Service/Business/business.service";
 import {bsTaskCategory} from "../../../../../Model/Business/bsTaskCategory";
-import {FormControl, FormGroup, NonNullableFormBuilder, Validators} from "@angular/forms";
+import {FormBuilder, FormControl, FormGroup, NonNullableFormBuilder, Validators} from "@angular/forms";
 import {AlertService} from "../../../../../Service/Shared/alert.service";
 import {UiMessage} from "../../../../../Model/Shared/ui-message";
 import {messageType} from "../../../../../Constant/messageType";
@@ -24,7 +24,7 @@ export class AddNewBsTaskCategoryComponent {
   })*/
 
   public newTaskCategoryForm = this.formBuilder.group({
-    name : "xs"
+    name : [null]
   })
 
   constructor(
@@ -32,7 +32,7 @@ export class AddNewBsTaskCategoryComponent {
     private businessService : BusinessService,
     private alertService : AlertService,
     private errorService : ErrorHandlerService,
-    private formBuilder : NonNullableFormBuilder
+    private formBuilder : FormBuilder
   ) {
     this.taskCategory.business = this.businessService.getLoadedBusiness();
   }
@@ -45,8 +45,8 @@ export class AddNewBsTaskCategoryComponent {
 
   public addNewTaskCategory(){
 
-    this.taskCategory.name = this.newTaskCategoryForm.value.name;
-    this.newTaskCategoryForm.controls['name'].setValue("");
+    /*this.taskCategory.name = this.newTaskCategoryForm.value.name;*/
+    /*this.newTaskCategoryForm.controls.name.setValue("");*/
 
     let taskCatSubsCription = this.bsTaskCategoryService.createNew<bsTaskCategory>(this.taskCategory).subscribe({
       next : (response) => {
@@ -69,7 +69,8 @@ export class AddNewBsTaskCategoryComponent {
 
   getFormData() {
     console.log(this.newTaskCategoryForm);
-    console.log("Data name", this.newTaskCategoryForm.controls['name'].value);
+    console.log("Data name", this.newTaskCategoryForm.controls.name.value);
     console.log("Form validity", this.newTaskCategoryForm.valid);
   }
+
 }
