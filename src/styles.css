@@ -37,3 +37,14 @@ p{
   font-weight: 500 !important;
 }
 
+
+/* Default input styles */
+
+.invalid-input-label-container{
+  @apply grid grid-cols-1 gap-y-2 place-items-end mt-2;
+}
+
+.invalid-input-label-container > div{
+  @apply badge badge-error;
+}
+
