@@ -10,10 +10,6 @@
   @apply input-success border-2 !important;
 }
 
-.invalid-input-label-message{
-  @apply label-text-alt text-error-content bg-error py-1 px-2 rounded;
-}
-
 .disable-add-button{
   @apply cursor-not-allowed !important;
 }

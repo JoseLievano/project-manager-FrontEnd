@@ -4,10 +4,6 @@
     <app-name-field [label]="'New task category name'" formControlName="name"></app-name-field>
   </form>
   <div class="modal-action my-8 justify-start">
-    <button class="btn btn-secondary" [disabled]="!nameValueIsEmpty()" (click)="addNewTaskCategory()">Create New Task Category</button>
-    <button class="btn btn-primary" (click)="getFormData()">get form data</button>
-  </div>
-  <div>
-    <p>{{newTaskCategoryForm.controls['name'].valid | json}}</p>
+    <button class="btn btn-secondary" [disabled]="!newTaskCategoryForm.valid" (click)="addNewTaskCategory()">Create New Task Category</button>
   </div>
 </div>
