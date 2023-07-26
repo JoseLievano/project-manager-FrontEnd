@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import {BsTaskCategoryService} from "../../../../../Service/Business/bs-task-category.service";
 import {BusinessService} from "../../../../../Service/Business/business.service";
 import {bsTaskCategory} from "../../../../../Model/Business/bsTaskCategory";
-import {FormBuilder, FormControl, FormGroup, NonNullableFormBuilder, Validators} from "@angular/forms";
+import {FormBuilder} from "@angular/forms";
 import {AlertService} from "../../../../../Service/Shared/alert.service";
 import {UiMessage} from "../../../../../Model/Shared/ui-message";
 import {messageType} from "../../../../../Constant/messageType";
@@ -19,13 +19,9 @@ export class AddNewBsTaskCategoryComponent {
 
   private taskCategory : bsTaskCategory = new bsTaskCategory();
 
-  /*public newTaskCategoryForm : FormGroup = new FormGroup<any>({
-    name : new FormControl('', {validators : [Validators.required]})
-  })*/
-
   public newTaskCategoryForm = this.formBuilder.group({
     name : [null]
-  })
+  });
 
   constructor(
     private bsTaskCategoryService : BsTaskCategoryService,
@@ -37,18 +33,10 @@ export class AddNewBsTaskCategoryComponent {
     this.taskCategory.business = this.businessService.getLoadedBusiness();
   }
 
-  public nameValueIsEmpty() {
-    /*let name = this.newTaskCategoryForm.value.name;
-    return name != null && true && name != "";*/
-    return true;
-  }
-
   public addNewTaskCategory(){
-
-    /*this.taskCategory.name = this.newTaskCategoryForm.value.name;*/
-    /*this.newTaskCategoryForm.controls.name.setValue("");*/
-
-    let taskCatSubsCription = this.bsTaskCategoryService.createNew<bsTaskCategory>(this.taskCategory).subscribe({
+    this.taskCategory.name = this.newTaskCategoryForm.value.name;
+    this.newTaskCategoryForm.controls.name.setValue(null);
+    let taskCatSubscription = this.bsTaskCategoryService.createNew<bsTaskCategory>(this.taskCategory).subscribe({
       next : (response) => {
         if (response.id){
           const emitModel : ActionModelEmit<bsTaskCategory> = new ActionModelEmit<bsTaskCategory>(actionType.NEW, response);
@@ -62,15 +50,9 @@ export class AddNewBsTaskCategoryComponent {
         this.errorService.processError(err);
       },
       complete : () =>{
-        taskCatSubsCription.unsubscribe();
+        taskCatSubscription.unsubscribe();
       }
     })
-  }
-
-  getFormData() {
-    console.log(this.newTaskCategoryForm);
-    console.log("Data name", this.newTaskCategoryForm.controls.name.value);
-    console.log("Form validity", this.newTaskCategoryForm.valid);
   }
 
 }
