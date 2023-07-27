@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {bsTaskCategory} from "../../../../../Model/Business/bsTaskCategory";
-import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {FormBuilder} from "@angular/forms";
 import {BsTaskCategoryService} from "../../../../../Service/Business/bs-task-category.service";
 import {BusinessService} from "../../../../../Service/Business/business.service";
 import {AlertService} from "../../../../../Service/Shared/alert.service";
@@ -21,25 +21,21 @@ export class EditBsTaskCategoryComponent implements OnInit{
 
   public modalID : string;
 
-  public editForm : FormGroup = new FormGroup<any>({
-    name : new FormControl("", {validators : [Validators.required]})
+  public editForm = this.formBuilder.group({
+    name : [null]
   })
 
   constructor(
     private bsTaskCategoryService : BsTaskCategoryService,
     private businessService : BusinessService,
     private alertService : AlertService,
-    private errorService : ErrorHandlerService
+    private errorService : ErrorHandlerService,
+    private formBuilder : FormBuilder
   ) {
   }
 
   ngOnInit(): void {
-
     this.modalID = "edit-task-cat-modal-" + this.toEdit.id;
-
-    if (this.toEdit.name){
-      this.editForm.controls['name'].setValue(this.toEdit.name);
-    }
   }
 
   public showEditModal(){
@@ -48,22 +44,11 @@ export class EditBsTaskCategoryComponent implements OnInit{
   }
 
   public updateTaskCategory(){
-
-    console.log("form value", this.editForm.value.name);
-
-    const newName = this.editForm.value.name;
-
-    if (newName != "" && newName != null && !this.editForm.pristine){
-      let newTaskCat : bsTaskCategory = new bsTaskCategory();
-      newTaskCat.name = newName;
-      newTaskCat.id = this.toEdit.id;
-      newTaskCat.business = this.businessService.getLoadedBusiness();
-      this.sendUpdateRequest(newTaskCat);
-    }else{
-      this.alertService.addNewAlert(
-        new UiMessage("Invalid new name", messageType.ERROR)
-      )
-    }
+    let newTaskCat : bsTaskCategory = new bsTaskCategory();
+    newTaskCat.name = this.editForm.value.name;
+    newTaskCat.id = this.toEdit.id;
+    newTaskCat.business = this.businessService.getLoadedBusiness();
+    this.sendUpdateRequest(newTaskCat);
   }
 
   private sendUpdateRequest(newTaskCat : bsTaskCategory){

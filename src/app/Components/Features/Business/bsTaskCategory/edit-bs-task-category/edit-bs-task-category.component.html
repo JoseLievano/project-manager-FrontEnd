@@ -4,14 +4,11 @@
     <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 bg-error text-error-content">✕</button>
     <h3 class="font-bold text-lg">Edit {{toEdit.name}} status.</h3>
 
-    <div class="grid grid-cols-1">
-      <label for="newStatusName" class="mr-4">Name: </label>
-      <input type="text" class="input input-bordered w-full max-w-xs" id="newStatusName" placeholder="New Status name" formControlName="name">
-    </div>
+    <app-name-field [label]="'Actual task category name'" formControlName="name" [originalValue]="toEdit.name"></app-name-field>
 
     <div class="modal-action">
       <button class="btn btn-error">Cancel</button>
-      <button class="btn btn-secondary" (click)="updateTaskCategory()" [disabled]="editForm.pristine">Update</button>
+      <button class="btn btn-secondary" (click)="updateTaskCategory()" [disabled]="!editForm.valid">Update</button>
     </div>
   </form>
   <form method="dialog" class="modal-backdrop">
