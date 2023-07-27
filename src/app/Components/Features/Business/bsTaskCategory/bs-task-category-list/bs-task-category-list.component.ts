@@ -6,9 +6,7 @@ import {ErrorHandlerService} from "../../../../../Service/Shared/error-handler.s
 import {AlertService} from "../../../../../Service/Shared/alert.service";
 import {UiMessage} from "../../../../../Model/Shared/ui-message";
 import {messageType} from "../../../../../Constant/messageType";
-import {FilterRequest} from "../../../../../Model/Shared/filterRequest";
 import {BusinessService} from "../../../../../Service/Business/business.service";
-import {OperationRequest} from "../../../../../Model/Shared/operationRequest";
 import {Subscription} from "rxjs";
 
 @Component({
@@ -48,7 +46,6 @@ export class BsTaskCategoryListComponent implements OnInit, OnDestroy{
   private setInitialPageReqState(){
     this.pageRequest.page = 0;
     this.pageRequest.size = 10;
-
     //Filter Request to get all items related to the current loaded business
     this.pageRequest.filter = [this.businessService.filterReqWithLoadedBusiness()];
   }
