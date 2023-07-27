@@ -1,13 +1,16 @@
 <div class="grid grid-cols-1 my-4">
   <label for="name-{{label}}" class="mr-4 mb-4">Name *: </label>
   <input  type="text"
+          [id]="id"
           class="input-bs-client"
           id="name" placeholder="{{label}}"
           (input)="fieldChangeDetected($event)"
           (click)="setTouched()"
           [disabled]="disabled">
-  <div class="flex justify-end">
-    <div class="invalid-input-label-message mt-2" *ngIf="touched && hasLessThanTwoCharacters">The client's first name is required. (min 3 characters)</div>
+  <div class="invalid-input-label-container">
+    <div *ngIf="touched && isEmpty">Name is required</div>
+    <div *ngIf="touched && hasBeenModified && invalidUseOfSpace">Check space utilization</div>
+    <div *ngIf="touched && hasLessThanTwoCharacters && hasBeenModified">Name must have more than 2 characters</div>
+    <div *ngIf="touched && equalToOriginal && hasBeenModified">Name has not been changed</div>
   </div>
-
 </div>
