@@ -1,4 +1,4 @@
-import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {
   AbstractControl,
   ControlValueAccessor, NG_VALIDATORS,
@@ -26,6 +26,8 @@ export class NameFieldComponent implements ControlValueAccessor, Validator{
 
   @Input() label: string;
 
+  @Input() originalValue : any;
+
   public actualName : string = "";
 
   public onChange: any = () => {};
@@ -33,6 +35,14 @@ export class NameFieldComponent implements ControlValueAccessor, Validator{
   public onTouched: any = () => {};
 
   public touched : boolean = false;
+
+  public hasBeenModified : boolean = false;
+
+  public equalToOriginal : boolean = false;
+
+  public isEmpty : boolean = true;
+
+  public invalidUseOfSpace : boolean = true;
 
   public disabled : boolean = false;
 
@@ -42,22 +52,40 @@ export class NameFieldComponent implements ControlValueAccessor, Validator{
 
   public hasLessThanTwoCharacters : boolean = true;
 
+  // Generate a unique id using a random number
+  public id = 'name-field-' + Math.floor(Math.random() * Math.floor(10000000)) + "-" + Math.floor(Math.random() * Math.floor(1030000));
+
   constructor() {
   }
 
   ngOnInit(): void {
     this.nameField = document.getElementById("name") as HTMLInputElement;
+    if (this.originalValue){
+      this.nameField.value = this.originalValue;
+    }
 
   }
 
   public fieldChangeDetected(event: any) {
-    this.onChange(event.target.value);
+    if (!this.hasBeenModified)
+      this.hasBeenModified = true;
     this.actualName = event.target.value;
+    this.onChange(event.target.value);
     this.onValidatorChange();
   }
 
   writeValue(value: any): void {
-    this.actualName = value;
+    if (this.originalValue){
+      this.nameField.value = this.originalValue;
+      this.actualName = this.originalValue;
+      this.touched = false;
+      this.hasBeenModified = false;
+    }else{
+      this.actualName = value;
+      this.nameField.value = this.actualName;
+      this.touched = false;
+      this.hasBeenModified = false;
+    }
   }
 
   registerOnChange(fn: any): void {
@@ -82,27 +110,30 @@ export class NameFieldComponent implements ControlValueAccessor, Validator{
   }
 
   validate(control: AbstractControl): ValidationErrors | null {
-
-    //Check if actualName is not empty
-    if (this.actualName != null && this.actualName != ""){
-
-      //Check if actualName has 3 or more characters
-      if (this.actualName.length < 3) {
-        this.hasLessThanTwoCharacters = true;
-        return {nameHasLessThanTwoCharacters: true};
-      }else{
-        this.hasLessThanTwoCharacters = false;
-      }
-
-    }else{
-      return {nameIsEmpty: true};
+    //Check field conditions and modified fields that holds conditions state
+    this.setValidationFlags();
+    if (this.isEmpty || this.equalToOriginal || this.hasLessThanTwoCharacters || this.invalidUseOfSpace){
+      let errors : any = {};
+      errors["isEmpty"] = this.isEmpty;
+      errors["equalToOriginal"] = this.equalToOriginal;
+      errors["hasLessThanTwoCharacters"] = this.hasLessThanTwoCharacters;
+      errors["invalidUseOfSpace"] = this.invalidUseOfSpace;
+      return errors;
     }
-
-
-
     return null;
   }
 
-
+  private setValidationFlags(){
+    if (this.actualName != null && this.actualName != ""){
+      this.isEmpty = false;
+      if (this.originalValue != null){
+        this.equalToOriginal = this.actualName == this.originalValue;
+      }
+      this.hasLessThanTwoCharacters = this.actualName.length < 3;
+      this.invalidUseOfSpace = /^\s/.test(this.actualName) || /^\s*$/.test(this.actualName) || /\s{2,}/.test(this.actualName);
+    }else{
+      this.isEmpty = true;
+    }
+  }
 
 }
