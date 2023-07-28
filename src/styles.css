@@ -64,3 +64,7 @@ p{
   @apply label-text-alt text-error-content bg-error py-1 px-2 rounded;
 }
 
+.input-checking-async-value-shared{
+  @apply input-warning border-2 animate-pulse !important;
+}
+
