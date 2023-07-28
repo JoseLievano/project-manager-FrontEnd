@@ -7,6 +7,8 @@ import {
 } from '@angular/forms';
 import { ModelService } from '../../../../Service/Shared/model.service';
 import { CustomTextFieldValidator } from '../../../../Util/customTextFieldValidator';
+import { BusinessService } from '../../../../Service/Business/business.service';
+import { ErrorHandlerService } from '../../../../Service/Shared/error-handler.service';
 
 @Component({
     selector: 'app-name-field',
@@ -30,17 +32,17 @@ export class NameFieldComponent<T>
     implements ControlValueAccessor, Validator
 {
     @Input() override label: string;
-
     @Input() override originalValue: any;
-
     @Input() override isRequired: boolean = false;
-
     @Input() override modelService: ModelService<T>;
-
     @Input() override model: T;
+    protected override filterFieldName: string = 'name';
 
-    constructor() {
-        super();
+    constructor(
+        businessService: BusinessService,
+        errorService: ErrorHandlerService,
+    ) {
+        super(businessService, errorService);
     }
 
     ngOnInit(): void {
