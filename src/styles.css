@@ -48,3 +48,19 @@ p{
   @apply badge badge-error;
 }
 
+.input-is-invalid-shared{
+  @apply input-error border-2 !important;
+}
+
+.input-is-valid-shared{
+  @apply input-success border-2 !important;
+}
+
+.input-field-common-shared{
+  @apply input input-bordered w-full;
+}
+
+.invalid-input-label-message{
+  @apply label-text-alt text-error-content bg-error py-1 px-2 rounded;
+}
+
