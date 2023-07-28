@@ -1,5 +1,11 @@
 import { AbstractControl, ValidationErrors } from '@angular/forms';
 import { ModelService } from '../Service/Shared/model.service';
+import { PageRequest } from '../Model/Shared/pageRequest';
+import { BusinessService } from '../Service/Business/business.service';
+import { FilterRequest } from '../Model/Shared/filterRequest';
+import { OperationRequest } from '../Model/Shared/operationRequest';
+import { Subscription } from 'rxjs';
+import { ErrorHandlerService } from '../Service/Shared/error-handler.service';
 
 export class CustomTextFieldValidator<T> {
     //Input() Fields from parent component
@@ -16,16 +22,23 @@ export class CustomTextFieldValidator<T> {
     //Field status flags
     public touched: boolean = false;
     public hasBeenModified: boolean = false;
+    private needsAsyncValidation: boolean = false;
+    public requestingAsyncValidation: boolean = false;
 
     //Field validation flags
     public equalToOriginal: boolean = false;
     public isEmpty: boolean = true;
     public hasLessThanTwoCharacters: boolean = true;
     public invalidUseOfSpace: boolean = true;
+    public valueAlreadyExists: boolean = false;
 
     public disabled: boolean = false;
 
-    public actualName: string = '';
+    public actualValue: string = '';
+
+    protected filterFieldName: string;
+
+    private pageRequest: PageRequest = new PageRequest(0, 100);
 
     // Generate a unique id using a random number
     public id =
@@ -38,30 +51,43 @@ export class CustomTextFieldValidator<T> {
 
     public onValidatorChange = () => {};
 
-    public test() {
-        console.log(
-            'test model and modelservice',
-            this.model,
-            this.modelService,
-        );
+    private businessService: BusinessService;
+
+    private errorService: ErrorHandlerService;
+
+    constructor(
+        businessService: BusinessService,
+        errorService: ErrorHandlerService,
+    ) {
+        this.businessService = businessService;
+        this.errorService = errorService;
     }
 
     public fieldChangeDetected(event: any) {
-        if (!this.hasBeenModified) this.hasBeenModified = true;
-        this.actualName = event.target.value;
-        this.onChange(event.target.value);
+        if (!this.hasBeenModified) {
+            this.hasBeenModified = true;
+            //Check if field needs async validation the first time the field is changed
+            this.checkIfNeedsAsyncValidation();
+        }
+        this.actualValue = event.target.value;
+        this.onChange(this.actualValue);
         this.onValidatorChange();
+        if (this.actualValue.length > 2) {
+            this.checkIfValueAlreadyExists();
+        } else {
+            this.valueAlreadyExists = false;
+        }
     }
 
     public writeValue(value: any): void {
         if (this.originalValue) {
             this.textField.value = this.originalValue;
-            this.actualName = this.originalValue;
+            this.actualValue = this.originalValue;
             this.touched = false;
             this.hasBeenModified = false;
         } else {
-            this.actualName = value;
-            this.textField.value = this.actualName;
+            this.actualValue = value;
+            this.textField.value = this.actualValue;
             this.touched = false;
             this.hasBeenModified = false;
         }
@@ -92,16 +118,16 @@ export class CustomTextFieldValidator<T> {
     }
 
     protected setValidationFlags() {
-        if (this.actualName != null && this.actualName != '') {
+        if (this.actualValue != null && this.actualValue != '') {
             this.isEmpty = false;
             if (this.originalValue != null) {
-                this.equalToOriginal = this.actualName == this.originalValue;
+                this.equalToOriginal = this.actualValue == this.originalValue;
             }
-            this.hasLessThanTwoCharacters = this.actualName.length < 3;
+            this.hasLessThanTwoCharacters = this.actualValue.length < 3;
             this.invalidUseOfSpace =
-                /^\s/.test(this.actualName) ||
-                /^\s*$/.test(this.actualName) ||
-                /\s{2,}/.test(this.actualName);
+                /^\s/.test(this.actualValue) ||
+                /^\s*$/.test(this.actualValue) ||
+                /\s{2,}/.test(this.actualValue);
         } else if (this.isRequired) {
             this.isEmpty = true;
             this.invalidUseOfSpace = false;
@@ -115,7 +141,11 @@ export class CustomTextFieldValidator<T> {
 
     public validate(control: AbstractControl): ValidationErrors | null {
         this.setValidationFlags();
+
         let errors: any = null;
+
+        if (this.requestingAsyncValidation)
+            errors = { requestingAsyncValidation: true };
 
         if (this.isRequired && this.isEmpty) errors = { required: true };
 
@@ -127,6 +157,7 @@ export class CustomTextFieldValidator<T> {
 
         if (this.equalToOriginal) errors = { equalToOriginal: true };
 
+        if (this.valueAlreadyExists) errors = { valueAlreadyExists: true };
         return errors;
     }
 
@@ -145,11 +176,56 @@ export class CustomTextFieldValidator<T> {
                 this.hasBeenModified
             )
                 return true;
+
+            if (this.valueAlreadyExists && this.hasBeenModified && this.touched)
+                return true;
         }
         return false;
     }
 
     public touchedAndValid(): boolean {
         return this.touched && !this.fieldIsInvalid() && this.hasBeenModified;
+    }
+
+    private checkIfNeedsAsyncValidation() {
+        if (this.modelService) {
+            this.needsAsyncValidation = true;
+        }
+    }
+
+    private checkIfValueAlreadyExists() {
+        this.requestingAsyncValidation = true;
+        this.onValidatorChange();
+        this.pageRequest.filter = this.getFilterRequests();
+        let checkValueExistence: Subscription = this.modelService
+            .getPageListView<T>(this.pageRequest)
+            .subscribe({
+                next: (data) => {
+                    this.valueAlreadyExists = data.numberOfElements > 0;
+                    this.pageRequest.filter = [];
+                    this.requestingAsyncValidation = false;
+                    this.onValidatorChange();
+                },
+                error: (err) => {
+                    this.errorService.processError(err);
+                },
+                complete: () => {
+                    checkValueExistence.unsubscribe();
+                },
+            });
+    }
+
+    private getFilterRequests(): FilterRequest[] {
+        const businessFilter: FilterRequest =
+            this.businessService.filterReqWithLoadedBusiness();
+
+        let actualFieldFilterRequests: FilterRequest = new FilterRequest();
+        actualFieldFilterRequests.field = this.filterFieldName;
+        actualFieldFilterRequests.operations = [new OperationRequest()];
+        actualFieldFilterRequests.operations[0].field = this.filterFieldName;
+        actualFieldFilterRequests.operations[0].operator = '=';
+        actualFieldFilterRequests.operations[0].value = this.actualValue;
+
+        return [businessFilter, actualFieldFilterRequests];
     }
 }
