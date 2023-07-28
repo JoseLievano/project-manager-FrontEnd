@@ -4,7 +4,13 @@
     <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 bg-error text-error-content">✕</button>
     <h3 class="font-bold text-lg">Edit {{toEdit.name}} status.</h3>
 
-    <app-name-field [label]="'Actual task category name'" formControlName="name" [originalValue]="toEdit.name"></app-name-field>
+    <app-name-field
+      [label]="'Actual task category name'" formControlName="name"
+      [originalValue]="toEdit.name"
+      [model]="model"
+      [modelService]="bsTaskCategoryService"
+      [isRequired]="true">
+    </app-name-field>
 
     <div class="modal-action">
       <button class="btn btn-error">Cancel</button>
