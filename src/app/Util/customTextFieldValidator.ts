@@ -66,13 +66,20 @@ export class CustomTextFieldValidator<T> {
     public fieldChangeDetected(event: any) {
         if (!this.hasBeenModified) {
             this.hasBeenModified = true;
+            this.touched = true;
             //Check if field needs async validation the first time the field is changed
             this.checkIfNeedsAsyncValidation();
         }
         this.actualValue = event.target.value;
         this.onChange(this.actualValue);
         this.onValidatorChange();
-        if (this.actualValue.length > 2) {
+        //Check if field needs async validation only if field value is valid
+        if (
+            this.actualValue.length > 2 &&
+            this.needsAsyncValidation &&
+            this.customValidationFlags()
+        ) {
+            console.log('checking async validation');
             this.checkIfValueAlreadyExists();
         } else {
             this.valueAlreadyExists = false;
@@ -117,7 +124,8 @@ export class CustomTextFieldValidator<T> {
         this.onValidatorChange = fn;
     }
 
-    protected setValidationFlags() {
+    private setValidationFlags() {
+        /*console.log('Validation flags');*/
         if (this.actualValue != null && this.actualValue != '') {
             this.isEmpty = false;
             if (this.originalValue != null) {
@@ -137,6 +145,7 @@ export class CustomTextFieldValidator<T> {
             this.invalidUseOfSpace = false;
             this.hasLessThanTwoCharacters = false;
         }
+        this.customValidationFlags();
     }
 
     public validate(control: AbstractControl): ValidationErrors | null {
@@ -158,11 +167,14 @@ export class CustomTextFieldValidator<T> {
         if (this.equalToOriginal) errors = { equalToOriginal: true };
 
         if (this.valueAlreadyExists) errors = { valueAlreadyExists: true };
+
+        errors = this.customValidate(errors);
+
         return errors;
     }
 
     public fieldIsInvalid(): boolean {
-        if (this.touched) {
+        if (this.touched || this.hasBeenModified) {
             if (this.isEmpty && this.isRequired) return true;
 
             if (this.hasLessThanTwoCharacters && this.hasBeenModified)
@@ -179,6 +191,8 @@ export class CustomTextFieldValidator<T> {
 
             if (this.valueAlreadyExists && this.hasBeenModified && this.touched)
                 return true;
+
+            return this.customFieldIsInvalidCheck();
         }
         return false;
     }
@@ -188,9 +202,7 @@ export class CustomTextFieldValidator<T> {
     }
 
     private checkIfNeedsAsyncValidation() {
-        if (this.modelService) {
-            this.needsAsyncValidation = true;
-        }
+        this.needsAsyncValidation = !!this.modelService;
     }
 
     private checkIfValueAlreadyExists() {
@@ -227,5 +239,20 @@ export class CustomTextFieldValidator<T> {
         actualFieldFilterRequests.operations[0].value = this.actualValue;
 
         return [businessFilter, actualFieldFilterRequests];
+    }
+
+    protected customValidationFlags(): boolean {
+        return true;
+    }
+
+    protected customValidate(
+        errors: ValidationErrors | null,
+    ): ValidationErrors | null {
+        if (errors) return errors;
+        return null;
+    }
+
+    protected customFieldIsInvalidCheck(): boolean {
+        return false;
     }
 }
