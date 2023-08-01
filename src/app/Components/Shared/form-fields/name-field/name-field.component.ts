@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import {
     ControlValueAccessor,
     NG_VALIDATORS,
@@ -29,7 +29,7 @@ import { ErrorHandlerService } from '../../../../Service/Shared/error-handler.se
 })
 export class NameFieldComponent<T>
     extends CustomTextFieldValidator<T>
-    implements ControlValueAccessor, Validator
+    implements ControlValueAccessor, Validator, OnInit
 {
     @Input() override label: string;
     @Input() override originalValue: any;
