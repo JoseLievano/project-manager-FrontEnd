@@ -1,14 +1,20 @@
 <div class="bg-base-400 rounded">
-  <form [formGroup]="newTaskCategoryForm">
-    <h3 class="font-bold text-lg">Create a new Task Category</h3>
-    <app-name-field
-      [label]="'New task category name'" formControlName="name"
-      [isRequired]="true"
-      [model]="model"
-      [modelService]="bsTaskCategoryService">
-    </app-name-field>
-  </form>
-  <div class="modal-action my-8 justify-start">
-    <button class="btn btn-secondary" [disabled]="!newTaskCategoryForm.valid" (click)="addNewTaskCategory()">Create New Task Category</button>
-  </div>
+    <form [formGroup]="newTaskCategoryForm">
+        <h3 class="font-bold text-lg">Create a new Task Category</h3>
+        <app-name-field
+            [label]="'New task category name'"
+            formControlName="name"
+            [isRequired]="true"
+            [model]="model"
+            [modelService]="bsTaskCategoryService">
+        </app-name-field>
+    </form>
+    <div class="modal-action my-8 justify-start">
+        <button
+            class="btn btn-secondary"
+            [disabled]="!newTaskCategoryForm.valid"
+            (click)="addNewTaskCategory()">
+            Create New Task Category
+        </button>
+    </div>
 </div>
