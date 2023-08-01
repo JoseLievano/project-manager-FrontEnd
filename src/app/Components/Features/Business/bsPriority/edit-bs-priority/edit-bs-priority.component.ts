@@ -54,7 +54,6 @@ export class EditBsPriorityComponent implements OnInit {
         let updatedPriority: bsPriority = new bsPriority();
         updatedPriority.id = this.toEdit.id;
         updatedPriority.name = this.editForm.value.name;
-
         if (typeof updatedPriority.id === 'number') {
             let updateRequest = this.bsPriorityService
                 .updateOne(updatedPriority.id, updatedPriority)
