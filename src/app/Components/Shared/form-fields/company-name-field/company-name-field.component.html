@@ -1,5 +1,7 @@
 <div class="grid grid-cols-1 my-4">
-    <label for="name-{{ label }}" class="mr-4 mb-4">Name *: </label>
+    <label for="name-{{ label }}" class="mr-4 mb-4"
+        >Company Name <span *ngIf="isRequired" class="text-error">*</span> :
+    </label>
     <input
         type="text"
         [ngClass]="{
