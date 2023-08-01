@@ -1,6 +1,11 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { CustomTextFieldValidator } from '../../../../Util/customTextFieldValidator';
-import { ControlValueAccessor, Validator } from '@angular/forms';
+import {
+    ControlValueAccessor,
+    NG_VALIDATORS,
+    NG_VALUE_ACCESSOR,
+    Validator,
+} from '@angular/forms';
 import { ModelService } from '../../../../Service/Shared/model.service';
 import { ErrorHandlerService } from '../../../../Service/Shared/error-handler.service';
 import { BusinessService } from '../../../../Service/Business/business.service';
@@ -9,6 +14,18 @@ import { BusinessService } from '../../../../Service/Business/business.service';
     selector: 'app-website-field',
     templateUrl: './website-field.component.html',
     styleUrls: ['./website-field.component.css'],
+    providers: [
+        {
+            provide: NG_VALUE_ACCESSOR,
+            multi: true,
+            useExisting: WebsiteFieldComponent,
+        },
+        {
+            provide: NG_VALIDATORS,
+            multi: true,
+            useExisting: WebsiteFieldComponent,
+        },
+    ],
 })
 export class WebsiteFieldComponent<T>
     extends CustomTextFieldValidator<T>
