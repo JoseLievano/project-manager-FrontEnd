@@ -33,10 +33,6 @@ export class AddNewBsClientComponent implements OnInit {
         companyName: [null],
     });
 
-    /*public validForm: boolean = false;*/
-
-    /*private newFormSub: Subscription;*/
-
     constructor(
         private businessService: BusinessService,
         public bsClientService: BsClientService,
