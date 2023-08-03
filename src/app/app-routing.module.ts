@@ -80,10 +80,6 @@ const routes: Routes = [
             {
                 path: Paths.BS_PROJECT.path,
                 component: ProjectComponent,
-                loadChildren: () =>
-                    import(
-                        './Components/Features/Project/project/project.module'
-                    ).then((m) => m.ProjectModule),
             },
         ],
     },
