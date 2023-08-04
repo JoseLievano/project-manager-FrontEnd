@@ -1,1 +1,20 @@
-<p>add-new-project works!</p>
+<div class="bg-base-400 rounded">
+    <form [formGroup]="newProjectForm">
+        <h3 class="font-bold text-lg">Create a new Task Category</h3>
+        <app-name-field
+            [label]="'New task category name'"
+            formControlName="name"
+            [isRequired]="true"
+            [model]="model"
+            [modelService]="projectService">
+        </app-name-field>
+    </form>
+    <div class="modal-action my-8 justify-start">
+        <button
+            class="btn btn-secondary"
+            [disabled]="!newProjectForm.valid"
+            (click)="addNewProject()">
+            Create New Task Category
+        </button>
+    </div>
+</div>
