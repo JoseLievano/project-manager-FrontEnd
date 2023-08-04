@@ -37,21 +37,21 @@ export class bsProject {
 
     public tasks: bsPrTask[] | number | null;
 
-    public bsProject(
-        id: number | null,
-        name: string | null,
-        isCompleted: boolean | null,
-        created: Date | null,
-        dueDate: Date | null,
-        business: Business | number | null,
-        client: bsClient | number | null,
-        invoices: bsInvoice[] | number | null,
-        channels: bsPrChannel[] | number | null,
-        docsCategories: bsPrDocsCategory[] | number | null,
-        docs: bsPrDocs[] | number | null,
-        kbCategories: bsPrKBCategory[] | number | null,
-        kbs: bsPrKB[] | number | null,
-        tasks: bsPrTask[] | number | null,
+    constructor(
+        id?: number | null,
+        name?: string | null,
+        isCompleted?: boolean | null,
+        created?: Date | null,
+        dueDate?: Date | null,
+        business?: Business | number | null,
+        client?: bsClient | number | null,
+        invoices?: bsInvoice[] | number | null,
+        channels?: bsPrChannel[] | number | null,
+        docsCategories?: bsPrDocsCategory[] | number | null,
+        docs?: bsPrDocs[] | number | null,
+        kbCategories?: bsPrKBCategory[] | number | null,
+        kbs?: bsPrKB[] | number | null,
+        tasks?: bsPrTask[] | number | null,
     ) {
         if (id) this.id = id;
         if (name) this.name = name;
