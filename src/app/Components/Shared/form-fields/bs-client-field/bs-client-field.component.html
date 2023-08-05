@@ -1,0 +1,36 @@
+<div class="grid grid-cols-1 my-4">
+    <label for="name-{{ label }}" class="mr-4 mb-4"
+        >Address <span *ngIf="isRequired" class="text-error">*</span> :
+    </label>
+    <div class="join">
+        <select class="select select-bordered join-item">
+            <option selected>By UserName</option>
+            <option>By Email</option>
+            <option>By IjD</option>
+        </select>
+        <input
+            type="text"
+            [ngClass]="{
+                'input-is-invalid-shared': fieldIsInvalid(),
+                'input-is-valid-shared': touchedAndValid(),
+                'input-checking-async-value-shared': requestingAsyncValidation
+            }"
+            [id]="label"
+            class="input-field-common-shared join-item"
+            id="address"
+            placeholder="{{ label }}"
+            (input)="fieldChangeDetected($event)"
+            (click)="setTouched()"
+            [disabled]="disabled" />
+    </div>
+    <div class="invalid-input-label-container">
+        <div *ngIf="touched && isRequired">Name is required</div>
+        <div *ngIf="touched && hasBeenModified && invalidUseOfSpace">
+            Check space utilization
+        </div>
+        <div *ngIf="touched && hasBeenModified">
+            Name must have more than 2 characters
+        </div>
+        <div *ngIf="touched && hasBeenModified">Name already exists</div>
+    </div>
+</div>
