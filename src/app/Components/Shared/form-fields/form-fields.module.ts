@@ -10,6 +10,7 @@ import { WebsiteFieldComponent } from './website-field/website-field.component';
 import { CompanyNameFieldComponent } from './company-name-field/company-name-field.component';
 import { EmailFieldComponent } from './email-field/email-field.component';
 import { PasswordFieldComponent } from './password-field/password-field.component';
+import { BsClientFieldComponent } from './bs-client-field/bs-client-field.component';
 
 @NgModule({
     declarations: [
@@ -22,6 +23,7 @@ import { PasswordFieldComponent } from './password-field/password-field.componen
         CompanyNameFieldComponent,
         EmailFieldComponent,
         PasswordFieldComponent,
+        BsClientFieldComponent,
     ],
     exports: [
         NameFieldComponent,
@@ -33,6 +35,7 @@ import { PasswordFieldComponent } from './password-field/password-field.componen
         CompanyNameFieldComponent,
         EmailFieldComponent,
         PasswordFieldComponent,
+        BsClientFieldComponent,
     ],
     imports: [CommonModule, ReactiveFormsModule],
 })
