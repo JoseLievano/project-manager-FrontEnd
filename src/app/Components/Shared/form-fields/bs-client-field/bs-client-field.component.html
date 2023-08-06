@@ -1,12 +1,20 @@
 <div class="grid grid-cols-1 my-4">
     <label for="name-{{ label }}" class="mr-4 mb-4"
-        >Address <span *ngIf="isRequired" class="text-error">*</span> :
+        >Client <span *ngIf="isRequired" class="text-error">*</span> :
     </label>
     <div class="join">
-        <select class="select select-bordered join-item">
-            <option selected>By UserName</option>
-            <option>By Email</option>
-            <option>By IjD</option>
+        <select
+            id="filter-selector"
+            class="select select-bordered join-item"
+            [ngClass]="{
+                'input-is-invalid-shared': fieldIsInvalid(),
+                'input-is-valid-shared': touchedAndValid(),
+                'input-checking-async-value-shared': requestingAsyncValidation
+            }"
+            (input)="filterSelectorChanged($event)">
+            <option value="username">By UserName</option>
+            <option value="email">By Email</option>
+            <option value="id">By ID</option>
         </select>
         <input
             type="text"
@@ -15,9 +23,9 @@
                 'input-is-valid-shared': touchedAndValid(),
                 'input-checking-async-value-shared': requestingAsyncValidation
             }"
-            [id]="label"
+            [id]="id"
             class="input-field-common-shared join-item"
-            id="address"
+            id="userSearch"
             placeholder="{{ label }}"
             (input)="fieldChangeDetected($event)"
             (click)="setTouched()"
