@@ -18,6 +18,7 @@ export class CustomTextFieldValidator<T> {
     //Callbacks for ControlValueAccessor and Validator
     public onChange: any = () => {};
     public onTouched: any = () => {};
+    public onValidatorChange = () => {};
 
     //Field status flags
     public touched: boolean = false;
@@ -48,8 +49,6 @@ export class CustomTextFieldValidator<T> {
         Math.floor(Math.random() * Math.floor(1030000));
 
     protected textField: HTMLInputElement;
-
-    public onValidatorChange = () => {};
 
     private businessService: BusinessService;
 
