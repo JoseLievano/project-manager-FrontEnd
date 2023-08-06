@@ -16,6 +16,7 @@ export class AddNewProjectComponent {
 
     public newProjectForm = this.formBuilder.group({
         name: [null],
+        client: [null],
     });
 
     constructor(
