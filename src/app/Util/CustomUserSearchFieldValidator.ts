@@ -13,6 +13,7 @@ export class CustomUserSearchFieldValidator<T> {
     public isRequired: boolean = false;
     public modelService: ModelService<T>;
     public model: T;
+    public multiple: boolean = false;
 
     //Callbacks for ControlValueAccessor and Validator
     public onChange: any = () => {};
@@ -27,6 +28,7 @@ export class CustomUserSearchFieldValidator<T> {
     public actualValue: string = '';
     protected actualFilterValue: 'id' | 'username' | 'email' = 'username';
     private pageRequest: PageRequest = new PageRequest(0, 100);
+    public selectedUsers: any;
 
     //Field validation flags
     public equalToOriginal: boolean = false;
@@ -106,6 +108,13 @@ export class CustomUserSearchFieldValidator<T> {
         this.actualFilterValue = event.target.value;
         this.pageRequest.filter = [];
         this.setPageRequestFilter();
+        this.selectedUsers = [
+            {
+                id: 1,
+                userName: this.actualValue,
+            },
+        ];
+        this.onChange(this.selectedUsers);
     }
 
     protected setPageRequestFilter() {
@@ -123,5 +132,9 @@ export class CustomUserSearchFieldValidator<T> {
         this.pageRequest.filter.push(filterReq);
     }
 
-    setTouched() {}
+    setTouched() {
+        if (!this.touched) {
+            this.touched = true;
+        }
+    }
 }
