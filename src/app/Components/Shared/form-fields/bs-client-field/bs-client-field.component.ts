@@ -9,6 +9,7 @@ import {
     NG_VALUE_ACCESSOR,
     Validator,
 } from '@angular/forms';
+import { User } from '../../../../Model/Shared/User';
 
 @Component({
     selector: 'app-bs-client-field',
@@ -27,7 +28,7 @@ import {
         },
     ],
 })
-export class BsClientFieldComponent<T>
+export class BsClientFieldComponent<T extends User>
     extends CustomUserSearchFieldValidator<T>
     implements ControlValueAccessor, Validator, OnInit
 {
