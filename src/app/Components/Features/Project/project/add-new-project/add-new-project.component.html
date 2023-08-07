@@ -8,7 +8,7 @@
             [model]="model"
             [modelService]="projectService">
         </app-name-field>
-        <app-bs-client-field> </app-bs-client-field>
+        <app-bs-client-field formControlName="client"> </app-bs-client-field>
     </form>
     <div class="modal-action my-8 justify-start">
         <button
@@ -18,4 +18,8 @@
             Create New Project
         </button>
     </div>
+</div>
+
+<div>
+    {{ this.newProjectForm.value | json }}
 </div>
