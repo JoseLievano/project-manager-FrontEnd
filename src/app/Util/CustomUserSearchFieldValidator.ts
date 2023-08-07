@@ -29,6 +29,7 @@ export class CustomUserSearchFieldValidator<T> {
     protected actualFilterValue: 'id' | 'username' | 'email' = 'username';
     private pageRequest: PageRequest = new PageRequest(0, 100);
     public selectedUsers: any;
+    public users: T[] = [];
 
     //Field validation flags
     public equalToOriginal: boolean = false;
@@ -66,7 +67,7 @@ export class CustomUserSearchFieldValidator<T> {
         filterReq.field = 'username';
         filterReq.operations = [new OperationRequest()];
         filterReq.operations[0].field = 'username';
-        filterReq.operations[0].operator = '=';
+        filterReq.operations[0].operator = ':';
         filterReq.operations[0].value = '';
         this.pageRequest.filter.push(filterReq);
     }
@@ -102,19 +103,23 @@ export class CustomUserSearchFieldValidator<T> {
 
     fieldChangeDetected(event: any) {
         this.actualValue = event.target.value;
+        if (this.actualFilterValue != 'id') {
+            if (this.actualValue.length > 2) {
+                this.setPageRequestFilter();
+                this.getUsers();
+            }
+        } else {
+            if (this.actualValue.length > 0) {
+                this.setPageRequestFilter();
+                this.getUsers();
+            }
+        }
     }
 
     filterSelectorChanged(event: any) {
         this.actualFilterValue = event.target.value;
         this.pageRequest.filter = [];
         this.setPageRequestFilter();
-        this.selectedUsers = [
-            {
-                id: 1,
-                userName: this.actualValue,
-            },
-        ];
-        this.onChange(this.selectedUsers);
     }
 
     protected setPageRequestFilter() {
@@ -126,10 +131,21 @@ export class CustomUserSearchFieldValidator<T> {
         filterReq.field = this.actualFilterValue;
         filterReq.operations = [new OperationRequest()];
         filterReq.operations[0].field = this.actualFilterValue;
-        filterReq.operations[0].operator = '=';
+        filterReq.operations[0].operator = ':';
         filterReq.operations[0].value = this.actualValue;
 
         this.pageRequest.filter.push(filterReq);
+    }
+
+    private getUsers() {
+        let getUserSub = this.modelService
+            .getPageListView<T>(this.pageRequest)
+            .subscribe({
+                next: (data) => {
+                    if (data.content) this.users = data.content;
+                    console.log('Users: ', this.users);
+                },
+            });
     }
 
     setTouched() {
