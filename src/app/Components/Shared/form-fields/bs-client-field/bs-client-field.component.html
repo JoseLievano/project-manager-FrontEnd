@@ -11,7 +11,8 @@
                 'input-is-valid-shared': touchedAndValid(),
                 'input-checking-async-value-shared': requestingAsyncValidation
             }"
-            (input)="filterSelectorChanged($event)">
+            (input)="filterSelectorChanged($event)"
+            (click)="setTouched()">
             <option value="username">By UserName</option>
             <option value="email">By Email</option>
             <option value="id">By ID</option>
