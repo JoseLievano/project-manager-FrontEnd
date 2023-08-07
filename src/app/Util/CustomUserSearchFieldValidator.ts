@@ -5,8 +5,9 @@ import { AbstractControl, ValidationErrors } from '@angular/forms';
 import { PageRequest } from '../Model/Shared/pageRequest';
 import { FilterRequest } from '../Model/Shared/filterRequest';
 import { OperationRequest } from '../Model/Shared/operationRequest';
+import { User } from '../Model/Shared/User';
 
-export class CustomUserSearchFieldValidator<T> {
+export class CustomUserSearchFieldValidator<T extends User> {
     //Input() Fields from parent component
     public label: string;
     public originalValue: any;
@@ -103,6 +104,9 @@ export class CustomUserSearchFieldValidator<T> {
 
     fieldChangeDetected(event: any) {
         this.actualValue = event.target.value;
+
+        if (this.actualValue.length < 3) this.users = [];
+
         if (this.actualFilterValue != 'id') {
             if (this.actualValue.length > 2) {
                 this.setPageRequestFilter();
@@ -118,6 +122,7 @@ export class CustomUserSearchFieldValidator<T> {
 
     filterSelectorChanged(event: any) {
         this.actualFilterValue = event.target.value;
+        this.users = [];
         this.pageRequest.filter = [];
         this.setPageRequestFilter();
     }
@@ -138,12 +143,19 @@ export class CustomUserSearchFieldValidator<T> {
     }
 
     private getUsers() {
+        this.users = [];
         let getUserSub = this.modelService
             .getPageListView<T>(this.pageRequest)
             .subscribe({
                 next: (data) => {
                     if (data.content) this.users = data.content;
                     console.log('Users: ', this.users);
+                },
+                error: (err) => {
+                    this.errorService.processError(err);
+                },
+                complete: () => {
+                    getUserSub.unsubscribe();
                 },
             });
     }
@@ -152,5 +164,10 @@ export class CustomUserSearchFieldValidator<T> {
         if (!this.touched) {
             this.touched = true;
         }
+    }
+
+    showUserResults() {
+        console.log('User Results', this.users);
+        return this.users.length > 0;
     }
 }
