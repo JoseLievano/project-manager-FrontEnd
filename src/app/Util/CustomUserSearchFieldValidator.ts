@@ -44,9 +44,7 @@ export class CustomUserSearchFieldValidator<T> {
 
     private businessService: BusinessService;
     private errorService: ErrorHandlerService;
-
     protected userField: HTMLInputElement;
-
     protected filterSelector: HTMLInputElement;
 
     constructor(
@@ -71,6 +69,7 @@ export class CustomUserSearchFieldValidator<T> {
         this.pageRequest.filter.push(filterReq);
     }
 
+    //ControlValueAccessor methods
     writeValue(obj: any): void {}
 
     registerOnChange(fn: any): void {
@@ -85,10 +84,16 @@ export class CustomUserSearchFieldValidator<T> {
         this.disabled = isDisabled;
     }
 
+    //Validator methods
+    public registerOnValidatorChange(fn: () => void) {
+        this.onValidatorChange = fn;
+    }
+
     validate(control: AbstractControl): ValidationErrors | null {
         return null;
     }
 
+    //Helper methods
     fieldIsInvalid() {}
 
     touchedAndValid() {}
