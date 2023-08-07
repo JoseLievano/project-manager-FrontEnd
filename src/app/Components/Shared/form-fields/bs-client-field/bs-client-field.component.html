@@ -2,36 +2,65 @@
     <label for="name-{{ label }}" class="mr-4 mb-4"
         >Client <span *ngIf="isRequired" class="text-error">*</span> :
     </label>
-    <div class="join">
-        <select
-            id="filter-selector"
-            class="select select-bordered join-item"
-            [ngClass]="{
-                'input-is-invalid-shared': fieldIsInvalid(),
-                'input-is-valid-shared': touchedAndValid(),
-                'input-checking-async-value-shared': requestingAsyncValidation
-            }"
-            (input)="filterSelectorChanged($event)"
-            (click)="setTouched()">
-            <option value="username">By UserName</option>
-            <option value="email">By Email</option>
-            <option value="id">By ID</option>
-        </select>
-        <input
-            type="text"
-            [ngClass]="{
-                'input-is-invalid-shared': fieldIsInvalid(),
-                'input-is-valid-shared': touchedAndValid(),
-                'input-checking-async-value-shared': requestingAsyncValidation
-            }"
-            [id]="id"
-            class="input-field-common-shared join-item"
-            id="userSearch"
-            placeholder="{{ label }}"
-            (input)="fieldChangeDetected($event)"
-            (click)="setTouched()"
-            [disabled]="disabled" />
+    <div>
+        <div class="join">
+            <select
+                id="filter-selector"
+                class="select select-bordered join-item"
+                [ngClass]="{
+                    'input-is-invalid-shared': fieldIsInvalid(),
+                    'input-is-valid-shared': touchedAndValid(),
+                    'input-checking-async-value-shared':
+                        requestingAsyncValidation
+                }"
+                (input)="filterSelectorChanged($event)"
+                (click)="setTouched()">
+                <option value="username">By UserName</option>
+                <option value="email">By Email</option>
+                <option value="id">By ID</option>
+            </select>
+            <input
+                type="text"
+                [ngClass]="{
+                    'input-is-invalid-shared': fieldIsInvalid(),
+                    'input-is-valid-shared': touchedAndValid(),
+                    'input-checking-async-value-shared':
+                        requestingAsyncValidation
+                }"
+                [id]="id"
+                class="input-field-common-shared join-item"
+                id="userSearch"
+                placeholder="{{ label }}"
+                (input)="fieldChangeDetected($event)"
+                (click)="setTouched()"
+                [disabled]="disabled" />
+        </div>
+        <!--Show user list result-->
+        <div>
+            <div
+                class="userResultSelector grid grid-cols-3"
+                [ngClass]="{ userResultShow: !showUserResults() }">
+                <div *ngFor="let user of users">
+                    <div
+                        class="grid grid-cols-3 gap-x-4 bg-base-100 p-4 rounded m-1 cursor-pointer hover:bg-base-400">
+                        <div class="avatar">
+                            <div
+                                class="w-8 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+                                <img src="https://picsum.photos/64" />
+                            </div>
+                        </div>
+                        <div class="col-span-2 grid grid-cols-1">
+                            <div>{{ user.username }}</div>
+                            <div>{{ user.firstName }} {{ user.lastName }}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+
+    <!--Show selected user-->
+
     <div class="invalid-input-label-container">
         <div *ngIf="touched && isRequired">Name is required</div>
         <div *ngIf="touched && hasBeenModified && invalidUseOfSpace">
