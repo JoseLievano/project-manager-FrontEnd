@@ -3,6 +3,8 @@ import { BusinessService } from '../Service/Business/business.service';
 import { ErrorHandlerService } from '../Service/Shared/error-handler.service';
 import { AbstractControl, ValidationErrors } from '@angular/forms';
 import { PageRequest } from '../Model/Shared/pageRequest';
+import { FilterRequest } from '../Model/Shared/filterRequest';
+import { OperationRequest } from '../Model/Shared/operationRequest';
 
 export class CustomUserSearchFieldValidator<T> {
     //Input() Fields from parent component
@@ -23,7 +25,7 @@ export class CustomUserSearchFieldValidator<T> {
     public requestingAsyncValidation: boolean = false;
     public disabled: boolean = false;
     public actualValue: string = '';
-    private actualFilterValue: 'id' | 'username' | 'email' = 'username';
+    protected actualFilterValue: 'id' | 'username' | 'email' = 'username';
     private pageRequest: PageRequest = new PageRequest(0, 100);
 
     //Field validation flags
@@ -53,6 +55,20 @@ export class CustomUserSearchFieldValidator<T> {
     ) {
         this.businessService = businessService;
         this.errorService = errorService;
+
+        //Set initial pageRequest
+        this.actualFilterValue = 'username';
+
+        this.pageRequest.filter = [
+            this.businessService.filterReqWithLoadedBusiness(),
+        ];
+        const filterReq: FilterRequest = new FilterRequest();
+        filterReq.field = 'username';
+        filterReq.operations = [new OperationRequest()];
+        filterReq.operations[0].field = 'username';
+        filterReq.operations[0].operator = '=';
+        filterReq.operations[0].value = '';
+        this.pageRequest.filter.push(filterReq);
     }
 
     writeValue(obj: any): void {}
@@ -78,13 +94,28 @@ export class CustomUserSearchFieldValidator<T> {
     touchedAndValid() {}
 
     fieldChangeDetected(event: any) {
-        console.log(event.target.value);
         this.actualValue = event.target.value;
     }
 
     filterSelectorChanged(event: any) {
         this.actualFilterValue = event.target.value;
-        console.log('Filter Changed', this.actualFilterValue);
+        this.pageRequest.filter = [];
+        this.setPageRequestFilter();
+    }
+
+    protected setPageRequestFilter() {
+        this.pageRequest.filter = [
+            this.businessService.filterReqWithLoadedBusiness(),
+        ];
+
+        const filterReq: FilterRequest = new FilterRequest();
+        filterReq.field = this.actualFilterValue;
+        filterReq.operations = [new OperationRequest()];
+        filterReq.operations[0].field = this.actualFilterValue;
+        filterReq.operations[0].operator = '=';
+        filterReq.operations[0].value = this.actualValue;
+
+        this.pageRequest.filter.push(filterReq);
     }
 
     setTouched() {}
