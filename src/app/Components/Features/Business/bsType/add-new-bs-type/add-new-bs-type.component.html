@@ -1,32 +1,71 @@
 <div *ngIf="!taskCatsIsEmpty && taskCatChecked" class="bg-base-400 rounded">
-  <h3 class="font-bold text-lg">Create a new Task Type</h3>
-  <form [formGroup]="newTypeForm" >
+    <h3 class="font-bold text-lg">Create a new Task Type</h3>
+    <form [formGroup]="newTypeForm">
+        <div class="grid grid-cols-1 my-4">
+            <label for="newTypesName" class="mr-4 mb-4">Name: </label>
+            <input
+                type="text"
+                class="input input-bordered w-full max-w-xs"
+                id="newTypesName"
+                placeholder="New Type name"
+                formControlName="name" />
+        </div>
 
-    <div class="grid grid-cols-1 my-4">
-      <label for="newTypesName" class="mr-4 mb-4">Name: </label>
-      <input type="text" class="input input-bordered w-full max-w-xs" id="newTypesName" placeholder="New Type name" formControlName="name">
+        <div class="grid grid-cols-1 my-4 relative">
+            <label for="typeTasks" class="mr-4 mb-4 mt-4"
+                >Task Category:
+            </label>
+            <input
+                type="text"
+                class="input input-bordered w-full max-w-xs"
+                id="typeTasks"
+                placeholder="Task Cat name"
+                formControlName="taskCat" />
+            <div>
+                <div
+                    class="taskCatSearcher"
+                    [ngClass]="{ taskSearchShow: !showSearchTaskCat() }">
+                    <button
+                        *ngFor="let taskCat of bsTaskCats"
+                        (click)="addTaskCatToTypeModel(taskCat)"
+                        class="badge badge-neutral m-1 cursor-pointer">
+                        {{ taskCat.name }}
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+    <div>
+        <button
+            class="badge badge-neutral m-1 cursor-pointer"
+            *ngFor="let addedTaskCat of getAddedTask()"
+            (click)="deleteTaskCatFromType(addedTaskCat)">
+            {{ addedTaskCat.name }}
+        </button>
     </div>
-
-    <div class="grid grid-cols-1 my-4 relative">
-      <label for="typeTasks" class="mr-4 mb-4 mt-4">Task Category: </label>
-      <input type="text" class="input input-bordered w-full max-w-xs" id="typeTasks" placeholder="Task Cat name" formControlName="taskCat">
-      <div class="taskCatSearcher" [ngClass]="{'taskSearchShow' : !showSearchTaskCat()}">
-        <button *ngFor="let taskCat of bsTaskCats" (click)="addTaskCatToTypeModel(taskCat)" class="badge badge-neutral m-1 cursor-pointer">{{taskCat.name}}</button>
-      </div>
+    <div class="modal-action my-8 justify-start">
+        <button
+            class="btn btn-secondary"
+            [disabled]="!isValidNewType()"
+            (click)="addNewType()">
+            Create New Type
+        </button>
     </div>
-
-  </form>
-  <div>
-    <button class="badge badge-neutral m-1 cursor-pointer" *ngFor="let addedTaskCat of getAddedTask()" (click)="deleteTaskCatFromType(addedTaskCat)">{{addedTaskCat.name}}</button>
-  </div>
-  <div class="modal-action my-8 justify-start">
-    <button class="btn btn-secondary" [disabled]="!isValidNewType()" (click)="addNewType()">Create New Type</button>
-  </div>
 </div>
 
 <div *ngIf="taskCatsIsEmpty && taskCatChecked">
-  <div class="alert alert-error">
-    <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-    <span>Please add at least one task category</span>
-  </div>
+    <div class="alert alert-error">
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="stroke-current shrink-0 h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24">
+            <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+        <span>Please add at least one task category</span>
+    </div>
 </div>
