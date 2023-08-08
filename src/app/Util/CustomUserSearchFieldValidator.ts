@@ -29,7 +29,7 @@ export class CustomUserSearchFieldValidator<T extends User> {
     public actualValue: string = '';
     protected actualFilterValue: 'id' | 'username' | 'email' = 'username';
     private pageRequest: PageRequest = new PageRequest(0, 100);
-    public selectedUsers: any;
+    public selectedUsers: T[] = [];
     public users: T[] = [];
 
     //Field validation flags
@@ -104,7 +104,18 @@ export class CustomUserSearchFieldValidator<T extends User> {
 
     fieldChangeDetected(event: any) {
         this.actualValue = event.target.value;
+        this.checkActualValue();
+    }
 
+    filterSelectorChanged(event: any) {
+        this.actualFilterValue = event.target.value;
+        this.users = [];
+        this.pageRequest.filter = [];
+        this.setPageRequestFilter();
+        this.checkActualValue();
+    }
+
+    private checkActualValue() {
         if (this.actualValue.length < 3) this.users = [];
 
         if (this.actualFilterValue != 'id') {
@@ -118,13 +129,6 @@ export class CustomUserSearchFieldValidator<T extends User> {
                 this.getUsers();
             }
         }
-    }
-
-    filterSelectorChanged(event: any) {
-        this.actualFilterValue = event.target.value;
-        this.users = [];
-        this.pageRequest.filter = [];
-        this.setPageRequestFilter();
     }
 
     protected setPageRequestFilter() {
@@ -144,12 +148,13 @@ export class CustomUserSearchFieldValidator<T extends User> {
 
     private getUsers() {
         this.users = [];
+        this.requestingAsyncValidation = true;
         let getUserSub = this.modelService
             .getPageListView<T>(this.pageRequest)
             .subscribe({
                 next: (data) => {
                     if (data.content) this.users = data.content;
-                    console.log('Users: ', this.users);
+                    this.requestingAsyncValidation = false;
                 },
                 error: (err) => {
                     this.errorService.processError(err);
@@ -169,5 +174,21 @@ export class CustomUserSearchFieldValidator<T extends User> {
     showUserResults() {
         console.log('User Results', this.users);
         return this.users.length > 0;
+    }
+
+    setSelectedUsers(user: T) {
+        if (this.multiple) {
+            this.selectedUsers.push(user);
+        } else {
+            this.selectedUsers = [];
+            this.selectedUsers = [user];
+        }
+        this.users = [];
+        this.onChange(this.selectedUsers);
+    }
+
+    clearSelectedUsers() {
+        this.selectedUsers = [];
+        this.onChange(this.selectedUsers);
     }
 }
