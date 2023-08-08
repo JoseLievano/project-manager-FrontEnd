@@ -1,0 +1,12 @@
+.userResultSelector {
+    @apply bg-base-200 shadow-lg p-2 rounded absolute;
+    opacity: 1;
+    transition: all 0.7s ease;
+}
+
+.userResultShow {
+    opacity: 0 !important;
+    min-width: 0;
+    max-width: 0;
+    transition: all 0.7s ease;
+}
