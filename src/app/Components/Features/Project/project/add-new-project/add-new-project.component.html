@@ -11,6 +11,9 @@
         <app-bs-client-field
             [modelService]="clientService"
             [model]="clientModel"
+            [isRequired]="true"
+            [multiple]="false"
+            [label]="'Search for a client'"
             formControlName="client">
         </app-bs-client-field>
     </form>
@@ -23,7 +26,12 @@
         </button>
     </div>
 </div>
-
+<div>
+    <span>Form is valid: {{ this.newProjectForm.valid }}</span>
+</div>
+<div>
+    <button (click)="getFormValidationErrors()">Get errors</button>
+</div>
 <div>
     {{ this.newProjectForm.value | json }}
 </div>
