@@ -6,6 +6,7 @@ import { PageRequest } from '../Model/Shared/pageRequest';
 import { FilterRequest } from '../Model/Shared/filterRequest';
 import { OperationRequest } from '../Model/Shared/operationRequest';
 import { User } from '../Model/Shared/User';
+import { FaIconsService } from '../Service/Shared/fa-icons.service';
 
 export class CustomUserSearchFieldValidator<T extends User> {
     //Input() Fields from parent component
@@ -48,15 +49,18 @@ export class CustomUserSearchFieldValidator<T extends User> {
 
     private businessService: BusinessService;
     private errorService: ErrorHandlerService;
+    public iconService: FaIconsService;
     protected userField: HTMLInputElement;
     protected filterSelector: HTMLInputElement;
 
     constructor(
         businessService: BusinessService,
         errorService: ErrorHandlerService,
+        iconService: FaIconsService,
     ) {
         this.businessService = businessService;
         this.errorService = errorService;
+        this.iconService = iconService;
 
         //Set initial pageRequest
         this.actualFilterValue = 'username';
@@ -94,13 +98,33 @@ export class CustomUserSearchFieldValidator<T extends User> {
     }
 
     validate(control: AbstractControl): ValidationErrors | null {
-        return null;
+        this.setValidationFlags();
+
+        let errors: any = null;
+
+        if (this.isRequired && this.isEmpty) errors = { userIsEmpty: true };
+
+        return errors;
+    }
+
+    private setValidationFlags() {
+        if (this.isRequired) {
+            this.isEmpty = this.selectedUsers.length == 0;
+        }
+        console.log('Setting isEmpty to ' + this.isEmpty);
     }
 
     //Helper methods
-    fieldIsInvalid() {}
+    fieldIsInvalid() {
+        return this.isEmpty && this.isRequired && this.touched;
+    }
 
-    touchedAndValid() {}
+    touchedAndValid() {
+        return (
+            (this.touched && this.isRequired && !this.isEmpty) ||
+            (this.touched && !this.isRequired)
+        );
+    }
 
     fieldChangeDetected(event: any) {
         this.actualValue = event.target.value;
@@ -153,7 +177,11 @@ export class CustomUserSearchFieldValidator<T extends User> {
             .getPageListView<T>(this.pageRequest)
             .subscribe({
                 next: (data) => {
-                    if (data.content) this.users = data.content;
+                    if (data.content) {
+                        for (const user of data.content) {
+                            this.addUserToUsersSelectionList(user);
+                        }
+                    }
                     this.requestingAsyncValidation = false;
                 },
                 error: (err) => {
@@ -172,11 +200,11 @@ export class CustomUserSearchFieldValidator<T extends User> {
     }
 
     showUserResults() {
-        console.log('User Results', this.users);
         return this.users.length > 0;
     }
 
-    setSelectedUsers(user: T) {
+    setSelectedUsers(user: T, userField: HTMLInputElement) {
+        userField.value = '';
         if (this.multiple) {
             this.selectedUsers.push(user);
         } else {
@@ -185,10 +213,27 @@ export class CustomUserSearchFieldValidator<T extends User> {
         }
         this.users = [];
         this.onChange(this.selectedUsers);
+        this.onValidatorChange();
     }
 
-    clearSelectedUsers() {
-        this.selectedUsers = [];
-        this.onChange(this.selectedUsers);
+    clearSelectedUsers(toRemoveUser: T) {
+        let indexToRemove: number = 0;
+        if (this.selectedUsers.length > 0) {
+            indexToRemove = this.selectedUsers.findIndex(
+                (user) => user.id === toRemoveUser.id,
+            );
+        }
+        this.selectedUsers.splice(indexToRemove, 1);
+        this.onValidatorChange();
+    }
+
+    private addUserToUsersSelectionList(toAddUser: T) {
+        let indexToAdd: number = 0;
+        indexToAdd = this.selectedUsers.findIndex(
+            (user) => user.id === toAddUser.id,
+        );
+        if (indexToAdd === -1) {
+            this.users.push(toAddUser);
+        }
     }
 }
