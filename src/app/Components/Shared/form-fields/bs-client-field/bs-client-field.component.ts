@@ -10,6 +10,7 @@ import {
     Validator,
 } from '@angular/forms';
 import { User } from '../../../../Model/Shared/User';
+import { FaIconsService } from '../../../../Service/Shared/fa-icons.service';
 
 @Component({
     selector: 'app-bs-client-field',
@@ -37,12 +38,14 @@ export class BsClientFieldComponent<T extends User>
     @Input() override isRequired: boolean = false;
     @Input() override modelService: ModelService<T>;
     @Input() override model: T;
+    @Input() override multiple: boolean;
 
     constructor(
         businessService: BusinessService,
         errorService: ErrorHandlerService,
+        iconService: FaIconsService,
     ) {
-        super(businessService, errorService);
+        super(businessService, errorService, iconService);
     }
 
     ngOnInit() {
