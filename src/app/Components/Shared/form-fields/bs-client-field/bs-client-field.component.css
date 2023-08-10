@@ -10,3 +10,18 @@
     max-width: 0;
     transition: all 0.7s ease;
 }
+
+.oneUserSelector {
+    @apply grid grid-cols-8 gap-x-4 border-2 border-base bg-base-100 p-4 rounded m-1 cursor-pointer;
+    transition: all 0.7s ease;
+}
+
+.multiUserSelector {
+    @apply grid grid-cols-6 gap-2 border-2 border-base bg-base-100 p-2 rounded cursor-pointer;
+    transition: all 0.7s ease;
+}
+
+.hover\:hoverUserToDelete:hover {
+    @apply bg-base-200 border-2 border-error animate-pulse !important;
+    transition: all 0.7s ease;
+}
