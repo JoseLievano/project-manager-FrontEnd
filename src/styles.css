@@ -68,3 +68,35 @@ p{
   @apply input-warning border-2 animate-pulse !important;
 }
 
+/* Material date picker styles */
+.mat-mdc-form-field{
+  @apply hidden !important;
+}
+
+/*Calendar Popup*/
+.mat-datepicker-content{
+  @apply bg-base-100 text-base-content !important;
+}
+
+.mat-mdc-button.mat-unthemed,
+.mat-calendar-body-cell-content,
+.mat-date-range-input-separator,
+.mat-calendar-body-label,
+.mat-calendar-previous-button,
+.mat-calendar-next-button,
+.mat-calendar-table-header,
+.mat-calendar-arrow{
+  @apply text-base-content !important;
+}
+
+.mat-calendar-body-selected{
+  @apply bg-secondary !important;
+}
+
+.mat-calendar-body-cell:not(.mat-calendar-body-disabled):hover>.mat-calendar-body-cell-content:not(.mat-calendar-body-selected):not(.mat-calendar-body-comparison-identical){
+  @apply bg-primary !important;
+}
+
+.mat-calendar-body-today{
+  @apply border-primary !important;
+}
