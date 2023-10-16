@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { bsProject } from '../../../../../Model/Project/bsProject';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, ValidationErrors } from '@angular/forms';
 import { ProjectService } from '../../../../../Service/Project/project.service';
 import { BusinessService } from '../../../../../Service/Business/business.service';
 import { AlertService } from '../../../../../Service/Shared/alert.service';
@@ -20,6 +20,7 @@ export class AddNewProjectComponent {
     public newProjectForm = this.formBuilder.group({
         name: [null],
         client: [null],
+        dueDate: [null],
     });
 
     constructor(
@@ -33,5 +34,29 @@ export class AddNewProjectComponent {
         this.model.business = this.businessService.getLoadedBusiness();
     }
 
-    public addNewProject() {}
+    public addNewProject() {
+        let newProject = new bsProject();
+        console.log(this.newProjectForm.controls.name.value);
+        console.log(this.newProjectForm.controls.client.value);
+        console.log(this.newProjectForm.controls.dueDate.value);
+        newProject.name = this.newProjectForm.controls.name.value;
+    }
+
+    /*getFormValidationErrors() {
+        Object.keys(this.newProjectForm.controls).forEach((key) => {
+            const controlErrors = this.newProjectForm.get(key)?.errors;
+            if (controlErrors != null) {
+                Object.keys(controlErrors).forEach((keyError) => {
+                    console.log(
+                        'Key control: ' +
+                            key +
+                            ', keyError: ' +
+                            keyError +
+                            ', err value: ',
+                        controlErrors[keyError],
+                    );
+                });
+            }
+        });
+    }*/
 }
