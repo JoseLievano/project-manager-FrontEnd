@@ -6,4 +6,14 @@
         (dateChange)="onDateChange($event)" />
     <mat-datepicker touchUi #picker></mat-datepicker>
 </mat-form-field>
-<button mat-raised-button (click)="picker.open()">Open</button>
+<div class="grid grid-cols-1 my-4">
+    <label for="name-{{ label }}" class="mr-4 mb-4"
+        >Due date <span *ngIf="isRequired" class="text-error">*</span> :
+    </label>
+    <input
+        id="date-holder"
+        type="text"
+        [placeholder]="label"
+        class="input-field-common-shared"
+        (click)="picker.open()" />
+</div>
