@@ -16,6 +16,9 @@
             [label]="'Search for a client'"
             formControlName="client">
         </app-bs-client-field>
+        <app-date-field
+            formControlName="dueDate"
+            label="Due date"></app-date-field>
     </form>
     <div class="modal-action my-8 justify-start">
         <button
@@ -29,9 +32,6 @@
 <div>
     <span>Form is valid: {{ this.newProjectForm.valid }}</span>
 </div>
-<div>
-    <button (click)="getFormValidationErrors()">Get errors</button>
-</div>
-<div>
+<!--<div>
     {{ this.newProjectForm.value | json }}
-</div>
+</div>-->
