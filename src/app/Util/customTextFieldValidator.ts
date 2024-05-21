@@ -124,7 +124,6 @@ export class CustomTextFieldValidator<T> {
     }
 
     private setValidationFlags() {
-        /*console.log('Validation flags');*/
         if (this.actualValue != null && this.actualValue != '') {
             this.isEmpty = false;
             if (this.originalValue != null) {
